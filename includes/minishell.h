@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/02/23 15:12:39 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/02/23 19:12:15 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 
 # define SUCCESS 0
 # define FAILURE 1
-# define NB_TOKEN 14
 
 typedef struct s_lst_cmd
 {
@@ -33,21 +32,14 @@ typedef struct s_lst_cmd
 
 enum e_token
 {
-	TOKEN_ERROR = -1,
-	TOKEN_BLANK = 0,
-	TOKEN_NEWLINE = 1,
-	TOKEN_SEMICOLON = 2,
-	TOKEN_PIPE = 3,
-	TOKEN_RLEFT = 4,
-	TOKEN_RRIGHT = 5,
-	TOKEN_ALEFT = 6,
-	TOKEN_ARIGHT = 7,
-	TOKEN_COMMENT = 8,
-	TOKEN_SQUOTE = 9,
-	TOKEN_DQUOTE = 10,
-	TOKEN_ESCAPE = 11,
-	TOKEN_VAR = 12,
-	TOKEN_WORD = 13
+	TOKEN_PIPE = 1,
+	TOKEN_RLEFT = 2,
+	TOKEN_RRIGHT = 3,
+	TOKEN_ALEFT = 4,
+	TOKEN_ARIGHT = 5,
+	TOKEN_SQUOTE = 6,
+	TOKEN_DQUOTE = 7,
+	TOKEN_WORD = 8,
 };
 
 /*	FT_SIGNALS	*/

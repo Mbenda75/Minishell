@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:07:53 by adaloui           #+#    #+#             */
-/*   Updated: 2022/02/23 15:11:26 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/02/23 19:00:36 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void  *free_lst(t_lst_cmd *lst)
     return (lst);
 }
 
-t_lst_cmd	*create_lst(char *split_bypipe)
+t_lst_cmd	*file_lst(char *split_bypipe)
 {
 	t_lst_cmd *lst;
 	
@@ -62,55 +62,67 @@ t_lst_cmd	*create_lst(char *split_bypipe)
 	lst->split_byspace = ft_split(split_bypipe, ' ');
 	lst->next= NULL;
 	for (int i = 0; lst->split_byspace[i];i++)
-		printf("split by pipe== %s\n", lst->split_byspace[i]);
+	printf("split by pipe== %s\n", lst->split_byspace[i]);
 	return (lst);
 }
-int	main(int argc, char **argv, char **env)
+
+t_lst_cmd	*create_lst(char *str, t_lst_cmd *lst, int nb_pipe)
 {
-	char	*buffer;
+	int i;
 	char **split_bypipe;
-	int		i;
-	int		nb_pipe;
-	t_lst_cmd *lst;
 	t_lst_cmd *tmp;
 	
 	tmp = NULL;
+	i = 0;
+	split_bypipe = ft_split(str, '|');
+	while (i <= nb_pipe)
+	{
+		if (!lst)
+		{
+			lst = file_lst(split_bypipe[i]);
+			tmp = lst;
+		}
+		else
+		{
+			tmp->next = file_lst(split_bypipe[i]);
+			tmp = tmp->next;
+		}
+		i++;
+	}
+	return (lst);
+}
+
+int	main(int argc, char **argv, char **env)
+{
+	char	*buffer;
+	int		nb_pipe;
+	t_lst_cmd *lst;
+
 	lst = NULL;
 	//ft_signals();
 	while (1)
 	{
-		buffer = readline("\033[0;33madaloui\033[0;35m42-> \033[0;37m");
+		buffer = readline("\033[0;33mSHELL DE MERDE\033[0;35m-> \033[0;37m");
 		add_history(buffer);
-		nb_pipe = count_pipe(buffer);
- 	 	if (nb_pipe != 0)
+		if (count_pipe(buffer) != 0)
 		{
-			i = 0;
-			split_bypipe = ft_split(buffer, '|');
-			while (i <= nb_pipe)
-			{
-				if (!lst)
-				{
-					lst = create_lst(split_bypipe[i]);
-					tmp = lst;
-				}
-				else
-				{
-					tmp->next = create_lst(split_bypipe[i]);
-					tmp = tmp->next;
-				}
-				i++;
-			}
-		} 
+			nb_pipe = count_pipe(buffer);
+		  	lst = create_lst(buffer, lst, nb_pipe);
+		}
    		if (strcmp(buffer, "exit") == 0)
 		{
 			free(buffer);
-			free_str(split_bypipe);
-			free_lst(lst);
+			if (lst)
+			{
+				free_str(lst->split_byspace);
+				free_lst(lst);	
+			}
 			return (0);
 		}  
 	}
 	return (0);
 }
+ 
  
 /* 
  		while (split_bypipe[j]) 
