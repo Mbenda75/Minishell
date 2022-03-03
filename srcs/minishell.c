@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:46:47 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/02 17:43:32 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/03 14:22:04 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_lst_cmd	*file_lst(char *split_bypipe)
 	
 	lst = malloc(sizeof(t_lst_cmd));
 	lst->split_byspace = ft_split(split_bypipe, ' ');
-	lst->
+	
 	lst->next= NULL;
  	for (int i = 0; lst->split_byspace[i];i++)
 	printf("split by pipe== %s\n", lst->split_byspace[i]);

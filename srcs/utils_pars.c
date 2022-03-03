@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 11:32:13 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/02 16:45:12 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/03 13:14:44 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int size_malloc(char *str)
 	return (size);
 }
 
-char	*skip_dquote(char *str)
+char	*skip_quote_cmd(char *str)
 {
 	int i;
 	int size;

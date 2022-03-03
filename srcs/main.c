@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:07:53 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/02 17:40:56 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/03 17:09:21 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,16 @@ int	exit_shell(char *buffer, t_lst_cmd *lst)
 	}
 }
 
-t_lst_cmd	*parsing_shell(char *buffer, t_lst_cmd *lst)
+t_lst_cmd	*init_shell(char *buffer, t_lst_cmd *lst)
 {
 	int		nb_pipe;
-	char 	*stock;
-
-	stock = skip_dquote(buffer);
-	printf("%s\n" ,stock);
+	
 	nb_pipe = count_pipe(buffer);
 	if (nb_pipe != 0)
 	{
 		/* parsing de plusieur commande */
 	  	lst = create_lst(buffer, lst, nb_pipe);
+		
 	}
 	else if (nb_pipe == 0)
 	{
@@ -41,27 +39,26 @@ t_lst_cmd	*parsing_shell(char *buffer, t_lst_cmd *lst)
 		lst = create_lst(buffer, lst, 0);
 		/* parser une seul commande et execution*/
 	}
-	free(stock);
 	return (lst);
 }
 
 void	minishell(t_lst_cmd *lst, char **env)
 {
-	char	*buffer;
+	char	*promt_line;
 	t_lst_cmd *mshell;
-	
+	char 	*new_line;
+
 	mshell = NULL;
 	while (1)
 	{
-		buffer = readline("\033[0;33mSHELL DE MERDE\033[0;35m-> \033[0;37m"); 
-		add_history(buffer);
-		mshell = parsing_shell(buffer, lst);
-		
-		
-		exit_shell(buffer, lst);
+		promt_line = readline("\033[0;33mSHELL DE MERDE\033[0;35m-> \033[0;37m");
+		new_line = skip_quote_cmd(promt_line);
+		add_history(promt_line);
+		mshell = init_shell(new_line, lst);	
+		free(new_line);
+		exit_shell(promt_line, lst);
 		free_lst(mshell);
 		mshell = NULL;
-		
 	}
 }
 
