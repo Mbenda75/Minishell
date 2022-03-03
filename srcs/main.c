@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:07:53 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/03 17:09:21 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/03 20:04:01 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+struct s_lst_cmd	*g_list;
 
 int	exit_shell(char *buffer, t_lst_cmd *lst)
 {
@@ -22,7 +24,7 @@ int	exit_shell(char *buffer, t_lst_cmd *lst)
 	}
 }
 
-t_lst_cmd	*init_shell(char *buffer, t_lst_cmd *lst)
+t_lst_cmd	*init_shell(char *buffer, t_lst_cmd *lst, char **env)
 {
 	int		nb_pipe;
 	
@@ -30,13 +32,12 @@ t_lst_cmd	*init_shell(char *buffer, t_lst_cmd *lst)
 	if (nb_pipe != 0)
 	{
 		/* parsing de plusieur commande */
-	  	lst = create_lst(buffer, lst, nb_pipe);
+	  	lst = create_lst(buffer, lst, nb_pipe, env);
 		
 	}
 	else if (nb_pipe == 0)
 	{
-		printf("ici\n");
-		lst = create_lst(buffer, lst, 0);
+		lst = create_lst(buffer, lst, 0, env);
 		/* parser une seul commande et execution*/
 	}
 	return (lst);
@@ -44,29 +45,52 @@ t_lst_cmd	*init_shell(char *buffer, t_lst_cmd *lst)
 
 void	minishell(t_lst_cmd *lst, char **env)
 {
-	char	*promt_line;
 	t_lst_cmd *mshell;
+	char *pwd;
 	char 	*new_line;
-
+	char 	*prompt_line;
+	char **cmd = NULL;
+	char **fake_env = NULL;
 	mshell = NULL;
+
+	fake_env = ft_env_cpy(env, fake_env);
 	while (1)
 	{
-		promt_line = readline("\033[0;33mSHELL DE MERDE\033[0;35m-> \033[0;37m");
-		new_line = skip_quote_cmd(promt_line);
-		add_history(promt_line);
-		mshell = init_shell(new_line, lst);	
-		free(new_line);
-		exit_shell(promt_line, lst);
-		free_lst(mshell);
-		mshell = NULL;
+		pwd = getcwd(NULL, 0);
+		prompt_line = readline(pwd);
+		cmd = ft_split(prompt_line, ' ');
+		free(pwd);
+		if (cmd[0] == NULL)
+			ft_putstr_fd(NULL, 0);
+		if (cmd[0] != NULL)
+		{
+			new_line = skip_quote_cmd(prompt_line);
+			add_history(prompt_line);
+			mshell = init_shell(new_line, lst, env);
+			free(new_line);
+			if (ft_is_built_in(mshell->split_byspace[0]) == 1)
+				exec_built_in(mshell->split_byspace, fake_env);
+			else
+				ft_putstr_fd("built-in introuvable\n", 0);
+			exit_shell(prompt_line, mshell);
+			free_lst(mshell);
+			mshell = NULL;
+		}
 	}
 }
 
 int	main(int argc, char **argv, char **env)
 {
 	t_lst_cmd *lst;
+	
+/* 	if (!lst)
+	{
+		//ft_system_error();
+		return (0);
+	} */
 
-	lst = NULL;
+ 	lst = NULL;
+	
 	//ft_signals();
 	minishell(lst, env);
 	return (0);

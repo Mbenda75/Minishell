@@ -1,45 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_file.c                                        :+:      :+:    :+:   */
+/*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/02 15:18:17 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/03 19:38:48 by adaloui          ###   ########.fr       */
+/*   Created: 2022/02/21 14:28:06 by user42            #+#    #+#             */
+/*   Updated: 2022/03/03 19:50:49 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void    free_str(char **s)
+int ft_built_in_cd(char **path, char **envp)
 {
-    int     line;
+    char **home;
+    char   *tmp;
 
-    line = 0;
-
-    for (int i = 0; s[i];i++)
-    printf("split by pipe== %s\n", s[i]);
-    while (s[line])
+    if (path[1] == NULL)
     {
-	    
-        printf("line %d \n", line);
-        free(s[line]);
-        line++;
-    }
-    free(s);
-}
-
-void  *free_lst(t_lst_cmd *lst)
-{
-    t_lst_cmd *tmp;
-
-    while (lst)
-   	{
-		free_str(lst->split_byspace);
-		tmp = lst;
-        lst = lst->next;
+        
+        home = ft_get_var_env(envp, "HOME");
+        tmp = home[0];
+        if (chdir(tmp) == -1)
+		    perror("chdir()");
         free(tmp);
     }
-    return (lst);
+    else if (path[2])
+        return(ft_custom_error("cd: too many arguments"));
+	if (path[1] != NULL && chdir(path[1]) == -1)
+		perror("chdir()");
+    return (SUCCESS);
 }

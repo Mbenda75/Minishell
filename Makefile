@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+         #
+#    By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/18 08:05:34 by adaloui           #+#    #+#              #
-#    Updated: 2022/03/02 10:58:55 by benmoham         ###   ########.fr        #
+#    Updated: 2022/03/03 19:53:19 by adaloui          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ endif
 
 OBJ = *.o
 
-FLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
+FLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 
 LIBFT_A = libft.a
 LIBFT_DOSSIER = libft/
@@ -46,7 +46,7 @@ $(NAME): $(OBJ)
 
 $(OBJ): $(SRC)
 	@echo $(CYAN) "Creation des fichiers .o." $(WHITE)
-	@gcc $(FALGS) -c $(SRC)
+	@gcc -g -c $(SRC)
 
 clean:
 	@echo "Suppression en cours des fichiers .o de $(NAME) et de la libft"

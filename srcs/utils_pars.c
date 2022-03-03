@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_pars.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 11:32:13 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/03 13:14:44 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/03 19:20:05 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,14 @@ char	*skip_quote_cmd(char *str)
 	
 	i = 0;
 	j = 0;
-	size = size_malloc(str);
-	new_str = malloc(sizeof(char *) * size + 1);
+	size = 0;
+	if (size != 0)
+	{
+		size = size_malloc(str);
+		new_str = malloc(sizeof(char *) * size + 1);
+	}
+	else
+		new_str = malloc(sizeof(char *) * ft_strlen(str) + 1);
 	if (!new_str)
 		return (NULL);
 	while (str[i])
