@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:07:53 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/04 18:23:56 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/04 19:11:35 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-struct s_lst_cmd	*g_list;
+struct s_env	*g_list;
 
 int count_pipe(char *str)
 {
@@ -54,6 +54,7 @@ void	minishell(char **env)
 {
 	t_lst_cmd *mshell = NULL;
 	t_init	*ishell = NULL;
+	char **env_2;
 
 	ishell = malloc(sizeof(t_init));
 	while (1)
@@ -85,18 +86,23 @@ void	minishell(char **env)
 
 int	main(int ac, char **av, char **env)
 {
-	g_list = NULL;
+	t_env *env2;
+	
+	env2 = NULL;
 	if (ac != 1 && !av)
 		exit(1);
-	
 /* 	if (!lst)
 	{
 		//ft_system_error();
 		return (0);
 	} */
-	
 	//ft_signals()
-	g_list = malloc(sizeof(t_lst_cmd));
-	minishell(env);
+	//minishell(env);
+	env2 = cpy_env(env);
+	while (env2 != NULL)
+	{
+		printf("env == %s\n", env2->content);
+		env2 = env2->next;
+	}
 	return (0);
 }

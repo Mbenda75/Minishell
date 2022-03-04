@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/04 18:15:27 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/04 18:53:59 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,18 @@
 # define SUCCESS 0
 # define FAILURE 1
 
-extern struct s_lst_cmd	*g_list;
+extern struct s_env	*g_list;
+
+typedef struct s_env
+{
+	char *content;
+	//int	unset_minus;
+	struct s_env *next;
+}				t_env;
 
 typedef struct s_init
 {
-	char *pwd;
+	char 	*pwd;
 	char 	*new_line;
 	char 	*prompt_line;
 	char 	**cmd;
@@ -38,7 +45,6 @@ typedef struct s_init
 typedef struct s_lst_cmd
 {
 	char **split_byspace;
-	int	unset_minus;
 	struct s_lst_cmd	*next;
 	//char *prompt_line;
 	char **env_2;
@@ -84,6 +90,8 @@ int check_quote(char *str);
 
 
 void	minishell( char **env);
+t_env	*cpy_env(char **envp);
+t_env *file_env(char *str);
 
 /*	FT_ERRORS_HANDLERS	*/
 void	ft_free_charr(char **path);

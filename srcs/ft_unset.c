@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 22:59:07 by user42            #+#    #+#             */
-/*   Updated: 2022/03/04 15:30:48 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/04 18:43:44 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	ft_reinitialize_k()
+/* void	ft_reinitialize_k()
 {
 	static int k;
 
@@ -100,13 +100,14 @@ int ft_built_in_unset(char **cmd)
 		g_list->unset_minus = k;
 		//if (g_list->unset_minus == 0)
 			k = 0;*/
-		i = ft_check_variable(cmd);
+	/*	i = ft_check_variable(cmd);
 		if (i == 1)
 			return (FAILURE);
 		ft_built_in_unset_2(cmd, g_list->env_2, p);
 		/*printf("k unset après = %d\n", k);
 		printf("unset_minus UNSET = %d\n", g_list->unset_minus);*/
 
-	}
-    return (SUCCESS);
+	//}
+    /*return (SUCCESS);
 }
+ */

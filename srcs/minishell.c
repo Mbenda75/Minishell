@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:46:47 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/04 17:58:31 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/04 18:56:15 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ t_lst_cmd	*file_lst(char *split_bypipe, char **env)
 	
 	lst = malloc(sizeof(t_lst_cmd));
 	lst->split_byspace = ft_split(split_bypipe, ' ');
-	lst->unset_minus = 0;
 	//g_list->env_2 = ft_env_cpy(env, g_list->env_2);
 	lst->next= NULL;
 /* 	for (int i = 0; lst->split_byspace[i];i++)

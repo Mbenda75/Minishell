@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_built_in_checker.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 14:03:44 by user42            #+#    #+#             */
-/*   Updated: 2022/03/04 16:51:09 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/04 18:41:10 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ int	exec_built_in(char **built_in, char **env)
 		ret = ft_built_in_exit(built_in);
 	else if (!ft_strcmp(built_in[0], "echo"))
 		ret = ft_built_in_echo(built_in);
-	else if (!ft_strcmp(built_in[0], "env"))
+/*	else if (!ft_strcmp(built_in[0], "env"))
 		ft_built_in_env(built_in, env);
 	else if (!ft_strcmp(built_in[0], "export"))
 		ft_built_in_export(built_in, env);
 	else if (!ft_strcmp(built_in[0], "unset"))
-		ft_built_in_unset(built_in);
+		ft_built_in_unset(built_in);*/
 	else
 		return (FAILURE);
 	return (ret + 0xFF);

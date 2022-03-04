@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:40:02 by user42            #+#    #+#             */
-/*   Updated: 2022/03/04 17:36:40 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/04 18:43:00 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
+/* 
 char	**realloc_envs(size_t size, char **envp)
 {
 	char	**new;
@@ -133,11 +133,11 @@ static int
 	j = i;
 /* 	for (int i = 0; g_list->split_byspace[i];i++)
 	printf("split by pipe== %s\n", g_list->split_byspace[i]);  */
-	if (k == 0)
+	/*if (k == 0)
 		g_list->env_2 = ft_env_cpy(envp, g_list->env_2);
 /*	g_list->env_2 = realloc_envs(k + j, g_list->env_2);
 	g_list->env_2[k + j] = c;*/
-	printf("k avant = %d\n", k);
+/*	printf("k avant = %d\n", k);
 	if (g_list->unset_minus > 0)
 	{
 		while (g_list->unset_minus >= 0)
@@ -184,4 +184,4 @@ int ft_built_in_export(char **cmd, char **envp)
 		}
     }
     return (SUCCESS);
-}
+} */
