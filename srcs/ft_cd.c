@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 14:28:06 by user42            #+#    #+#             */
-/*   Updated: 2022/03/03 19:50:49 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/04 17:00:00 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,13 @@ int ft_built_in_cd(char **path, char **envp)
         tmp = home[0];
         if (chdir(tmp) == -1)
 		    perror("chdir()");
-        free(tmp);
+		free_str(home);
     }
     else if (path[2])
-        return(ft_custom_error("cd: too many arguments"));
+	{
+		ft_custom_error("cd: too many arguments");
+        return(FAILURE);
+	}
 	if (path[1] != NULL && chdir(path[1]) == -1)
 		perror("chdir()");
     return (SUCCESS);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+         #
+#    By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/18 08:05:34 by adaloui           #+#    #+#              #
-#    Updated: 2022/03/03 19:53:19 by adaloui          ###   ########.fr        #
+#    Updated: 2022/03/04 16:57:14 by benmoham         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ RED = '\033[0;31m'
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@echo $(CYAN) "Compilation en cours de $(NAME) crée par $(RED)fasi-moh et adaloui$(CYAN) sur l'OS \"$(NAME_OS)\"" $(WHITE)
+	@echo $(CYAN) "Compilation en cours de $(NAME) crée par $(RED)benmoham et adaloui$(CYAN) sur l'OS \"$(NAME_OS)\"" $(WHITE)
 	@make  --no-print-directory -C $(LIBFT_DOSSIER)
 	@gcc $(FLAGS) $(LIBFT) $(OBJ) -o $(NAME) -lreadline -ggdb3 -std=c11
 	@echo ""

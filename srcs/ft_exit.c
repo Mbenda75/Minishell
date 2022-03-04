@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:09:23 by user42            #+#    #+#             */
-/*   Updated: 2022/03/03 16:14:02 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/04 17:33:57 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,17 +59,15 @@ int	ft_check_nb(char **cmd)
 	return (SUCCESS);
 }
 
-int	ft_check_exit_args(char **cmd)
+int	ft_check_exit_args()
 {
 	return (SUCCESS);
 }
 
-int ft_built_in_exit(char **cmd, char **envp)
+int ft_built_in_exit(char **cmd)
 {
     int i;
-    int j;
 
-    j = 0;
     if (cmd[1] == NULL)
         i = 0;
 	else if (ft_check_nb(cmd) == 1)
@@ -89,13 +87,7 @@ int ft_built_in_exit(char **cmd, char **envp)
         if (ft_calc_exit_nb(cmd[1], &i))
 			return (ft_custom_error("exit: bad number"));
     }
-    ft_free_charr(cmd);
-/*    while (j <= 150)
-    {
-        close(j);
-        j++;
-    }*/
-
+	ft_free_charr(cmd);
     printf("exit\n");
 	exit(i);
 }

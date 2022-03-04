@@ -3,31 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   utils_pars.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 11:32:13 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/03 19:20:05 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/04 18:15:03 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int count_pipe(char *str)
+int check_quote(char *str)
 {
 	int i;
-	int pipe;
 
 	i = 0;
-	pipe = 0;
 	while(str[i])
 	{
-		if (str[i] == '|')
-			pipe++;
+		if (str[i] == 34)
+			return (1);
+		if (str[i] == 39)
+			return (2);
 		i++;
 	}
-	return (pipe);
+	return (0);
 }
-
 int if_noquote(char *str)
 {
 	int i;
@@ -45,30 +44,30 @@ int if_noquote(char *str)
 		return (0);
 	return (1);
 }
-/* 
-char	*skip_dquote_arg(char *str)
+
+char	*skip_squote_cmd(char *str)
 {
 	int i;
-	int start;
+	int j;
 	char *new_str;
 	
 	i = 0;
-	start = 0;
+	j = 0;
+
+	new_str = malloc(sizeof(char *) * ft_strlen(str) + 1);
+	if (!new_str)
+		return (NULL);
 	while (str[i])
 	{
-		if (str[i] == 34)
-		{
+		if (str[i] == 39)
 			i++;
-			start = i;
-			while (str[i] != 34)
-				i++;
-			new_str = ft_substr(str, start, i - start);
-			return (new_str);
-		}
-		i++;
+		new_str[j] = str[i];
+		j++;
+		i++; 
 	}
-	return (str);
-} */
+	new_str[j] = '\0';
+	return (new_str);
+} 
 
 int size_malloc(char *str)
 {
@@ -86,28 +85,20 @@ int size_malloc(char *str)
 	return (size);
 }
 
-char	*skip_quote_cmd(char *str)
+char	*skip_dquote_cmd(char *str)
 {
 	int i;
-	int size;
 	int j;
 	char *new_str;
 	
 	i = 0;
 	j = 0;
-	size = 0;
-	if (size != 0)
-	{
-		size = size_malloc(str);
-		new_str = malloc(sizeof(char *) * size + 1);
-	}
-	else
-		new_str = malloc(sizeof(char *) * ft_strlen(str) + 1);
+	new_str = malloc(sizeof(char *) * ft_strlen(str) + 1);
 	if (!new_str)
 		return (NULL);
 	while (str[i])
 	{
-		if (str[i] == 34 || str[i] == 39)
+		if (str[i] == 34)
 			i++;
 		new_str[j] = str[i];
 		j++;

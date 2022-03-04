@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:40:02 by user42            #+#    #+#             */
-/*   Updated: 2022/03/03 18:28:48 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/04 17:36:40 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,10 +131,12 @@ static int
 	while (envp[i])
 		i++;
 	j = i;
+/* 	for (int i = 0; g_list->split_byspace[i];i++)
+	printf("split by pipe== %s\n", g_list->split_byspace[i]);  */
 	if (k == 0)
-		g_list->envp_2 = ft_env_cpy(envp, g_list->envp_2);
-/*	g_list->envp_2 = realloc_envs(k + j, g_list->envp_2);
-	g_list->envp_2[k + j] = c;*/
+		g_list->env_2 = ft_env_cpy(envp, g_list->env_2);
+/*	g_list->env_2 = realloc_envs(k + j, g_list->env_2);
+	g_list->env_2[k + j] = c;*/
 	printf("k avant = %d\n", k);
 	if (g_list->unset_minus > 0)
 	{
@@ -144,8 +146,8 @@ static int
 			k--;
 		}
 	}
-	g_list->envp_2 = realloc_envs(k + j, g_list->envp_2);
-	g_list->envp_2[k + j] = c;
+	g_list->env_2 = realloc_envs(k + j, g_list->env_2);
+	g_list->env_2[k + j] = c;
 	if (k > 0)
 		k++;
 	if (k == 0)
@@ -153,7 +155,7 @@ static int
 	g_list->unset_minus = 0;
 	printf("k après = %d\n", k);
 	printf("unset_minus EXPORT = %d\n", g_list->unset_minus);
-
+	free(c);
 	return (SUCCESS);
 }
 

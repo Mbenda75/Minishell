@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/03 18:51:21 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/04 18:15:27 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,22 @@
 
 extern struct s_lst_cmd	*g_list;
 
+typedef struct s_init
+{
+	char *pwd;
+	char 	*new_line;
+	char 	*prompt_line;
+	char 	**cmd;
+}			t_init;
+
 typedef struct s_lst_cmd
 {
 	char **split_byspace;
+	int	unset_minus;
 	struct s_lst_cmd	*next;
 	//char *prompt_line;
-	pid_t pid;
-	char **envp_2;
+	char **env_2;
 	int	exit_value;
-	int	unset_minus;
 }				t_lst_cmd;
 
 typedef struct s_decompte
@@ -66,16 +73,17 @@ void	*free_lst(t_lst_cmd *lst);
 
 /* PARSING SHELL */
 char	*skip_dquote(char *str);
-t_lst_cmd	*create_lst(char *str, t_lst_cmd *lst, int nb_pipe, char **env);
+t_lst_cmd	*create_lst(char *prompt_line, int nb_pipe, t_lst_cmd *lst, char **env);
 t_lst_cmd	*file_lst(char *split_bypipe, char **env);
 int			count_pipe(char *str);
 int		size_malloc(char *str);
-char	*skip_quote_cmd(char *str);
-char	*skip_dquote_arg(char *str);
+char	*skip_squote_cmd(char *str);
+char	*skip_dquote_cmd(char *str);
 t_lst_cmd	*init_shell(char *buffer, t_lst_cmd *lst, char **env);
+int check_quote(char *str);
 
-int	exit_shell(char *buffer, t_lst_cmd *lst);
-void	minishell(t_lst_cmd *lst, char **env);
+
+void	minishell( char **env);
 
 /*	FT_ERRORS_HANDLERS	*/
 void	ft_free_charr(char **path);
@@ -93,7 +101,7 @@ int		ft_builtin_pwd(char **argv);
 int		ft_built_in_cd(char **path, char **envp);
 
 /*	FT_EXIT	*/
-int		ft_built_in_exit(char **cmd, char **envp);
+int		ft_built_in_exit(char **cmd);
 
 /*	FT_ENV	*/
 void	ft_built_in_env(char **built_in, char **env);
@@ -102,7 +110,7 @@ void	ft_built_in_env(char **built_in, char **env);
 int		ft_built_in_echo(char **cmd);
 
 /*	FT_UNSET	*/
-int 	ft_built_in_unset(char **cmd, char **envp);
+int 	ft_built_in_unset(char **cmd);
 
 /*	FT_EXPORT	*/
 int		ft_built_in_export(char **cmd, char **envp);
