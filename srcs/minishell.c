@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:46:47 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/04 18:56:15 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/05 17:14:37 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,9 @@ t_lst_cmd	*file_lst(char *split_bypipe, char **env)
 	
 	lst = malloc(sizeof(t_lst_cmd));
 	lst->split_byspace = ft_split(split_bypipe, ' ');
-	//g_list->env_2 = ft_env_cpy(env, g_list->env_2);
 	lst->next= NULL;
-/* 	for (int i = 0; lst->split_byspace[i];i++)
-	printf("split by pipe== %s\n", lst->split_byspace[i]);  */
+ /*	for (int i = 0; lst->split_byspace[i];i++)
+	printf("split by pipe== %s\n", lst->split_byspace[i]);*/
 	return (lst);
 }
 
@@ -55,5 +54,24 @@ t_lst_cmd	*create_lst(char *prompt_line, int nb_pipe, t_lst_cmd *lst, char **env
 	}
 	if (nb_pipe != 0)
 		free_str(split_bypipe);
+	return (lst);
+}
+
+t_lst_cmd	*init_shell(char *buffer, t_lst_cmd *lst, char **env)
+{
+	int		nb_pipe;
+	
+	nb_pipe = count_pipe(buffer);
+	if (nb_pipe != 0)
+	{
+		/* parsing de plusieur commande */
+	  	lst = create_lst(buffer, nb_pipe, lst, env);
+		
+	}
+	else if (nb_pipe == 0)
+	{
+		lst = create_lst(buffer, 0, lst, env); 
+		/* parser une seul commande et execution*/
+	}
 	return (lst);
 }

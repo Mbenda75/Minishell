@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/04 18:53:59 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/05 16:41:56 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,14 @@
 
 extern struct s_env	*g_list;
 
+
+typedef struct s_pipex
+{
+	char **split_path;
+	int		index_path;
+	char *path;
+}		t_pipex;
+
 typedef struct s_env
 {
 	char *content;
@@ -37,7 +45,6 @@ typedef struct s_env
 typedef struct s_init
 {
 	char 	*pwd;
-	char 	*new_line;
 	char 	*prompt_line;
 	char 	**cmd;
 }			t_init;
@@ -50,12 +57,6 @@ typedef struct s_lst_cmd
 	char **env_2;
 	int	exit_value;
 }				t_lst_cmd;
-
-typedef struct s_decompte
-{
-	int i;
-	int j;
-}				t_decompte;
 
 enum e_token
 {
@@ -92,6 +93,14 @@ int check_quote(char *str);
 void	minishell( char **env);
 t_env	*cpy_env(char **envp);
 t_env *file_env(char *str);
+
+/* 		PIPEX			*/
+char	*boucle_path(char **array_path, char **array_cmd);
+char	**get_arraycmd(int cmd, char **av);
+char	*get_path(char **av, char **env, int cmd, t_pipex pipex);
+char	*check_path(char **av, int cmd, char **array_path, t_pipex pipex);
+int		search_path(char **env);
+char	*ft_strcat2(char *dest, char *src);
 
 /*	FT_ERRORS_HANDLERS	*/
 void	ft_free_charr(char **path);
