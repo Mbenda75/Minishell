@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:40:02 by user42            #+#    #+#             */
-/*   Updated: 2022/03/09 14:15:58 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/09 20:35:04 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,8 +171,8 @@ int	ft_built_in_export_add(char *env_var, char *apres_egal)
 	{
 		env_var = ft_strjoin(env_var, "=");
 		tmp = env_var;
-		free(env_var);
-		tmp = ft_strjoin(tmp, apres_egal);
+		env_var = ft_strjoin(env_var, apres_egal);
+		free(tmp);
 	}
 	tail = ft_list_push_back(g_list, env_var);
 	return (SUCCESS);

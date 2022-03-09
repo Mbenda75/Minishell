@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 21:10:54 by user42            #+#    #+#             */
-/*   Updated: 2022/03/09 16:27:42 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/09 20:32:50 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,10 @@ void	ft_built_in_env(char **built_in)
 	{
 		while (tail != NULL)
 		{
-			printf("adrresenv== %p\n", tail->content);
-			printf("env == %s\n", tail->content);
+			if (tail->content)
+			{	
+				printf("env == %s\n", tail->content);
+			}
 			tail = tail->next;
 		}
 	}

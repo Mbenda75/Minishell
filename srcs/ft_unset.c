@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 22:59:07 by user42            #+#    #+#             */
-/*   Updated: 2022/03/09 13:53:11 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/09 20:28:29 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	ft_check_variable_unset(char **cmd)
 		{
 			if (!((cmd[i][j] >= 'a' && cmd[i][j] <= 'z' )
 				|| (cmd[i][j] >= 'A' && cmd[i][j] <= 'Z')
-				|| (cmd[i][j] >= '0' && cmd[i][j] <= '9')
 				|| (cmd[i][j] == '_')))
 			return (ft_custom_error("unset: not valid identifier"));
 			j++;
@@ -75,6 +74,7 @@ void ft_built_in_unset_2(char *cmd)
 		head = head->next;
 	}
 	free(cmd);
+	cmd = NULL;
 }
 
 
