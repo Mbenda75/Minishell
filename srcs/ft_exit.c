@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:09:23 by user42            #+#    #+#             */
-/*   Updated: 2022/03/04 17:33:57 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/09 16:30:06 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,20 @@ int	ft_check_nb(char **cmd)
 	return (SUCCESS);
 }
 
+int	ft_check_nb_2(char *cmd)
+{
+	int i;
+
+	i = 1;
+	while (cmd[i])
+	{
+		if (ft_isdigit(cmd[i]) == 1)
+			return (FAILURE);
+		i++;
+	}
+	return (SUCCESS);
+}
+
 int	ft_check_exit_args()
 {
 	return (SUCCESS);
@@ -70,24 +84,40 @@ int ft_built_in_exit(char **cmd)
 
     if (cmd[1] == NULL)
         i = 0;
-	else if (ft_check_nb(cmd) == 1)
+	else if (ft_check_nb(cmd) == 0)
 	{
+		ft_putstr_fd("exit\n", 0);
+		ft_putstr_fd("exit: numeric argument required\n", 0);
+		free_env(g_list);
+		exit (2);
+	}
+/*	else if (ft_check_nb_2(cmd[1]) == 1 && cmd[2])
+	{
+		ft_putstr_fd("exit\n", 0);
 		ft_putstr_fd("exit: numeric argument required\n", 0);
 		ft_free_charr(cmd);
+		exit (2);
+	}*/
+	else if (ft_check_nb(cmd) == 1)
+	{
+		ft_putstr_fd("exit\n", 0);
+		ft_putstr_fd("exit: numeric argument required\n", 0);
+		free_env(g_list);
 		exit (2);
 	}
     else if (cmd[2])
 	{
+		ft_putstr_fd("exit\n", 2);
         ft_putstr_fd("exit: too many arguments\n", 0);
-		ft_free_charr(cmd);
+		free_env(g_list);
 		exit (2);
 	}
-    else
+	else
     {
         if (ft_calc_exit_nb(cmd[1], &i))
 			return (ft_custom_error("exit: bad number"));
     }
-	ft_free_charr(cmd);
+	free_env(g_list);
     printf("exit\n");
 	exit(i);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_signals.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:27:34 by adaloui           #+#    #+#             */
-/*   Updated: 2022/02/23 15:16:23 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/07 14:40:29 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,18 @@
 void	ft_signals_handler(int signal)
 {
 	int i;
+	char	*ishell;
 
 	i = 0;
+	ishell = NULL;
 	if (signal == SIGQUIT)
 		rl_replace_line("", 0);
 	if (signal == SIGINT)
 	{
 		ft_putstr_fd("\n", 0);
-		ft_putstr_fd("\033[0;33madaloui\033[0;35m42->\033[0;37m", 0);
+		ishell = getcwd(NULL, 0);
+		printf("%s", ishell);
+		free(ishell);
 	}
 	if (signal == SIGSEGV)
 	{

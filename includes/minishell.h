@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/05 16:41:56 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/09 18:33:56 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,13 @@
 
 extern struct s_env	*g_list;
 
+typedef struct s_env
+{
+	char *content;
+	int index_env;
+	int limit_free;
+	struct s_env *next;
+}				t_env;
 
 typedef struct s_pipex
 {
@@ -35,16 +42,19 @@ typedef struct s_pipex
 	char *path;
 }		t_pipex;
 
-typedef struct s_env
+typedef struct s_redirection
 {
-	char *content;
-	//int	unset_minus;
-	struct s_env *next;
-}				t_env;
+	int redirection_normal;
+	int redirection_inverse;
+	int double_red_norm;
+	int double_red_inv;
+}				t_redirection;
+
 
 typedef struct s_init
 {
 	char 	*pwd;
+	char 	*new_line;
 	char 	*prompt_line;
 	char 	**cmd;
 }			t_init;
@@ -53,10 +63,15 @@ typedef struct s_lst_cmd
 {
 	char **split_byspace;
 	struct s_lst_cmd	*next;
-	//char *prompt_line;
-	char **env_2;
 	int	exit_value;
 }				t_lst_cmd;
+
+typedef struct s_decompte
+{
+	int i;
+	int j;
+	int l;
+}				t_decompte;
 
 enum e_token
 {
@@ -77,6 +92,7 @@ void	ft_signals_handler(int signal);
 /* FUNCT MEMORY */
 void	free_str(char **s);
 void	*free_lst(t_lst_cmd *lst);
+void  *free_env(t_env *lst);
 
 /* PARSING SHELL */
 char	*skip_dquote(char *str);
@@ -92,15 +108,7 @@ int check_quote(char *str);
 
 void	minishell( char **env);
 t_env	*cpy_env(char **envp);
-t_env *file_env(char *str);
-
-/* 		PIPEX			*/
-char	*boucle_path(char **array_path, char **array_cmd);
-char	**get_arraycmd(int cmd, char **av);
-char	*get_path(char **av, char **env, int cmd, t_pipex pipex);
-char	*check_path(char **av, int cmd, char **array_path, t_pipex pipex);
-int		search_path(char **env);
-char	*ft_strcat2(char *dest, char *src);
+t_env *file_env(char *str, int i);
 
 /*	FT_ERRORS_HANDLERS	*/
 void	ft_free_charr(char **path);
@@ -121,7 +129,7 @@ int		ft_built_in_cd(char **path, char **envp);
 int		ft_built_in_exit(char **cmd);
 
 /*	FT_ENV	*/
-void	ft_built_in_env(char **built_in, char **env);
+void	ft_built_in_env(char **built_in);
 
 /*	FT_ECHO	*/
 int		ft_built_in_echo(char **cmd);
@@ -130,13 +138,16 @@ int		ft_built_in_echo(char **cmd);
 int 	ft_built_in_unset(char **cmd);
 
 /*	FT_EXPORT	*/
-int		ft_built_in_export(char **cmd, char **envp);
+int		ft_built_in_export(char **cmd);
 
 /*	FT_GET_VAR_ENV	*/
 char	**ft_get_var_env(char **envp, char *str);
 char	**ft_get_var_env_2(char **envp, char *var_env);
 
+/*	FT_PIPE_CMD	*/
+t_redirection	*ft_count_simple_redirect(char *str);
+
+
 void		status_child(void);
 char		**ft_env_cpy(char **envp, char **envp_2);
-
 #endif

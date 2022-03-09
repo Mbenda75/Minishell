@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 11:32:13 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/05 19:36:26 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/04 18:15:03 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,23 @@ int check_quote(char *str)
 	}
 	return (0);
 }
+int if_noquote(char *str)
+{
+	int i;
+	int quote;
+
+	quote = 0;
+	i = 0;
+	while(str[i])
+	{
+		if (str[i] == 34)
+			quote++;
+		i++;
+	}
+	if (quote % 2)
+		return (0);
+	return (1);
+}
 
 char	*skip_squote_cmd(char *str)
 {
@@ -42,7 +59,7 @@ char	*skip_squote_cmd(char *str)
 		return (NULL);
 	while (str[i])
 	{
-		if (str[i] == 39) 
+		if (str[i] == 39)
 			i++;
 		new_str[j] = str[i];
 		j++;
@@ -51,6 +68,22 @@ char	*skip_squote_cmd(char *str)
 	new_str[j] = '\0';
 	return (new_str);
 } 
+
+int size_malloc(char *str)
+{
+	int i;
+	int size;
+
+	i = 0;
+	size = 0;
+	while(str[i])
+	{
+		if (str[i] != 34 || str[i] != 39)
+			size++;
+		i++;	
+	}
+	return (size);
+}
 
 char	*skip_dquote_cmd(char *str)
 {

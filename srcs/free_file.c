@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:18:17 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/05 17:08:30 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/09 16:30:00 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,21 @@ void  *free_lst(t_lst_cmd *lst)
     while (lst)
    	{
 		free_str(lst->split_byspace);
-		//free_str(lst->env_2);
 		tmp = lst;
+        lst = lst->next;
+        free(tmp);
+    }
+    return (lst);
+}
+void  *free_env(t_env *lst)
+{
+    t_env *tmp;
+	
+    while (lst != NULL)
+   	{
+		tmp = lst;
+		if (tmp->index_env >= g_list->limit_free)
+			free(tmp->content);
         lst = lst->next;
         free(tmp);
     }

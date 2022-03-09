@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 14:28:32 by user42            #+#    #+#             */
-/*   Updated: 2022/02/26 16:46:28 by user42           ###   ########.fr       */
+/*   Updated: 2022/03/09 14:00:44 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-/*int	ft_prompt_pwd(void)
-{
-	
-}*/
 
 int	ft_builtin_pwd(char **argv)
 {

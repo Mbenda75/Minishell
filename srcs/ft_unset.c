@@ -3,58 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 22:59:07 by user42            #+#    #+#             */
-/*   Updated: 2022/03/04 18:43:44 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/09 13:53:11 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/* void	ft_reinitialize_k()
-{
-	static int k;
-
-	printf("k unset avant = %d\n", k);
-	if (k > 0)
-		k++;
-	if (k == 0)		
-		k++;
-	g_list->unset_minus = k;
-	//if (g_list->unset_minus == 0)
-		k = 0;
-	printf("k unset après = %d\n", k);
-	printf("unset_minus UNSET = %d\n", g_list->unset_minus);
-}
-
-void	ft_built_in_unset_2(char **cmd, char **envp, t_decompte p)
-{
-	while (cmd[++p.j])
-	{
-        while (envp[++p.i])
-        {
-            if (ft_strnstr(envp[p.i], cmd[p.j], ft_strlen(cmd[p.j])))
-            {
-				ft_reinitialize_k(g_list->unset_minus);
-				if (envp[p.i][ft_strlen(cmd[p.j])] == '=')
-				{
-               		envp[p.i] = memset(envp[p.i], 0, ft_strlen(envp[p.i]));
-                	while (envp[p.i])
-                	{
-                    	envp[p.i] = envp[p.i + 1];
-                    	p.i++;
-                	}
-                	p.i = 0;
-                	break ;
-				}
-            }
-		}
-		p.i = 0;
-    }
-}
-
-int	ft_check_variable(char **cmd)
+int	ft_check_variable_unset(char **cmd)
 {
 	int i;
 	int j;
@@ -78,36 +36,66 @@ int	ft_check_variable(char **cmd)
 	return (0);
 }	
 
+void ft_built_in_unset_2(char *cmd)
+{
+	t_env *head;
+	t_env *temp;
+	t_env *lastNode;
+	t_env *tmp;
+
+	head = g_list;
+	temp = head;
+	cmd = ft_strjoin(cmd, "=");
+	while (head != NULL)
+	{
+		if (ft_strncmp(head->content, cmd, ft_strlen(cmd)) == 0)
+		{
+			if (head->next != NULL)
+			{
+				tmp = head->next;
+				if (head->index_env >= g_list->limit_free)
+					free(head->content);
+				head->content = head->next->content;
+				head->next = head->next->next;
+				free(tmp);
+				break ;
+			}
+			if (head->next == NULL)
+			{
+				while(temp->next->next != NULL)
+					temp = temp->next;
+				if (temp->next->index_env >= g_list->limit_free)
+					free(temp->next->content);
+				free(temp->next);
+				lastNode = temp->next;
+				temp->next = NULL;
+			}
+			break ;
+		}
+		head = head->next;
+	}
+	free(cmd);
+}
+
+
 int ft_built_in_unset(char **cmd)
 {
-	t_decompte p;
-	g_list->unset_minus = 0;
 	int i;
-    
-    p.i = -1;
-	p.j = 0;		
-    if (cmd[1] == NULL)
-        ft_putstr_fd("", 0);
-    else
+	int j;
+
+	j = 1;
+	if (cmd[1] == NULL)
+		ft_putstr_fd("", 0);
+	else
 	{
-	/*	if (k == 0)
-			k = g_list->unset_minus;
-		printf("k unset avant = %d\n", k);
-		if (k > 0)
-			k++;
-		if (k == 0)
-			k++;
-		g_list->unset_minus = k;
-		//if (g_list->unset_minus == 0)
-			k = 0;*/
-	/*	i = ft_check_variable(cmd);
+		i = ft_check_variable_unset(cmd);
 		if (i == 1)
 			return (FAILURE);
-		ft_built_in_unset_2(cmd, g_list->env_2, p);
-		/*printf("k unset après = %d\n", k);
-		printf("unset_minus UNSET = %d\n", g_list->unset_minus);*/
-
-	//}
-    /*return (SUCCESS);
+		while (cmd[j])
+		{
+			ft_built_in_unset_2(cmd[j]);
+			j++;
+		}
+	}
+	return (SUCCESS);
 }
- */
