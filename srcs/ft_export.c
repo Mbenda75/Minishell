@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:40:02 by user42            #+#    #+#             */
-/*   Updated: 2022/03/09 20:35:04 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/09 23:59:21 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	ft_find_where_is_equal(char *str)
 	return (SUCCESS);
 }
 
-int	ft_check_variable(char *cmd)
+int	ft_check_variable_after_equal(char *cmd)
 {
 	int i;
 	int j;
@@ -66,8 +66,36 @@ int	ft_check_variable(char *cmd)
 			if (!((cmd[i] >= 'a' && cmd[i] <= 'z' )
 				|| (cmd[i] >= 'A' && cmd[i] <= 'Z')
 				|| (cmd[i] >= '0' && cmd[i] <= '9')
+				|| (cmd[i] == '_' || cmd[i] == '=')
+				|| (cmd[i] == '+' || cmd[i] == '*')
+				|| (cmd[i] == '-' || cmd[i] == '.')
+				|| (cmd[i] == '$' || cmd[i] == '^')
+				|| (cmd[i] == '?' || cmd[i] == ',')
+				|| (cmd[i] == '-' || cmd[i] == '{')
+				|| (cmd[i] == '}' || cmd[i] == '[')
+				|| (cmd[i] == ']' || cmd[i] == '#')
+				|| (cmd[i] == '~' || cmd[i] == '/')
+				|| (cmd[i] == '@' || cmd[i] == '%')))
+			return (ft_custom_error("export: not valid identifier\n"));
+		i++;
+	}
+	return (0);
+}
+
+int	ft_check_variable_before_equal(char *cmd)
+{
+	int i;
+
+	i = 0;
+	if (cmd[0] >= '0' && cmd[0] <= '9')
+		return (ft_custom_error("export: not valid identifier\n"));
+	while (cmd[i])
+	{
+			if (!((cmd[i] >= 'a' && cmd[i] <= 'z' )
+				|| (cmd[i] >= 'A' && cmd[i] <= 'Z')
+				
 				|| (cmd[i] == '_' || cmd[i] == '=')))
-			return (ft_custom_error("export: not valid identifier"));
+			return (ft_custom_error("export: not valid identifier\n"));
 		i++;
 	}
 	return (0);
@@ -150,9 +178,9 @@ int	ft_built_in_export_add(char *env_var, char *apres_egal)
 	t_env *tail;
 	char *tmp;
 	
-	if (ft_check_variable(env_var) == 1)
+	if (ft_check_variable_before_equal(env_var) == 1)
 		return (FAILURE);
-	if (ft_check_variable(apres_egal) == 1)
+	if (ft_check_variable_after_equal(apres_egal) == 1)
 		return (FAILURE);
 	head = g_list;
 	tail = head;
