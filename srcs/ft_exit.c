@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:09:23 by user42            #+#    #+#             */
-/*   Updated: 2022/03/09 20:28:47 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/11 15:41:48 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int ft_built_in_exit(char **cmd)
         i = 0;
 	else if (ft_check_nb(cmd) == 0)
 	{
-		ft_putstr_fd("exit\n", 0);
+		ft_putstr_fd("exit1\n", 0);
 		ft_putstr_fd("exit: numeric argument required\n", 0);
 		free_env(g_list);
 		exit (2);
@@ -100,14 +100,14 @@ int ft_built_in_exit(char **cmd)
 	}*/
 	else if (ft_check_nb(cmd) == 1)
 	{
-		ft_putstr_fd("exit\n", 0);
+		ft_putstr_fd("exit2\n", 0);
 		ft_putstr_fd("exit: numeric argument required\n", 0);
 		free_env(g_list);
 		exit (2);
 	}
     else if (cmd[2])
 	{
-		ft_putstr_fd("exit\n", 2);
+		ft_putstr_fd("exit3\n", 2);
         ft_putstr_fd("exit: too many arguments\n", 0);
 		free_env(g_list);
 		exit (2);
@@ -118,6 +118,6 @@ int ft_built_in_exit(char **cmd)
 			return (ft_custom_error("exit: bad number"));
     }
 	free_env(g_list);
-    printf("exit\n");
+    printf("exit 4\n");
 	exit(i);
 }

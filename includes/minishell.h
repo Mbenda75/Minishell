@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/11 09:44:45 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/11 19:12:56 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include "../libft/libft.h"
 # include <sys/types.h>
 # include <sys/wait.h>
-# include <stdbool.h>
+# include <fcntl.h>
 
 # define SUCCESS 0
 # define FAILURE 1
@@ -43,7 +43,7 @@ typedef struct s_pipex
 	char **split_path;
 	char *line_path;
 	char *exec_path;
-	int		child;
+	pid_t		child;
 }		t_pipex;
 
 
@@ -119,6 +119,7 @@ t_env *file_env(char *str, int i);
 char 	*search_path(t_env *lst);
 char	*ft_strcat2(char *dest, char *src);
 char	*boucle_path(char **array_path, char **array_cmd);
+int		start_exec(t_pipex *pipex, t_lst_cmd *mshell, char **env);
 
 /*	FT_ERRORS_HANDLERS	*/
 void	ft_free_charr(char **path);

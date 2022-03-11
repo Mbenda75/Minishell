@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:07:53 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/11 09:42:07 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/11 19:16:10 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@ int count_pipe(char *str)
 t_lst_cmd	*init_shell(char *buffer, t_lst_cmd *lst, char **env)
 {
 	int		nb_pipe;
-	//t_redirection *red;
+	t_redirection *red;
 	
-//	red = ft_count_simple_redirect(buffer);
+	red = ft_count_simple_redirect(buffer);
+	free(red);
 	nb_pipe = count_pipe(buffer);
 	//printf("red_norm %d\nred_inv %d\ndb_red_n%d\ndb_ezs_inv%d\n", red->redirection_normal, red->redirection_inverse, red->double_red_norm, red->double_red_inv);
 	if (nb_pipe != 0)
@@ -79,29 +80,23 @@ void	minishell(char **env)
 			ishell.new_line = skip_dquote_cmd(ishell.prompt_line);
 			add_history(ishell.prompt_line);
 			mshell = init_shell(ishell.new_line, mshell, env);
-			
+	
 			free(ishell.new_line);
 			free_str(ishell.cmd);
 			free(ishell.prompt_line);
 			
 			/*			EXEC PART					*/
-			pipex->line_path = search_path(g_list);
-			pipex->split_path = ft_split(pipex->line_path, ':');
-			pipex->exec_path = boucle_path(pipex->split_path, mshell->split_byspace);
-			printf("split_path == %s\n", pipex->exec_path);
-			
-			if (access(pipex->exec_path, F_OK) == 0)
-				execve(pipex->exec_path, mshell->split_byspace, env);
-				
-			/*			BUILTIN PART					*/
-		 	if (ft_is_built_in(mshell->split_byspace[0]) == 1)
-				exec_built_in(mshell->split_byspace, env);
+			if (start_exec(pipex, mshell, env) == 0)
+				printf("out\n");
 			else
-				ft_putstr_fd("built-in introuvable\n", 0);
-				
+			{
+			/*		BUILTIN PART					*/
+		 		if (ft_is_built_in(mshell->split_byspace[0]) == 1)
+					exec_built_in(mshell->split_byspace, env);
+				else
+					ft_putstr_fd("built-in introuvable\n", 0);
+			}
 			free_lst(mshell);
-			free_str(pipex->split_path);
-			free(pipex->exec_path);
 			pipex->line_path = NULL;
 			mshell = NULL;
 		}

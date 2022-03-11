@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:40:02 by user42            #+#    #+#             */
-/*   Updated: 2022/03/11 09:38:05 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/11 18:07:23 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	ft_check_variable_after_equal(char *cmd)
 				|| (cmd[i] == ']' || cmd[i] == '#')
 				|| (cmd[i] == '~' || cmd[i] == '/')
 				|| (cmd[i] == '@' || cmd[i] == '%')))
-			return (ft_custom_error("export: not valid identifier\n"));
+			return (ft_custom_error("export: not valid identifier1\n"));
 		i++;
 	}
 	return (0);
@@ -88,14 +88,14 @@ int	ft_check_variable_before_equal(char *cmd)
 
 	i = 0;
 	if (cmd[0] >= '0' && cmd[0] <= '9')
-		return (ft_custom_error("export: not valid identifier\n"));
+		return (ft_custom_error("export: not valid identifier2\n"));
 	while (cmd[i])
 	{
 			if (!((cmd[i] >= 'a' && cmd[i] <= 'z' )
 				|| (cmd[i] >= 'A' && cmd[i] <= 'Z')
-				
+				||	(cmd[i] >= '0' && cmd[i] <= '9') 
 				|| (cmd[i] == '_' || cmd[i] == '=')))
-			return (ft_custom_error("export: not valid identifier\n"));
+			return (ft_custom_error("export: not valid identifier3\n"));
 		i++;
 	}
 	return (0);
@@ -116,7 +116,6 @@ t_env    *ft_list_push_back(t_env *cpy_env, char *str)
 			i++;
 		}
 		i++;
-		printf("i push bacl = %d\n", i);
         list->next = file_env(str, i);
     }
     return (list);
@@ -142,7 +141,6 @@ t_env *ft_modify_lst(t_env *lst, char *env_var_cpy, char *env_var)
 	}
 	if (head == NULL)
 		head = ft_list_push_back(lst, env_var);
-	printf("adrress mdy list == %p\n", env_var);
 	free(str);
 	return (lst);
 }
@@ -207,7 +205,7 @@ int	ft_built_in_export_add(char *env_var, char *apres_egal)
 		free(tmp);
 	}
 	tail = ft_list_push_back(g_list, env_var);
-	free(env_var);
+	//free(env_var);
 	return (SUCCESS);
 }
 
@@ -240,10 +238,6 @@ int	ft_built_in_export(char **cmd)
 			{
 				k.j = ft_find_where_is_equal(env_var);
 				ft_built_in_export_add(env_var, env_var + k.j + 1);
-			}
-			if (k.i == 1)
-			{
-				return (FAILURE);
 			}
 		}
 	}

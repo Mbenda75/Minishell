@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_signals.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:27:34 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/07 14:40:29 by user42           ###   ########.fr       */
+/*   Updated: 2022/03/11 18:21:07 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,7 @@ void	ft_signals_handler(int signal)
 	}
 	if (signal == SIGSEGV)
 	{
-		ft_putstr_fd("\nexit\n", 0);
-	 	while (i <= 150)
-		{
-			close(i);
-			i++;
-		}
+		ft_putstr_fd("\nexit ctrl d\n", 0);
 		exit(EXIT_FAILURE);
 	}
 }

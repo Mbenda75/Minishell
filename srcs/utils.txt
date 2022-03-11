@@ -24,15 +24,26 @@
 				i++;
 			}
 
-				//if (strcmp(ishell->cmd[0], "echo"))
-			//ishell->prompt_line = parse_echo_arg(ishell->cmd[0]);
-		//if (strcmp(ishell->cmd[0] && count_quote(ishell->cmd[0])  == 0))// cmd interdit avec multiquote
-		//	cmd not found
-	//	else if (cmd == other && multiquote == 0 && 1_quote == double) skipp les dquote des cmd
+			if (cmd == echo)
+				parse_echo_arg(arg)
+			if (cmd == other && multiquote = 1)
+				cmd not found
+	//	else if (cmd == other && multiquote == 0 && 1_quote == double) skipp les dquote des cmd 
 	//			skip_dquote_cmd(cmd);
 	//	else if (cmd == other && multiquote == 0 && 1_quote == simple) skip les squote des cmd
 	//			skip_squote_cmd(cmd); *
 
+	//pour les fichier si dquote en premier et squote a linterieur skip les dquote et cree le fichier avec les squote inclut
+
+	/// ppour les cmd fork avant de les exec et les builtin a executer dansle main
+
+	///Gere les quotes pas fermer si meme quote nb impaire == erreur 
+
+	//Faire un double tableau de notre env a chaque export pour pouvoir lenvoyer a lexec 
+	//faire une protection au cas on unset le path = impossi dexec les cmds
+	//check si le fichier exist apres une redirc
+	//si chevron entre guillmet apres un chevron = considerer comme fichier 
+	//skip guillmet pour les redirc
 
 		while (i < 2)
 			{
@@ -50,3 +61,27 @@
 				i++;
 				waitpid(pipex->child, NULL, 0);
 			}
+
+cat bonsoir>test
+
+ARG1 : si ce nest pas une redirection cest une commande
+	tant que largument nest pas un pipe
+		si ce nest pas une redirection alors
+			c un argument de la commande
+		sinon si cest une redirection
+			arg = redirecton
+			arg++
+			l'argument est un fichier
+ARG1 : SI C'est une redirection alors
+	le prochain argument est un fichier
+	et celui juste apr`es (arg++) est une commande FORCEMENT
+
+LINE : pour chaque character de la ligne :
+	si cest une quote :
+		mon argument est de cette quote jusqua la prochaine :
+			tant que je nai pas une autre quote alors je copie la chain de character
+
+LINE : Si c'est une fleche
+	JE regarde le character +1
+	SI c'est aussi une fleche du meme sens c bon
+	SInon erreur
