@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:40:02 by user42            #+#    #+#             */
-/*   Updated: 2022/03/09 23:59:21 by user42           ###   ########.fr       */
+/*   Updated: 2022/03/11 09:38:05 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,7 +194,11 @@ int	ft_built_in_export_add(char *env_var, char *apres_egal)
 		head = head->next;
 	}
 	if (ft_strchr(env_var, '='))
+	{
+		tmp = env_var;
 		env_var = ft_strjoin(env_var, apres_egal);
+		free(tmp);
+	}
 	else
 	{
 		env_var = ft_strjoin(env_var, "=");
@@ -203,6 +207,7 @@ int	ft_built_in_export_add(char *env_var, char *apres_egal)
 		free(tmp);
 	}
 	tail = ft_list_push_back(g_list, env_var);
+	free(env_var);
 	return (SUCCESS);
 }
 

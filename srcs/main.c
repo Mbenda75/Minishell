@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:07:53 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/09 18:33:39 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/11 09:42:07 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,53 +52,57 @@ t_lst_cmd	*init_shell(char *buffer, t_lst_cmd *lst, char **env)
 	return (lst);
 }
 
-
 void	minishell(char **env)
 {
 	t_lst_cmd *mshell = NULL;
-	t_init	*ishell = NULL;
-	//t_pipex *pipex = NULL;
-
-	ishell = malloc(sizeof(t_init));
-	//pipex = malloc(sizeof(t_pipex));
+	t_init	ishell;
+	t_pipex *pipex = NULL;
+	int	pfd[2];
+	int i = 0;
+	//ishell = malloc(sizeof(t_init));
+	pipex = malloc(sizeof(t_pipex));
 	g_list = cpy_env(env);
 	while (1)
 	{
-		//if (strcmp(ishell->cmd[0], "echo"))
-			//ishell->prompt_line = parse_echo_arg(ishell->cmd[0]);
-		//if (strcmp(ishell->cmd[0] && count_quote(ishell->cmd[0])  == 0))// cmd interdit avec multiquote
-		//	cmd not found
-	//	else if (cmd == other && multiquote == 0 && 1_quote == double) skipp les dquote des cmd
-	//			skip_dquote_cmd(cmd);
-	//	else if (cmd == other && multiquote == 0 && 1_quote == simple) skip les squote des cmd
-	//			skip_squote_cmd(cmd); *
-		ishell->pwd = getcwd(NULL, 0);
-		ishell->prompt_line = readline(ishell->pwd);
-		ishell->cmd = ft_split(ishell->prompt_line, ' ');
-		free(ishell->pwd);
-		if (ishell->cmd[0] == NULL)
+		ishell.pwd = getcwd(NULL, 0);
+		ishell.prompt_line = readline(ishell.pwd);
+		ishell.cmd = ft_split(ishell.prompt_line, ' ');
+		free(ishell.pwd);
+		if (ishell.cmd[0] == NULL)
 		{
 			ft_putstr_fd(NULL, 0);
-			free_str(ishell->cmd);
+			free_str(ishell.cmd);
 		}
-		else if (ishell->cmd[0] != NULL)
+		else if (ishell.cmd[0] != NULL)
 		{
-			ishell->new_line = skip_dquote_cmd(ishell->prompt_line);
-			add_history(ishell->prompt_line);
-			mshell = init_shell(ishell->new_line, mshell, env);
-			free(ishell->new_line);
-			free_str(ishell->cmd);
-			free(ishell->prompt_line);
-		 	//pipex->index_path = search_path(env);
-			//pipex->split_path = ft_split(env[pipex->index_path], ':');
-			//pipex->path = boucle_path(pipex->split_path, mshell->split_byspace);
+			/*			PARSING NOT FINISH 				*/
+			ishell.new_line = skip_dquote_cmd(ishell.prompt_line);
+			add_history(ishell.prompt_line);
+			mshell = init_shell(ishell.new_line, mshell, env);
 			
+			free(ishell.new_line);
+			free_str(ishell.cmd);
+			free(ishell.prompt_line);
+			
+			/*			EXEC PART					*/
+			pipex->line_path = search_path(g_list);
+			pipex->split_path = ft_split(pipex->line_path, ':');
+			pipex->exec_path = boucle_path(pipex->split_path, mshell->split_byspace);
+			printf("split_path == %s\n", pipex->exec_path);
+			
+			if (access(pipex->exec_path, F_OK) == 0)
+				execve(pipex->exec_path, mshell->split_byspace, env);
+				
+			/*			BUILTIN PART					*/
 		 	if (ft_is_built_in(mshell->split_byspace[0]) == 1)
 				exec_built_in(mshell->split_byspace, env);
 			else
-				ft_putstr_fd("built-in introuvable\n", 0); 
+				ft_putstr_fd("built-in introuvable\n", 0);
+				
 			free_lst(mshell);
-			//free_str(pipex->split_path);
+			free_str(pipex->split_path);
+			free(pipex->exec_path);
+			pipex->line_path = NULL;
 			mshell = NULL;
 		}
 	}

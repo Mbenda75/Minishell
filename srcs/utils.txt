@@ -1,0 +1,52 @@
+			while (i < 2)
+			{
+				pipex->child = fork();
+				if (pipex->child == -1)
+				{
+					write(2, "fork failed\n", 13);
+					close(pfd[0]);
+					close(pfd[1]);
+					exit (1);
+				}
+				if (pipex->child == 0)
+				{
+					dup2(pfd[0], 0);
+					close(pfd[1]);
+					if (access(pipex->exec_path, F_OK) == 0)
+						execve(pipex->exec_path, mshell->split_byspace, env);
+				}
+				else
+				{
+					dup2(pfd[1], 1);
+					if (access(pipex->exec_path, F_OK) == 0)
+						execve(pipex->exec_path, mshell->split_byspace, env);
+				}
+				i++;
+			}
+
+				//if (strcmp(ishell->cmd[0], "echo"))
+			//ishell->prompt_line = parse_echo_arg(ishell->cmd[0]);
+		//if (strcmp(ishell->cmd[0] && count_quote(ishell->cmd[0])  == 0))// cmd interdit avec multiquote
+		//	cmd not found
+	//	else if (cmd == other && multiquote == 0 && 1_quote == double) skipp les dquote des cmd
+	//			skip_dquote_cmd(cmd);
+	//	else if (cmd == other && multiquote == 0 && 1_quote == simple) skip les squote des cmd
+	//			skip_squote_cmd(cmd); *
+
+
+		while (i < 2)
+			{
+				pipex->child = fork();
+				if (pipex->child == -1)
+				{
+					write(2, "fork failed\n", 13);
+					exit (1);
+				}
+				if (pipex->child == 0)
+				{
+					if (access(pipex->exec_path, F_OK) == 0)
+						execve(pipex->exec_path, mshell->split_byspace, env);
+				}
+				i++;
+				waitpid(pipex->child, NULL, 0);
+			}
