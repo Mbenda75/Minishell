@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:23:39 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/11 19:01:34 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/14 11:09:30 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int start_exec(t_pipex *pipex, t_lst_cmd *mshell, char **env)
 {
+	int i = 0;
+	
 	pipex->line_path = search_path(g_list);
 	pipex->split_path = ft_split(pipex->line_path, ':');
 	pipex->exec_path = boucle_path(pipex->split_path, mshell->split_byspace);

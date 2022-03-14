@@ -6,12 +6,11 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:46:47 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/08 21:15:59 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/14 18:46:19 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
 
 t_lst_cmd	*file_lst(char *split_bypipe, char **env)
 {
@@ -36,8 +35,7 @@ t_lst_cmd	*create_lst(char *prompt_line, int nb_pipe, t_lst_cmd *lst, char **env
 	tmp = NULL;
 	i = 0;
 	if (nb_pipe != 0)
-		split_bypipe = ft_split(prompt_line, '|');
-	
+		split_bypipe = ft_split(prompt_line, '|'); 
 	while (i <= nb_pipe)
 	{
 		if (!lst)

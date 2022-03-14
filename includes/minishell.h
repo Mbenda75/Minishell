@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/11 19:12:56 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/14 10:51:25 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ typedef struct s_pipex
 	char **split_path;
 	char *line_path;
 	char *exec_path;
+	int  nb_cmd;
+	int pfd[2];
 	pid_t		child;
 }		t_pipex;
 

@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 14:03:44 by user42            #+#    #+#             */
-/*   Updated: 2022/03/07 20:33:51 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/14 18:54:48 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,15 @@ int	ft_is_built_in(char *cmd)
 
 int	exec_built_in(char **built_in, char **env)
 {
-	int ret;
-	
+	printf("builtin === %s\n", built_in[0]);
 	if (!ft_strcmp(built_in[0], "pwd"))
-		ret = ft_builtin_pwd(built_in);
+		ft_builtin_pwd(built_in);
 	else if (!ft_strcmp(built_in[0], "cd"))
-		ret = ft_built_in_cd(built_in, env);
+		ft_built_in_cd(built_in, env);
 	else if (!ft_strcmp(built_in[0], "exit"))
-		ret = ft_built_in_exit(built_in);
+		ft_built_in_exit(built_in);
 	else if (!ft_strcmp(built_in[0], "echo"))
-		ret = ft_built_in_echo(built_in);
+		ft_built_in_echo(built_in);
 	else if (!ft_strcmp(built_in[0], "env"))
 		ft_built_in_env(built_in);
 	else if (!ft_strcmp(built_in[0], "export"))
@@ -47,5 +46,4 @@ int	exec_built_in(char **built_in, char **env)
 		ft_built_in_unset(built_in);
 	else
 		return (FAILURE);
-	return (ret + 0xFF);
 }

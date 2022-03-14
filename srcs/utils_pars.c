@@ -6,13 +6,13 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 11:32:13 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/04 18:15:03 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/14 13:37:04 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int check_quote(char *str)
+int check_first_quote(char *str)
 {
 	int i;
 
@@ -27,7 +27,7 @@ int check_quote(char *str)
 	}
 	return (0);
 }
-int if_noquote(char *str)
+int if_noquote(char *str, char c)
 {
 	int i;
 	int quote;
@@ -36,7 +36,7 @@ int if_noquote(char *str)
 	i = 0;
 	while(str[i])
 	{
-		if (str[i] == 34)
+		if (str[i] == c)
 			quote++;
 		i++;
 	}
