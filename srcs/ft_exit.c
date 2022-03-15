@@ -6,13 +6,13 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:09:23 by user42            #+#    #+#             */
-/*   Updated: 2022/03/11 15:41:48 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/15 19:06:23 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int ft_calc_exit_nb(char *cmd, int *i)
+int	ft_calc_exit_nb(char *cmd, int *i)
 {
 	long	lim;
 	int		signe;
@@ -30,7 +30,8 @@ int ft_calc_exit_nb(char *cmd, int *i)
 	while (*cmd >= '0' && *cmd <= '9')
 	{
 		lim = lim * 10 + (*cmd++ - 48);
-		if ((lim > 2147483647 && signe == 1) || (lim > 2147483648 && signe == -1))
+		if ((lim > 2147483647 && signe == 1)
+			|| (lim > 2147483648 && signe == -1))
 			return (-1);
 	}
 	if (*cmd)
@@ -41,8 +42,8 @@ int ft_calc_exit_nb(char *cmd, int *i)
 
 int	ft_check_nb(char **cmd)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 1;
 	while (cmd[i])
@@ -61,7 +62,7 @@ int	ft_check_nb(char **cmd)
 
 int	ft_check_nb_2(char *cmd)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	while (cmd[i])
@@ -78,46 +79,41 @@ int	ft_check_exit_args()
 	return (SUCCESS);
 }
 
-int ft_built_in_exit(char **cmd)
+int	ft_built_in_exit(t_lst_cmd *mshell)
 {
-    int i;
+	int	i;
 
-    if (cmd[1] == NULL)
-        i = 0;
-	else if (ft_check_nb(cmd) == 0)
+	if (mshell->split_byspace[1] == NULL)
+		i = 0;
+	else if (ft_check_nb(mshell->split_byspace) == 0)
 	{
 		ft_putstr_fd("exit1\n", 0);
 		ft_putstr_fd("exit: numeric argument required\n", 0);
 		free_env(g_list);
+		free_lst(mshell);
 		exit (2);
 	}
-/*	else if (ft_check_nb_2(cmd[1]) == 1 && cmd[2])
-	{
-		ft_putstr_fd("exit\n", 0);
-		ft_putstr_fd("exit: numeric argument required\n", 0);
-		ft_free_charr(cmd);
-		exit (2);
-	}*/
-	else if (ft_check_nb(cmd) == 1)
+	else if (ft_check_nb(mshell->split_byspace) == 1)
 	{
 		ft_putstr_fd("exit2\n", 0);
 		ft_putstr_fd("exit: numeric argument required\n", 0);
 		free_env(g_list);
+		free_lst(mshell);
 		exit (2);
 	}
-    else if (cmd[2])
+	else if (mshell->split_byspace[2])
 	{
 		ft_putstr_fd("exit3\n", 2);
-        ft_putstr_fd("exit: too many arguments\n", 0);
+		ft_putstr_fd("exit: too many arguments\n", 0);
 		free_env(g_list);
+		free_lst(mshell);
 		exit (2);
 	}
 	else
-    {
-        if (ft_calc_exit_nb(cmd[1], &i))
+		if (ft_calc_exit_nb(mshell->split_byspace[1], &i))
 			return (ft_custom_error("exit: bad number"));
-    }
 	free_env(g_list);
-    printf("exit 4\n");
+	free_lst(mshell);
+	printf("exit 4\n");
 	exit(i);
 }

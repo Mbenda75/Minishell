@@ -1,4 +1,16 @@
+/*	else if (ft_check_nb_2(mshell->split_byspace[1]) == 1 && mshell->split_byspace[2])
+	{
+		ft_putstr_fd("exit\n", 0);
+		ft_putstr_fd("exit: numeric argument required\n", 0);
+		ft_free_charr(mshell->split_byspace);
+		exit (2);
+	}*/
 
+/* 	if (!lst)
+	{
+		//ft_system_error();
+		return (0);
+	}*/
 			if (cmd == echo)
 				parse_echo_arg(arg)
 			if (cmd == other && multiquote = 1)
@@ -22,26 +34,10 @@
 
 	//|>| file2 == cree le fichier
 	//| >| file = cree aussi
-
-		while (i < 2)
-			{
-				pipex->child = fork();
-				if (pipex->child == -1)
-				{
-					write(2, "fork failed\n", 13);
-					exit (1);
-				}
-				if (pipex->child == 0)
-				{
-					if (access(pipex->exec_path, F_OK) == 0)
-						execve(pipex->exec_path, mshell->split_byspace, env);
-				}
-				i++;
-				waitpid(pipex->child, NULL, 0);
-			}
-
-cat bonsoir>test
-
+	/// gere echo avec le $
+	//export HO$LA=BON a gerer 
+	/export HOLA+=BOU
+	//export HOLA=$USER 
 ARG1 : si ce nest pas une redirection cest une commande
 	tant que largument nest pas un pipe
 		si ce nest pas une redirection alors

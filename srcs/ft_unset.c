@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 22:59:07 by user42            #+#    #+#             */
-/*   Updated: 2022/03/09 20:28:29 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/15 19:02:09 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	ft_check_variable_unset(char **cmd)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
@@ -27,7 +27,7 @@ int	ft_check_variable_unset(char **cmd)
 			if (!((cmd[i][j] >= 'a' && cmd[i][j] <= 'z' )
 				|| (cmd[i][j] >= 'A' && cmd[i][j] <= 'Z')
 				|| (cmd[i][j] == '_')))
-			return (ft_custom_error("unset: not valid identifier"));
+				return (ft_custom_error("unset: not valid identifier"));
 			j++;
 		}
 		i++;
@@ -35,12 +35,12 @@ int	ft_check_variable_unset(char **cmd)
 	return (0);
 }	
 
-void ft_built_in_unset_2(char *cmd)
+void	ft_built_in_unset_2(char *cmd)
 {
-	t_env *head;
-	t_env *temp;
-	t_env *lastNode;
-	t_env *tmp;
+	t_env	*head;
+	t_env	*temp;
+	t_env	*lastnode;
+	t_env	*tmp;
 
 	head = g_list;
 	temp = head;
@@ -61,12 +61,12 @@ void ft_built_in_unset_2(char *cmd)
 			}
 			if (head->next == NULL)
 			{
-				while(temp->next->next != NULL)
+				while (temp->next->next != NULL)
 					temp = temp->next;
 				if (temp->next->index_env >= g_list->limit_free)
 					free(temp->next->content);
 				free(temp->next);
-				lastNode = temp->next;
+				lastnode = temp->next;
 				temp->next = NULL;
 			}
 			break ;
@@ -77,11 +77,10 @@ void ft_built_in_unset_2(char *cmd)
 	cmd = NULL;
 }
 
-
-int ft_built_in_unset(char **cmd)
+int	ft_built_in_unset(char **cmd)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	j = 1;
 	if (cmd[1] == NULL)

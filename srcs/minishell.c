@@ -6,54 +6,64 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:46:47 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/14 18:46:19 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/15 18:35:52 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_lst_cmd	*file_lst(char *split_bypipe, char **env)
+void	start_minishell(t_init ishell, char **env)
 {
-	t_lst_cmd *lst;
-	
-	lst = malloc(sizeof(t_lst_cmd));
-	lst->split_byspace = ft_split(split_bypipe, ' ');
-	//g_list->env_2 = ft_env_cpy(env, g_list->env_2);0
-	lst->next= NULL;
- 	for (int i = 0; lst->split_byspace[i];i++)
-	printf("split by pipe== %s\n", lst->split_byspace[i]);  
-	return (lst);
+	t_lst_cmd	*mshell;
+	t_lst_cmd	*tmp;
+
+	mshell = NULL;
+	mshell = init_shell(ishell.new_line, mshell);
+	tmp = mshell;
+	/*			EXEC PART & BUILTINS			*/
+	while (tmp)
+	{
+		printf("tmpl == %s\n", tmp->split_byspace[0]);
+		builtin_or_exec(tmp, env, ishell);
+		tmp = tmp->next;
+	}
+	free_lst(mshell);
+	free(ishell.new_line);
+	free_str(ishell.cmd);
+	free(ishell.prompt_line);
 }
 
-t_lst_cmd	*create_lst(char *prompt_line, int nb_pipe, t_lst_cmd *lst, char **env)
+void	minishell(char **env)
 {
-	int i;
-	char **split_bypipe;
-	char **split_byredirect;
-	t_lst_cmd *tmp;
-	
-	tmp = NULL;
-	i = 0;
-	if (nb_pipe != 0)
-		split_bypipe = ft_split(prompt_line, '|'); 
-	while (i <= nb_pipe)
+	t_init	ishell;
+
+	g_list = cpy_env(env);
+	while (1)
 	{
-		if (!lst)
+		ishell.pwd = getcwd(NULL, 0);
+		ishell.prompt_line = readline(ishell.pwd);
+		ishell.cmd = ft_split(ishell.prompt_line, ' ');
+		free(ishell.pwd);
+		if (ishell.cmd[0] == NULL)
 		{
-			if (nb_pipe != 0)
-				lst = file_lst(split_bypipe[i], env);
+			ft_putstr_fd(NULL, 0);
+			free_str(ishell.cmd);
+		}
+		else if (ishell.cmd[0] != NULL)
+		{
+			/*			PARSING NOT FINISH 				*/
+			ishell.new_line = skip_dquote_cmd(ishell.prompt_line);
+			add_history(ishell.prompt_line);
+			//pipex->nb_cmd = count_pipe(ishell.new_line);
+			if (check_pipe(ishell.new_line) == 1)
+			{
+				printf("error pipe\n");
+				free(ishell.new_line);
+				free_str(ishell.cmd);
+				free(ishell.prompt_line);
+			}
 			else
-				lst = file_lst(prompt_line, env);
-			tmp = lst;
+				start_minishell(ishell, env);
 		}
-		else
-		{
-			tmp->next = file_lst(split_bypipe[i], env);
-			tmp = tmp->next;
-		}
-		i++;
 	}
-	if (nb_pipe != 0)
-		free_str(split_bypipe);
-	return (lst);
 }
