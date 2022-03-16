@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
 /*   Updated: 2022/03/16 16:25:32 by benmoham         ###   ########.fr       */
@@ -103,6 +103,9 @@ int			ft_find_the_equal(char *str);
 int			ft_find_where_is_equal(char *str);
 int			ft_check_variable_after_equal(char *cmd);
 int			ft_check_variable_before_equal(char *cmd);
+char		*ft_trim_name(char *cmd);
+char 		*ft_add_content(char *avant_equal, char *after_equal);
+
 
 /*			INIT SHELL  		*/
 t_env		*cpy_env(char **envp);
@@ -142,7 +145,7 @@ int			ft_built_in_exit(t_lst_cmd *mshell);
 void		ft_built_in_env(char **built_in);
 
 /*			FT_ECHO			*/
-int		ft_built_echo(char *args[]);
+int			ft_built_echo(char *args[]);
 
 /*			FT_UNSET				*/
 int			ft_built_in_unset(char **cmd);

@@ -36,9 +36,9 @@
 	//|>| file2 == cree le fichier
 	//| >| file = cree aussi
 	/// gere echo avec le $
-	//export HO$LA=BON a gerer 
-	/export HOLA+=BOU
-	//export HOLA=$USER 
+	//export HO$LA=BON a gerer  LE DOLLAR FAIT TOUT SUPPRIMER APRES LUI
+	/export HOLA+=BOU LE  LE PLUS N'est valide qu'a la fin
+	//export HOLA=$USER DONNE LA VALEUR DE LA VARIABLE D'ENVIRONNEMENT
 ARG1 : si ce nest pas une redirection cest une commande
 	tant que largument nest pas un pipe
 		si ce nest pas une redirection alors
@@ -68,4 +68,10 @@ if (count_pipe(prompt_line) == 0)
 		exec_multi_cmd(cmd);
 
 //$ ne prend pas les simple quote
+// echo -n popo$USERpolo --> seul popo doit s'afficher
 
+if + in export 
+	check si variable export nexiste pas
+	tu la cree
+	sinon si variable export existe
+	strjoin anciencontent + new
