@@ -126,6 +126,7 @@ int	ft_built_in_export_add(char *env_var, char *apres_egal)
 		free(tmp);
 	}
 	tail = ft_list_push_back(g_list, before_equal);
+
 	return (SUCCESS);
 }
 

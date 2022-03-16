@@ -75,4 +75,3 @@ if + in export
 	tu la cree
 	sinon si variable export existe
 	strjoin anciencontent + new
-	
