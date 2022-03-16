@@ -27,7 +27,6 @@
 
 	///Gere les quotes pas fermer si meme quote nb impaire == erreur 
 
-	//Faire un double tableau de notre env a chaque export pour pouvoir lenvoyer a lexec 
 	//faire une protection au cas on unset le path = impossi dexec les cmds
 	//check si le fichier exist apres une redirc
 	//si chevron entre guillmet apres un chevron = considerer comme fichier 
