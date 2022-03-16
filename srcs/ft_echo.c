@@ -6,22 +6,22 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 22:05:30 by user42            #+#    #+#             */
-/*   Updated: 2022/03/16 16:16:59 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/16 16:26:20 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int		valid_option(char *now)
+int		check_option(char *str)
 {
 	int i;
 
 	i = 0;
-	while (now[i])
+	while (str[i])
 	{
-		if (i == 0 && (now[i] != '-'))
+		if (i == 0 && (str[i] != '-'))
 			return (0);
-		if (i > 0 && (now[i] != 'n'))
+		if (i > 0 && (str[i] != 'n'))
 			return (0);
 		i++;
 	}
@@ -30,39 +30,39 @@ int		valid_option(char *now)
 	return (1);
 }
 
-int		ft_len(char *args[])
+int		ft_len(char *cmd[])
 {
 	int i;
 
 	i = 0;
-	while (args[i])
+	while (cmd[i])
 		i++;
 	return (i);
 }
 
-int		ft_echo(char *args[])
+int		ft_built_echo(char *cmd[])
 {
 	int i;
-	int is_n;
+	int cmd_n;
 
 	i = 1;
-	is_n = 0;
-	if (ft_len(args) != 1)
+	cmd_n = 0;
+	if (ft_len(cmd) != 1)
 	{
-		while (args[i] && valid_option(args[i]))
+		while (cmd[i] && check_option(cmd[i]))
 		{
-			is_n = 1;
+			cmd_n = 1;
 			i++;
 		}
-		while (args[i])
+		while (cmd[i])
 		{
-			ft_putstr_fd(args[i], 1);
-			if (args[i + 1])
+			ft_putstr_fd(cmd[i], 1);
+			if (cmd[i + 1])
 				write(1, " ", 1);
 			i++;
 		}
 	}
-	if (!is_n)
+	if (!cmd_n)
 		write(1, "\n", 1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 14:03:44 by user42            #+#    #+#             */
-/*   Updated: 2022/03/16 16:09:57 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/16 16:25:41 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	exec_built_in(t_lst_cmd *mshell, char **env)
 	else if (!ft_strcmp(mshell->split_byspace[0], "exit"))
 		ft_built_in_exit(mshell);
 	else if (!ft_strcmp(mshell->split_byspace[0], "echo"))
-		ft_echo(mshell->split_byspace);
+		ft_built_echo(mshell->split_byspace);
 	else if (!ft_strcmp(mshell->split_byspace[0], "env"))
 		ft_built_in_env(mshell->split_byspace);
 	else if (!ft_strcmp(mshell->split_byspace[0], "export"))

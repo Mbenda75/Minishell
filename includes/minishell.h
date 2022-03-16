@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/16 16:10:25 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/16 16:25:32 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ int			ft_built_in_exit(t_lst_cmd *mshell);
 void		ft_built_in_env(char **built_in);
 
 /*			FT_ECHO			*/
-int		ft_echo(char *args[]);
+int		ft_built_echo(char *args[]);
 
 /*			FT_UNSET				*/
 int			ft_built_in_unset(char **cmd);
