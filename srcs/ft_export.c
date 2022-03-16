@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:40:02 by user42            #+#    #+#             */
-/*   Updated: 2022/03/15 18:52:03 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/16 21:29:45 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,36 +86,47 @@ int	ft_built_in_export_add(char *env_var, char *apres_egal)
 	t_env	*head;
 	t_env	*tail;
 	char	*tmp;
+	char	*before_equal;
 
 	if (ft_check_variable_before_equal(env_var) == 1)
 		return (FAILURE);
 	if (ft_check_variable_after_equal(apres_egal) == 1)
 		return (FAILURE);
+	if (ft_strrchr(env_var, '+'))
+	{
+		before_equal = ft_trim_name(env_var);
+		apres_egal = ft_add_content(before_equal, apres_egal);
+	}
+	/*if (ft_strchr(apres_egal, "$"))
+	{
+		
+	}*/
 	head = g_list;
 	tail = head;
 	while (head != NULL)
 	{
-		if (ft_strncmp(head->content, env_var, ft_strlen(env_var)) == 0)
+		if (ft_strncmp(head->content, before_equal, ft_strlen(before_equal)) == 0)
 		{
-			ft_built_in_export_modify(env_var, apres_egal);
+			ft_built_in_export_modify(before_equal, apres_egal);
 			return (SUCCESS);
 		}
 		head = head->next;
 	}
-	if (ft_strchr(env_var, '='))
+	if (ft_strchr(before_equal, '='))
 	{
-		tmp = env_var;
-		env_var = ft_strjoin(env_var, apres_egal);
+		tmp = before_equal;
+		before_equal = ft_strjoin(before_equal, apres_egal);
 		free(tmp);
 	}
 	else
 	{
-		env_var = ft_strjoin(env_var, "=");
-		tmp = env_var;
-		env_var = ft_strjoin(env_var, apres_egal); // need to correct leaks
+		before_equal = ft_strjoin(before_equal, "=");
+		tmp = before_equal;
+		before_equal = ft_strjoin(before_equal, apres_egal); // need to correct leaks
 		free(tmp);
 	}
-	tail = ft_list_push_back(g_list, env_var);
+	tail = ft_list_push_back(g_list, before_equal);
+
 	return (SUCCESS);
 }
 
