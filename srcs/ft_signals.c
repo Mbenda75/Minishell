@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:27:34 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/11 18:21:07 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/15 18:54:05 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_signals_handler(int signal)
 {
-	int i;
+	int		i;
 	char	*ishell;
 
 	i = 0;

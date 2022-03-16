@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_var_env.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 16:21:19 by user42            #+#    #+#             */
-/*   Updated: 2022/02/23 22:05:08 by user42           ###   ########.fr       */
+/*   Updated: 2022/03/15 18:53:18 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	**ft_get_var_env(char **envp, char *var_env)
 {
 	char	**location;
-	char str[] = "/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin";
+	char	str[] = "/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin";
 
 	while (*envp)
 	{

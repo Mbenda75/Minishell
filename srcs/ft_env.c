@@ -6,26 +6,26 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 21:10:54 by user42            #+#    #+#             */
-/*   Updated: 2022/03/09 20:32:50 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/15 18:44:02 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_env *file_env(char *str, int i)
+t_env	*file_env(char *str, int i)
 {
-	t_env *lst;
-	
+	t_env	*lst;
+
 	lst = malloc(sizeof(t_env));
 	lst->content = str;
 	lst->index_env = i;
 	lst->next = NULL;
-	return (lst);	
+	return (lst);
 }
 
-int limit_env(char **env)
+int	limit_env(char **env)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	while (env[i])
@@ -35,9 +35,9 @@ int limit_env(char **env)
 
 t_env	*cpy_env(char **env)
 {
-	t_env *tmp;
-	int i;
-	
+	t_env	*tmp;
+	int		i;
+
 	tmp = g_list;
 	i = 1;
 	while (env[i])
@@ -55,14 +55,14 @@ t_env	*cpy_env(char **env)
 		i++;
 	}
 	g_list->limit_free = limit_env(env);
-	return (g_list);	
+	return (g_list);
 }
 
 void	ft_built_in_env(char **built_in)
 {
-	int i;
-	t_env *head;
-	t_env *tail;
+	int		i;
+	t_env	*head;
+	t_env	*tail;
 
 	i = 0;
 	head = g_list;

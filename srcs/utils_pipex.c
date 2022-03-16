@@ -6,23 +6,22 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 15:16:14 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/10 16:42:45 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/15 18:30:02 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char *search_path(t_env *lst)
+char	*search_path(t_env *lst)
 {
 	size_t	size;
 	int		index_path;
-	char *str;
+	char	*str;
 
 	size = 5;
 	index_path = 0;
 	while (lst)
 	{
-		
 		if (ft_strncmp("PATH=\n", lst->content, size) == 0)
 			break ;
 		lst = lst->next;
@@ -57,11 +56,10 @@ char	*ft_strcat2(char *dest, char *src)
 	return (tmp);
 }
 
-
 char	*boucle_path(char **array_path, char **array_cmd)
 {
 	char	*path;
-	int index_path;
+	int		index_path;
 
 	index_path = 0;
 	while (array_path[index_path])

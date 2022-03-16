@@ -1,41 +1,29 @@
-			while (i < 2)
-			{
-				pipex->child = fork();
-				if (pipex->child == -1)
-				{
-					write(2, "fork failed\n", 13);
-					close(pfd[0]);
-					close(pfd[1]);
-					exit (1);
-				}
-				if (pipex->child == 0)
-				{
-					dup2(pfd[0], 0);
-					close(pfd[1]);
-					if (access(pipex->exec_path, F_OK) == 0)
-						execve(pipex->exec_path, mshell->split_byspace, env);
-				}
-				else
-				{
-					dup2(pfd[1], 1);
-					if (access(pipex->exec_path, F_OK) == 0)
-						execve(pipex->exec_path, mshell->split_byspace, env);
-				}
-				i++;
-			}
+/*	else if (ft_check_nb_2(mshell->split_byspace[1]) == 1 && mshell->split_byspace[2])
+	{
+		ft_putstr_fd("exit\n", 0);
+		ft_putstr_fd("exit: numeric argument required\n", 0);
+		ft_free_charr(mshell->split_byspace);
+		exit (2);
+	}*/
 
+/* 	if (!lst)
+	{
+		//ft_system_error();
+		return (0);
+	}*/
 			if (cmd == echo)
 				parse_echo_arg(arg)
-			if (cmd == other && multiquote = 1)
+			if (cmd == other && multiquote (squote dans dquote ou v-versa) = 1)
 				cmd not found
+		else if (cmd == other && multiquote separer ("ca"'t'))
+				skip les quote et exec
 	//	else if (cmd == other && multiquote == 0 && 1_quote == double) skipp les dquote des cmd 
 	//			skip_dquote_cmd(cmd);
 	//	else if (cmd == other && multiquote == 0 && 1_quote == simple) skip les squote des cmd
 	//			skip_squote_cmd(cmd); *
 
-	//pour les fichier si dquote en premier et squote a linterieur skip les dquote et cree le fichier avec les squote inclut
-
-	/// ppour les cmd fork avant de les exec et les builtin a executer dansle main
+	//pour les > fichier si dquote en premier et squote a linterieur skip les dquote 
+											et cree le fichier avec les squote inclut
 
 	///Gere les quotes pas fermer si meme quote nb impaire == erreur 
 
@@ -45,25 +33,12 @@
 	//si chevron entre guillmet apres un chevron = considerer comme fichier 
 	//skip guillmet pour les redirc
 
-		while (i < 2)
-			{
-				pipex->child = fork();
-				if (pipex->child == -1)
-				{
-					write(2, "fork failed\n", 13);
-					exit (1);
-				}
-				if (pipex->child == 0)
-				{
-					if (access(pipex->exec_path, F_OK) == 0)
-						execve(pipex->exec_path, mshell->split_byspace, env);
-				}
-				i++;
-				waitpid(pipex->child, NULL, 0);
-			}
-
-cat bonsoir>test
-
+	//|>| file2 == cree le fichier
+	//| >| file = cree aussi
+	/// gere echo avec le $
+	//export HO$LA=BON a gerer  LE DOLLAR FAIT TOUT SUPPRIMER APRES LUI
+	/export HOLA+=BOU LE  LE PLUS N'est valide qu'a la fin
+	//export HOLA=$USER DONNE LA VALEUR DE LA VARIABLE D'ENVIRONNEMENT
 ARG1 : si ce nest pas une redirection cest une commande
 	tant que largument nest pas un pipe
 		si ce nest pas une redirection alors
@@ -81,7 +56,23 @@ LINE : pour chaque character de la ligne :
 		mon argument est de cette quote jusqua la prochaine :
 			tant que je nai pas une autre quote alors je copie la chain de character
 
-LINE : Si c'est une fleche
+LINE : Si c'est un chevron
 	JE regarde le character +1
-	SI c'est aussi une fleche du meme sens c bon
-	SInon erreur
+	si cest un ficher je check si je peux lopen
+	SI c'est aussi une fleche du s ou un mauvais arg 
+	SInon erreurcat
+
+if (count_pipe(prompt_line) == 0)
+		one_command(cmd);
+	else if (count_pipe(prompt_line) > 1)
+		exec_multi_cmd(cmd);
+
+//$ ne prend pas les simple quote
+// echo -n popo$USERpolo --> seul popo doit s'afficher
+
+if + in export 
+	check si variable export nexiste pas
+	tu la cree
+	sinon si variable export existe
+	strjoin anciencontent + new
+	

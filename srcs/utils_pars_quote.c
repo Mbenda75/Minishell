@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_pars.c                                       :+:      :+:    :+:   */
+/*   utils_pars_quote.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 11:32:13 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/04 18:15:03 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/16 16:01:59 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <string.h>
 
-int check_quote(char *str)
+int	check_first_quote(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 	{
 		if (str[i] == 34)
 			return (1);
@@ -27,16 +28,17 @@ int check_quote(char *str)
 	}
 	return (0);
 }
-int if_noquote(char *str)
+
+int	if_noquote(char *str, char c)
 {
-	int i;
-	int quote;
+	int	i;
+	int	quote;
 
 	quote = 0;
 	i = 0;
-	while(str[i])
+	while (str[i])
 	{
-		if (str[i] == 34)
+		if (str[i] == c)
 			quote++;
 		i++;
 	}
@@ -45,52 +47,29 @@ int if_noquote(char *str)
 	return (1);
 }
 
-char	*skip_squote_cmd(char *str)
+int	size_malloc(char *str)
 {
-	int i;
-	int j;
-	char *new_str;
-	
-	i = 0;
-	j = 0;
-
-	new_str = malloc(sizeof(char *) * ft_strlen(str) + 1);
-	if (!new_str)
-		return (NULL);
-	while (str[i])
-	{
-		if (str[i] == 39)
-			i++;
-		new_str[j] = str[i];
-		j++;
-		i++; 
-	}
-	new_str[j] = '\0';
-	return (new_str);
-} 
-
-int size_malloc(char *str)
-{
-	int i;
-	int size;
+	int	i;
+	int	size;
 
 	i = 0;
 	size = 0;
-	while(str[i])
+	while (str[i])
 	{
 		if (str[i] != 34 || str[i] != 39)
 			size++;
-		i++;	
+		i++;
 	}
 	return (size);
 }
 
-char	*skip_dquote_cmd(char *str)
+char	*skip_quote(char *str)
 {
-	int i;
-	int j;
-	char *new_str;
-	
+	int		temp;
+	int		i;
+	int		j;
+	char	*new_str;
+
 	i = 0;
 	j = 0;
 	new_str = malloc(sizeof(char *) * ft_strlen(str) + 1);
@@ -98,12 +77,23 @@ char	*skip_dquote_cmd(char *str)
 		return (NULL);
 	while (str[i])
 	{
-		if (str[i] == 34)
+		if (str[i] == '\'' || str[i] == '"')
+		{
+			temp = i;
 			i++;
-		new_str[j] = str[i];
-		j++;
-		i++; 
+			while (str[i] && str[i] != str[temp])
+			{
+				new_str[j++] = str[i];
+				i++;
+			}
+			i++;
+		}
+		else
+		{
+			new_str[j++] = str[i];
+			i++;
+		}
 	}
-	new_str[j] = '\0';
+	new_str[j++] = '\0';
 	return (new_str);
 }

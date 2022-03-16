@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 11:26:11 by user42            #+#    #+#             */
-/*   Updated: 2022/03/11 19:43:49 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/15 19:30:16 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,16 +152,16 @@ int ft_create_file(char **str)
 	dup2(fd_err, 2);
 }
 
-t_redirection	*ft_count_simple_redirect(char *str)
+t_redir	*ft_count_simple_redirect(char *str)
 {
 	int i;
 	char **str_2;
 	int j = 0;
-	t_redirection *red;
+	t_redir *red;
 	
 	str_2 = NULL;
 	i = 0;
-	red = malloc(sizeof(t_redirection));
+	red = malloc(sizeof(t_redir));
 	red->redirection_normal = 0;
 	red->redirection_inverse = 0;
 	red->double_red_norm = 0;
