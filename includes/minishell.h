@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/15 19:32:56 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/16 16:10:25 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,8 @@ void		*free_lst(t_lst_cmd *lst);
 void		*free_env(t_env *lst);
 
 /* 			PARSING SHELL		 */
-char		*skip_dquote(char *str);
-char		*skip_squote_cmd(char *str);
-char		*skip_dquote_cmd(char *str);
-int			check_quote(char *str);
+char		*skip_quote(char *str);
+int			check_first_quote(char *str);
 
 int			count_pipe(char *str);
 int			size_malloc(char *str);
@@ -144,7 +142,7 @@ int			ft_built_in_exit(t_lst_cmd *mshell);
 void		ft_built_in_env(char **built_in);
 
 /*			FT_ECHO			*/
-int			ft_built_in_echo(char **cmd);
+int		ft_echo(char *args[]);
 
 /*			FT_UNSET				*/
 int			ft_built_in_unset(char **cmd);

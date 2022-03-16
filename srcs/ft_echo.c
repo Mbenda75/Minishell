@@ -6,58 +6,63 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 22:05:30 by user42            #+#    #+#             */
-/*   Updated: 2022/03/15 18:42:54 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/16 16:16:59 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	ft_built_in_echo_n(char ***args, int *newline)
+int		valid_option(char *now)
 {
-	char	**ptr;
-	char	*s;
+	int i;
 
-	ptr = *args;
-	while (1)
+	i = 0;
+	while (now[i])
 	{
-		if (*ptr && **ptr == '-' && *(*ptr + 1) == 'n')
-		{
-			s = *ptr;
-			s++;
-			while (*s == 'n')
-				s++;
-			if (!*s)
-			{
-				*newline = 0;
-				ptr++;
-				continue ;
-			}
-		}
-		break ;
+		if (i == 0 && (now[i] != '-'))
+			return (0);
+		if (i > 0 && (now[i] != 'n'))
+			return (0);
+		i++;
 	}
-	*args = ptr;
+	if (i <= 1)
+		return (0);
+	return (1);
 }
 
-int	ft_built_in_echo(char **cmd)
+int		ft_len(char *args[])
 {
-	int	newline;
-	char	**ptr;
+	int i;
 
-	ptr = cmd + 1;
-	newline = 1;
-	ft_built_in_echo_n(&ptr, &newline);
-	while (1)
+	i = 0;
+	while (args[i])
+		i++;
+	return (i);
+}
+
+int		ft_echo(char *args[])
+{
+	int i;
+	int is_n;
+
+	i = 1;
+	is_n = 0;
+	if (ft_len(args) != 1)
 	{
-		if (!*ptr)
-			break ;
-		if (printf("%s", *ptr++) < 0)
-			return (ft_system_error());
-		if (*ptr && printf(" ") < 0)
-			return (ft_system_error());
+		while (args[i] && valid_option(args[i]))
+		{
+			is_n = 1;
+			i++;
+		}
+		while (args[i])
+		{
+			ft_putstr_fd(args[i], 1);
+			if (args[i + 1])
+				write(1, " ", 1);
+			i++;
+		}
 	}
-	if (!newline)
-		return (SUCCESS);
-	if (printf("\n") < 0)
-		return (ft_system_error());
-	return (SUCCESS);
+	if (!is_n)
+		write(1, "\n", 1);
+	return (0);
 }

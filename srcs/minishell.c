@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:46:47 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/15 18:35:52 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/16 16:02:19 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,12 @@ void	minishell(char **env)
 		else if (ishell.cmd[0] != NULL)
 		{
 			/*			PARSING NOT FINISH 				*/
-			ishell.new_line = skip_dquote_cmd(ishell.prompt_line);
+			if (check_first_quote(ishell.prompt_line) == 1)
+				ishell.new_line = skip_quote(ishell.prompt_line);
+			else if (check_first_quote(ishell.prompt_line) == 2)
+				ishell.new_line = skip_quote(ishell.prompt_line);
+			else if (check_first_quote(ishell.prompt_line) == 0)
+				ishell.new_line = ft_strdup(ishell.prompt_line);
 			add_history(ishell.prompt_line);
 			//pipex->nb_cmd = count_pipe(ishell.new_line);
 			if (check_pipe(ishell.new_line) == 1)

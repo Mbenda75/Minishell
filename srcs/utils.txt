@@ -13,16 +13,17 @@
 	}*/
 			if (cmd == echo)
 				parse_echo_arg(arg)
-			if (cmd == other && multiquote = 1)
+			if (cmd == other && multiquote (squote dans dquote ou v-versa) = 1)
 				cmd not found
+		else if (cmd == other && multiquote separer ("ca"'t'))
+				skip les quote et exec
 	//	else if (cmd == other && multiquote == 0 && 1_quote == double) skipp les dquote des cmd 
 	//			skip_dquote_cmd(cmd);
 	//	else if (cmd == other && multiquote == 0 && 1_quote == simple) skip les squote des cmd
 	//			skip_squote_cmd(cmd); *
 
-	//pour les fichier si dquote en premier et squote a linterieur skip les dquote et cree le fichier avec les squote inclut
-
-	/// ppour les cmd fork avant de les exec et les builtin a executer dansle main
+	//pour les > fichier si dquote en premier et squote a linterieur skip les dquote 
+											et cree le fichier avec les squote inclut
 
 	///Gere les quotes pas fermer si meme quote nb impaire == erreur 
 
@@ -65,3 +66,6 @@ if (count_pipe(prompt_line) == 0)
 		one_command(cmd);
 	else if (count_pipe(prompt_line) > 1)
 		exec_multi_cmd(cmd);
+
+//$ ne prend pas les simple quote
+//
