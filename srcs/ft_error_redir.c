@@ -3,180 +3,227 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error_redir.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 11:26:11 by user42            #+#    #+#             */
-/*   Updated: 2022/03/15 19:30:16 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/17 20:53:14 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_check_get_next_chevron(char **str)
+
+
+t_redir ft_count_redirection(char *str)
+{
+    int i;
+    t_redir red;
+
+    i = 0;
+    red.redirection_normal = 0;
+    red.redirection_inverse = 0;
+    red.double_red_norm = 0;
+    red.double_red_inv = 0;
+    while (str[i])
+    {
+        if (str[i] == '<' && str[i + 1] != '<' && str[i - 1] != '<')
+            red.redirection_inverse++;
+        if (str[i] == '<' && str[i + 1] == '<')
+            red.double_red_inv++;
+        if (str[i] == '>' && str[i + 1] != '>' && str[i - 1] != '>')
+            red.redirection_normal++;
+        if (str[i] == '>' && str[i + 1] == '>')
+            red.double_red_norm++;
+        i++;
+    }
+    return (red);
+}
+
+int ft_check_chev_errors(char *str)
 {
 	int i;
 
 	i = -1;
 	while (str[++i])
 	{
-		if ((ft_strcmp(str[i], ">") == 0 && ft_strcmp(str[i + 1], ">") == 0) ||
-			(ft_strcmp(str[i], ">") == 0 && ft_strcmp(str[i + 1], "<") == 0) ||
-			(ft_strcmp(str[i], ">") == 0 && ft_strcmp(str[i + 1], "<<") == 0) ||
-			(ft_strcmp(str[i], ">") == 0 && ft_strcmp(str[i + 1], ">>") == 0) ||
-			(ft_strcmp(str[i], "<") == 0 && ft_strcmp(str[i + 1], "<") == 0) ||
-			(ft_strcmp(str[i], "<") == 0 && ft_strcmp(str[i + 1], ">") == 0) ||
-			(ft_strcmp(str[i], "<") == 0 && ft_strcmp(str[i + 1], "<<") == 0) ||
-			(ft_strcmp(str[i], "<") == 0 && ft_strcmp(str[i + 1], ">>") == 0) ||
-			(ft_strcmp(str[i], ">>") == 0 && ft_strcmp(str[i + 1], ">") == 0) ||
-			(ft_strcmp(str[i], ">>") == 0 && ft_strcmp(str[i + 1], "<") == 0) ||
-			(ft_strcmp(str[i], ">>") == 0 && ft_strcmp(str[i + 1], "<<") == 0) ||
-			(ft_strcmp(str[i], ">>") == 0 && ft_strcmp(str[i + 1], ">>") == 0) ||
-			(ft_strcmp(str[i], "<<") == 0 && ft_strcmp(str[i + 1], ">") == 0) ||
-			(ft_strcmp(str[i], "<<") == 0 && ft_strcmp(str[i + 1], "<") == 0) ||
-			(ft_strcmp(str[i], "<<") == 0 && ft_strcmp(str[i + 1], "<<") == 0) ||
-			(ft_strcmp(str[i], "<<") == 0 && ft_strcmp(str[i + 1], ">>") == 0))
-			{
-				printf("ECHEC JE SUIS LA --> NEXT_CHEVRON 1\n");
+		if (str[i] == '>')
+		{
+			if (str[i + 1] == '<' || str[i + 1] == '>' && str[i - 1] == '>')
 				return (FAILURE);
-			}
+			if (str[i + 1] == ' ' && str[i + 2] == '>' || str[i + 1] == ' ' && str[i + 2] == '<')
+				return (FAILURE);
+		}
+		if (str[i] == '<')
+		{
+			if (str[i + 1] == '>' || str[i + 1] == '<' && str[i - 1] == '<')
+				return (FAILURE);
+			if (str[i + 1] == ' ' && str[i + 2] == '>' || str[i + 1] == ' ' && str[i + 2] == '<')
+				return (FAILURE);
+		}
 	}
-	printf("REUSSITE JE SUIS LA --> NEXT_CHEVRON 1\n");
+	
+	printf("str[i - 1] == [%c]\nstr[i] == [%c]\n", str[i - 1], str[i]);
+	if (str[i - 1] == '<' || str[i - 1] == '>' ||  str[i - 1] == ' ')
+		return (FAILURE);
+	printf("SUCCESS CHECK REDIR\n");
 	return (SUCCESS);
 }
 
-int ft_check_get_next_chevron_2(char **str)
+int ft_colle_chevron_inverse(char *split_by_spa)
 {
-	int i;
-	int j;
-
-	i = -1;
-	while (str[++i])
-	{
-		if ((ft_strcmp(str[i], ">") == 0 && str[i + 1][0] == '>') ||
-			(ft_strcmp(str[i], ">") == 0 && str[i + 1][0] == '<') ||
-			(ft_strcmp(str[i], ">") == 0 && str[i + 1][0] == '<' && str[i + 1][1] == '<') ||
-			(ft_strcmp(str[i], ">") == 0 && str[i + 1][0] == '>' && str[i + 1][1] == '>') ||
-			(ft_strcmp(str[i], "<") == 0 && str[i + 1][0] == '<') ||
-			(ft_strcmp(str[i], "<") == 0 && str[i + 1][0] == '>') ||
-			(ft_strcmp(str[i], "<") == 0 && str[i + 1][0] ==  '<' && str[i + 1][1] == '<') ||
-			(ft_strcmp(str[i], "<") == 0 && str[i + 1][0] == '>' && str[i + 1][1] == '>') ||
-			(ft_strcmp(str[i], ">>") == 0 && str[i + 1][0] == '>') ||
-			(ft_strcmp(str[i], ">>") == 0 && str[i + 1][0] == '<') ||
-			(ft_strcmp(str[i], ">>") == 0 && str[i + 1][0] == '<' && str[i + 1][1] == '<') ||
-			(ft_strcmp(str[i], ">>") == 0 && str[i + 1][0] == '>' && str[i + 1][1] == '>') ||
-			(ft_strcmp(str[i], "<<") == 0 && str[i + 1][0] == '>') ||
-			(ft_strcmp(str[i], "<<") == 0 && str[i + 1][0] == '<') ||
-			(ft_strcmp(str[i], "<<") == 0 && str[i + 1][0] == '<' && str[i + 1][1] == '<') ||
-			(ft_strcmp(str[i], "<<") == 0 && str[i + 1][0] == '>' && str[i + 1][1] == '>'))
-			{
-				printf("ECHEC JE SUIS LA --> CHEVRON 2\n");
-				return (FAILURE);
-			}
-	}
-	printf("REUSSITE JE SUIS LA --> CHEVRON 2\n");
-	return (SUCCESS);
-}
-
-int ft_check_chev_errors(char **str)
-{
-	t_decompte k;
-
-	k.i = -1;
-	k.j = 0;
-	while (str[k.j])
-		k.j++;
-	if (ft_strcmp(str[k.j - 1], ">") == 0 || ft_strcmp(str[k.j - 1], "<") == 0 ||
-		ft_strcmp(str[k.j - 1], ">>") == 0 || ft_strcmp(str[k.j - 1], "<<") == 0)
-			return (ft_custom_error("ERROR POUR CHEVRON A LA FIN DE STR syntax error near unexpected token 'newline'"));
-	k.j = k.j - 1;
-	if (ft_strcmp(str[0], "<") == 0 || ft_strcmp(str[0], "<<") == 0)
-		return (ft_custom_error("ERROR POUR CHEVRON AU DEBUT DE STR No such file or directory"));
-	if (ft_check_get_next_chevron(str) == 1)
-		return (ft_custom_error("CHEVRON 1 syntax error near unexpected token"));
-	if (ft_check_get_next_chevron_2(str) == 1)
-		return (ft_custom_error("CHEVRON 2syntax error near unexpected token"));
-	while (str[++k.i] && k.i <= k.j)
-	{
-		if (ft_strcmp(str[k.i], ">") == 0 || (ft_strcmp(str[k.i], ">>") == 0 ||
-			ft_strcmp(str[k.i], "<") == 0 || ft_strcmp(str[k.i], "<<") == 0))
-			{
-				printf("SUCCESS -> AUCUNE ERREUR TROUVEE\n");
-				return (SUCCESS);
-			}
-	}
-	return (ft_custom_error("ERROR FIN DE CYCLE syntax error near unexpected token"));
-}
-
-int ft_create_file(char **str)
-{
-	int fd_in;
-	int fd_out;
-	int fd_err;
 	int i;
 	int file_open;
 
-	fd_in = dup(0);
-	fd_out = dup(1);
-	fd_err = dup(2);
+	i = 0;
+	printf("COUCOU <\n");
+	split_by_spa = ft_strtrim(split_by_spa, "<");
+	file_open = open(split_by_spa, O_RDONLY);
+	if (file_open < 0)
+		return (ft_custom_error("No such file or directory"));
+	close (file_open);
+	return (SUCCESS);
+}
+
+int ft_colle_chevron_normal(char *str)
+{
+	int i;
+	int file_open;
+
+	i = 0;
+	printf("COUCOU >\n");
+	str = ft_strtrim(str, ">");
+	file_open = open(str, O_WRONLY | O_TRUNC | O_CREAT, 0755 );
+	if (file_open < 0)
+		return (ft_custom_error("Error > chevron"));
+	close (file_open);
+	return (SUCCESS);
+}
+
+int ft_colle_double_chevron_normal(char *str)
+{
+	int i;
+	int file_open;
+
+	i = 0;
+	printf("COUCOU >>\n");
+	str = ft_strtrim(str, ">>");
+	file_open = open(str, O_WRONLY | O_APPEND | O_CREAT, 0755 );
+	if (file_open < 0)
+		return (ft_custom_error("Error > chevron"));
+	close (file_open);
+	return (SUCCESS);
+}
+
+void open_redir(char **tab, int i, int j)
+{
+	if (tab[i][j] == '>' && tab[i][j + 1] != '>')
+	{
+		ft_colle_chevron_normal(tab[i]);
+		j++;
+	}
+	if (tab[i][j] == '>' && tab[i][j + 1] == '>')
+	{
+		ft_colle_double_chevron_normal(tab[i]);
+		j++;
+	}
+	if (tab[i][j] == '<' && tab[i][j + 1] != '<') 
+	{
+		ft_colle_chevron_inverse(tab[i]);
+		j++;
+	}
+	if (tab[i][j] == '>' && tab[i][j + 1] == '>')
+	{
+		ft_colle_double_chevron_normal(tab[i]);
+		j++;
+	}
+	if (tab[i][j] == '<' && tab[i][j + 1] != '<') 
+	{
+		ft_colle_chevron_inverse(tab[i]);
+		j++;
+	}
+}
+
+int ft_pas_colle_chevron_inverse(char **str)
+{
+	int i;
+	int file_open;
+
 	i = 0;
 	while (str[i])
 	{
-		if (ft_strcmp(str[i], ">") == 0)
+		if (ft_strcmp(str[i], "<") == 0)
 		{
-			file_open = open(str[i + 1], O_WRONLY | O_TRUNC | O_CREAT, 0755 );
+			file_open = open(str[i + 1], O_RDONLY);
 			if (file_open < 0)
-				return (ft_custom_error("Error > chevron"));
-			if (dup2(file_open, 0) < 0)
-				return (ft_custom_error("Error > chevron"));
+				return (ft_custom_error("No such file or directory"));
 			close (file_open);
 			str[i] = NULL;
-			str[i + 1] == NULL;
+			str[i + 1] = NULL;
+			i = i + 1;
+		}
+		i++;
+	}
+	return (SUCCESS);
+}
+
+int ft_pas_colle_chevron(char **str)
+{
+	int i;
+	int file_open;
+
+	i = -1;
+	while (str[++i])
+	{
+		if (ft_strcmp(str[i], ">") == 0)
+		{
+			printf("coucou\n");
+			file_open = open(str[i + 1], O_WRONLY | O_TRUNC | O_CREAT, 0755);
+			if (file_open < 0)
+				return (ft_custom_error("Error > chevron"));
+			close (file_open);
 			i = i + 2;
 		}
 		else if (ft_strcmp(str[i], ">>") == 0)
 		{
-			file_open = open(str[i + 1], O_WRONLY | O_APPEND | O_CREAT, 0755 );
+			printf("coucou 2\n");
+			file_open = open(str[i + 1], O_WRONLY | O_APPEND | O_CREAT, 0755);
 			if (file_open < 0)
 				return (ft_custom_error("Error >> chevron"));
-			if (dup2(file_open, 0) < 0)
-				return (ft_custom_error("Error >> chevron"));
 			close (file_open);
-			str[i] = NULL;
-			str[i + 1] == NULL;
 			i = i + 2;
 		}
-		i++;
 	}
-	dup2(fd_in, 0);
-	dup2(fd_out, 1);
-	dup2(fd_err, 2);
+	return (SUCCESS);
 }
 
-t_redir	*ft_count_simple_redirect(char *str)
+int	ft_check_redirection(char *str)
 {
+	char **tab;
 	int i;
-	char **str_2;
-	int j = 0;
-	t_redir *red;
+	int j;
 	
-	str_2 = NULL;
 	i = 0;
-	red = malloc(sizeof(t_redir));
-	red->redirection_normal = 0;
-	red->redirection_inverse = 0;
-	red->double_red_norm = 0;
-	red->double_red_inv = 0;
-	str_2 = ft_split(str, ' ');
-	printf("JE SUIS ICI\n");
- 	if (ft_check_chev_errors(str_2) == 1)
+	j = 0;
+	tab = NULL;
+ 	if (ft_check_chev_errors(str) == 1)
 	{
-		printf("ERROR\n");
-		ft_free_charr(str_2);
-		return (red);
-	} 
-	printf("REUSSITE\n");
-	ft_create_file(str_2);
-	//printf("redirection normal = %d\n", red->redirection_normal);
-	ft_free_charr(str_2);
-	return (red);
+		printf("ERROR CHEVRON\n");
+		return (FAILURE);
+	}
+	tab = ft_split(str, ' ');
+/*	while (tab[i])
+	{
+		j = 0;
+		while (tab[i][j])
+		{
+			open_redir(tab, i, j);
+			j++;
+		}
+		i++;
+	}*/
+	ft_pas_colle_chevron_inverse(tab);
+	ft_pas_colle_chevron(tab);
+	ft_free_charr(tab);
+	printf("REUSSITE CHEVRON\n");
+	return (SUCCESS);
 }

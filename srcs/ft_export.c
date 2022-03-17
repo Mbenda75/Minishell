@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:40:02 by user42            #+#    #+#             */
-/*   Updated: 2022/03/16 21:29:45 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/17 13:45:54 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ t_env	*ft_modify_lst(t_env *lst, char *env_var_cpy, char *env_var)
 	{
 		if (ft_strncmp(head->content, str, ft_strlen(env_var_cpy)) == 0)
 		{
+			free(head->content);
 			head->content = env_var;
 			break ;
 		}
@@ -92,15 +93,19 @@ int	ft_built_in_export_add(char *env_var, char *apres_egal)
 		return (FAILURE);
 	if (ft_check_variable_after_equal(apres_egal) == 1)
 		return (FAILURE);
-	if (ft_strrchr(env_var, '+'))
+	printf("APRES_egal = %s\n", apres_egal);
+/* 	if (ft_strrchr(env_var, '+'))
 	{
 		before_equal = ft_trim_name(env_var);
 		apres_egal = ft_add_content(before_equal, apres_egal);
-	}
-	/*if (ft_strchr(apres_egal, "$"))
+	} */
+	if (ft_strchr(apres_egal, '$'))
 	{
-		
-	}*/
+		apres_egal = ft_add_env_var(apres_egal);
+		printf("APRES_egal = %s\n", apres_egal);
+
+	}
+	printf("APRES_egal = %s\n", apres_egal);
 	head = g_list;
 	tail = head;
 	while (head != NULL)

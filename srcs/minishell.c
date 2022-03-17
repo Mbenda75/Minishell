@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:46:47 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/16 16:02:19 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/17 14:02:58 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	start_minishell(t_init ishell, char **env)
 	/*			EXEC PART & BUILTINS			*/
 	while (tmp)
 	{
-		printf("tmpl == %s\n", tmp->split_byspace[0]);
+		//printf("tmpl == %s\n", tmp->split_byspace[0]);
 		builtin_or_exec(tmp, env, ishell);
 		tmp = tmp->next;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:23:39 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/15 20:45:36 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/17 17:10:05 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 int	builtin_or_exec(t_lst_cmd *mshell, char **env, t_init ishell)
 {
 	t_pipex	*pipex;
-
+	char *str;
 	pipex = NULL;
 	if (ft_is_built_in(mshell->split_byspace[0]) == 1)
 		exec_built_in(mshell, env);
@@ -41,10 +41,10 @@ int	builtin_or_exec(t_lst_cmd *mshell, char **env, t_init ishell)
 		pipex->line_path = search_path(g_list);
 		pipex->split_path = ft_split(pipex->line_path, ':');
 		pipex->exec_path = boucle_path(pipex->split_path, mshell->split_byspace);
-		printf("split_path == %s\n", pipex->exec_path);
+		//printf("split_path == %s\n", pipex->exec_path);
 		if (pipex->exec_path == NULL)
 		{
-			printf("exit exec\n");
+		//	printf("exit exec\n");
 			free_str(pipex->split_path);
 			free(pipex->exec_path);
 			return (1);

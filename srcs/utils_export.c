@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 18:51:40 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/16 21:29:50 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/17 13:47:55 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,42 +55,47 @@ int	ft_find_where_is_equal(char *str)
 	return (0);
 }
 
-char *ft_trim_name(char *cmd)
+char	*ft_trim_name(char *cmd)
 {
-	char *tmp;
-
+	char	*tmp;
+	
 	tmp = ft_strtrim(cmd, "+");
 	return (tmp);
 }
 
-/*char *ft_add_env_var(char *after_equal)
+char *ft_add_env_var(char *after_equal)
 {
 	t_env *verify;
-	t_env *export_content;
+	t_env *env_value;
+	char *new_after_equal;
+	char *tmp2;
 
 	verify = g_list;
-	export_content = g_list;
+	env_value = g_list;
+	tmp2 = ft_strtrim(after_equal, "$");
+	tmp2 = ft_strjoin(tmp2, "=");
+	printf("%s\n", tmp2);
 	while (verify) 
 	{
-		if (ft_strncmp(verify->content, tmp, ft_strlen(tmp)) == SUCCESS)
+		if (ft_strncmp(verify->content, tmp2, ft_strlen(tmp2)) == SUCCESS)
 			break ;
 				verify = verify->next;
 		if (verify == NULL)
 			return (after_equal);
 	}
-	while (export_content)
+	while (env_value)
 	{
-		if (ft_strncmp(export_content->content, tmp, ft_strlen(tmp)) == SUCCESS)
+		if (ft_strncmp(env_value->content, tmp2, ft_strlen(tmp2)) == SUCCESS)
 		{
-			tmp2 = ft_substr(export_content->content, ft_find_where_is_equal(export_content->content) + 1, ft_strlen(export_content->content));			
+			tmp2 = ft_substr(env_value->content, ft_find_where_is_equal(env_value->content) + 1, ft_strlen(env_value->content));	
 			new_after_equal = tmp2;
 			break ;
 		}
-		export_content = export_content->next;
+		env_value = env_value->next;
 	}
 	return (new_after_equal); 
 }
-*/
+
 char *ft_add_content(char *avant_equal, char *after_equal)
 {
 	t_env *export_content;
@@ -143,7 +148,8 @@ int	ft_check_variable_after_equal(char *cmd)
 				|| (cmd[i] == '}' || cmd[i] == '[')
 				|| (cmd[i] == ']' || cmd[i] == '#')
 				|| (cmd[i] == '~' || cmd[i] == '/')
-				|| (cmd[i] == '@' || cmd[i] == '%')))
+				|| (cmd[i] == '@' || cmd[i] == '%')
+				|| (cmd[i] == '\'' || cmd[i] == '"')))
 			return (ft_custom_error("export: not valid identifier1"));
 		i++;
 	}

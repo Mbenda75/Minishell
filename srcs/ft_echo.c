@@ -3,10 +3,11 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/23 22:05:30 by user42            #+#    #+#             */
-/*   Updated: 2022/03/16 20:15:31 by adaloui          ###   ########.fr       */                                                                       */
+/*   Created: 2022/03/16 21:52:47 by adaloui           #+#    #+#             */
+/*   Updated: 2022/03/16 21:52:54 by adaloui          ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
