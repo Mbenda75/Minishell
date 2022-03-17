@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 11:26:11 by user42            #+#    #+#             */
-/*   Updated: 2022/03/17 20:53:14 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/17 21:22:59 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,53 @@ int ft_colle_double_chevron_normal(char *str)
 	return (SUCCESS);
 }
 
+int ft_pas_colle_chevron_inverse(char **str)
+{
+	int i;
+	int file_open;
+
+	i = 0;
+	while (str[i])
+	{
+		if (ft_strcmp(str[i], "<") == 0)
+		{
+			file_open = open(str[i + 1], O_RDONLY);
+			if (file_open < 0)
+				return (ft_custom_error("No such file or directory"));
+			close (file_open);
+			str[i] = NULL;
+			str[i + 1] = NULL;
+			i = i + 1;
+		}
+		i++;
+	}
+	return (SUCCESS);
+}
+
+int ft_pas_colle_chevron(char **str, int i)
+{
+	int file_open;
+
+	printf("coucou\n");
+	file_open = open(str[i + 1], O_WRONLY | O_TRUNC | O_CREAT, 0755);
+	if (file_open < 0)
+		return (ft_custom_error("Error > pas colle"));
+	close (file_open);
+	return (SUCCESS);
+}
+
+int ft_pas_colle_double_chevron(char **str, int i)
+{
+	int file_open;
+
+	printf("coucou 2\n");
+	file_open = open(str[i + 1], O_WRONLY | O_APPEND | O_CREAT, 0755);
+	if (file_open < 0)
+		return (ft_custom_error("Error >> pas colle"));
+	close (file_open);
+	return (SUCCESS);
+}
+
 void open_redir(char **tab, int i, int j)
 {
 	if (tab[i][j] == '>' && tab[i][j + 1] != '>')
@@ -143,57 +190,22 @@ void open_redir(char **tab, int i, int j)
 	}
 }
 
-int ft_pas_colle_chevron_inverse(char **str)
-{
-	int i;
-	int file_open;
-
-	i = 0;
-	while (str[i])
+void create_redir(char **tab, int i)
+{ 
+	while (tab[i])
 	{
-		if (ft_strcmp(str[i], "<") == 0)
+		if (tab[i] == ">")
 		{
-			file_open = open(str[i + 1], O_RDONLY);
-			if (file_open < 0)
-				return (ft_custom_error("No such file or directory"));
-			close (file_open);
-			str[i] = NULL;
-			str[i + 1] = NULL;
-			i = i + 1;
+			ft_pas_colle_chevron(tab, i);
+			i++;
+		}
+		if (tab[i][0] == '>' && tab[i][1] == '>')
+		{
+			ft_pas_colle_double_chevron(tab, i);
+			i++;
 		}
 		i++;
 	}
-	return (SUCCESS);
-}
-
-int ft_pas_colle_chevron(char **str)
-{
-	int i;
-	int file_open;
-
-	i = -1;
-	while (str[++i])
-	{
-		if (ft_strcmp(str[i], ">") == 0)
-		{
-			printf("coucou\n");
-			file_open = open(str[i + 1], O_WRONLY | O_TRUNC | O_CREAT, 0755);
-			if (file_open < 0)
-				return (ft_custom_error("Error > chevron"));
-			close (file_open);
-			i = i + 2;
-		}
-		else if (ft_strcmp(str[i], ">>") == 0)
-		{
-			printf("coucou 2\n");
-			file_open = open(str[i + 1], O_WRONLY | O_APPEND | O_CREAT, 0755);
-			if (file_open < 0)
-				return (ft_custom_error("Error >> chevron"));
-			close (file_open);
-			i = i + 2;
-		}
-	}
-	return (SUCCESS);
 }
 
 int	ft_check_redirection(char *str)
@@ -211,18 +223,19 @@ int	ft_check_redirection(char *str)
 		return (FAILURE);
 	}
 	tab = ft_split(str, ' ');
-/*	while (tab[i])
+	while (tab[i])
 	{
 		j = 0;
 		while (tab[i][j])
 		{
 			open_redir(tab, i, j);
+			create_redir(tab, i);
 			j++;
 		}
 		i++;
-	}*/
-	ft_pas_colle_chevron_inverse(tab);
-	ft_pas_colle_chevron(tab);
+	}
+//	ft_pas_colle_chevron_inverse(tab);
+//	ft_pas_colle_chevron(tab);
 	ft_free_charr(tab);
 	printf("REUSSITE CHEVRON\n");
 	return (SUCCESS);

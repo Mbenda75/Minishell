@@ -78,7 +78,7 @@ export POPO=$USER export POPO+=$USER ca fait dans le parsing = adaloui$USER --> 
  faire un nouveau readline 
  sauvegarder le contenu du readline dans un pipe (ecrire l'ouvrture et )
 
-
+NE PAS OBLIER LE : POPO > LOLO >[ ] avec un espace dans le check d'erreur
 
 
  /*int ft_create_file(char **str)
