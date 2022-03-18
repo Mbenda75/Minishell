@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:40:02 by user42            #+#    #+#             */
-/*   Updated: 2022/03/17 13:45:54 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/18 16:26:32 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	ft_built_in_export_add(char *env_var, char *apres_egal)
 	} */
 	if (ft_strchr(apres_egal, '$'))
 	{
-		apres_egal = ft_add_env_var(apres_egal);
+		apres_egal = ft_add_env_var(apres_egal, env_var);
 		printf("APRES_egal = %s\n", apres_egal);
 
 	}

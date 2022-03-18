@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 11:26:11 by user42            #+#    #+#             */
-/*   Updated: 2022/03/17 21:46:16 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/18 16:26:03 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int ft_check_chev_errors(char *str)
 	}
 	
 	printf("str[i - 1] == [%c]\nstr[i] == [%c]\n", str[i - 1], str[i]);
-	if (str[i - 1] == '<' || str[i - 1] == '>' ||  str[i - 1] == ' ')
+	if (str[i - 1] == '<' || str[i - 1] == '>' ||  str[i - 1] == ' ') // gerer le cas de l'espace
 		return (FAILURE);
 	printf("SUCCESS CHECK REDIR\n");
 	return (SUCCESS);

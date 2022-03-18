@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/17 13:00:21 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/18 16:25:34 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,7 @@ int			ft_check_variable_after_equal(char *cmd);
 int			ft_check_variable_before_equal(char *cmd);
 char		*ft_trim_name(char *cmd);
 char 		*ft_add_content(char *avant_equal, char *after_equal);
-char		*ft_add_env_var(char *after_equal);
-
-
+char 		*ft_add_env_var(char *after_equal, char *env_var);
 
 /*			INIT SHELL  		*/
 t_env		*cpy_env(char **envp);
