@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 11:26:11 by user42            #+#    #+#             */
-/*   Updated: 2022/03/18 11:51:56 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/19 17:36:34 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,11 @@ int ft_colle_chevron_inverse(char *split_by_spa)
 	split_by_spa = ft_strtrim(split_by_spa, "<");
 	file_open = open(split_by_spa, O_RDONLY);
 	if (file_open < 0)
+	{
+		free(split_by_spa);
 		return (ft_custom_error("No such file or directory"));
+	}
+	free(split_by_spa);
 	close (file_open);
 	return (SUCCESS);
 }
@@ -92,7 +96,10 @@ int ft_colle_chevron_normal(char *str)
 	str = ft_strtrim(str, ">");
 	file_open = open(str, O_WRONLY | O_TRUNC | O_CREAT, 0755 );
 	if (file_open < 0)
+	{
+		free(str);
 		return (ft_custom_error("Error > chevron"));
+	}
 	close (file_open);
 	printf("Creation de %s\n", str);
 	free(str);
@@ -109,7 +116,10 @@ int ft_colle_double_chevron_normal(char *str)
 	str = ft_strtrim(str, ">>");
 	file_open = open(str, O_WRONLY | O_APPEND | O_CREAT, 0755 );
 	if (file_open < 0)
+	{
+		free(str);
 		return (ft_custom_error("Error > chevron"));
+	}
 	close (file_open);
 	printf("Creation de %s\n", str);
 	free(str);

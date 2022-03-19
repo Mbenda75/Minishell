@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:46:47 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/17 20:45:50 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/19 15:55:22 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	start_minishell(t_init ishell, char **env)
 		printf("tmpl == %s\n", tmp->split_byspace[0]);
 		builtin_or_exec(tmp, env, ishell);
 		tmp = tmp->next;
+		
 	}
 	free_lst(mshell);
 	free(ishell.new_line);
