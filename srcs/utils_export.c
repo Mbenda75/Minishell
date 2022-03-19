@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 18:51:40 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/16 21:29:50 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/19 13:05:45 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,72 +55,100 @@ int	ft_find_where_is_equal(char *str)
 	return (0);
 }
 
-char *ft_trim_name(char *cmd)
+int	ft_find_where_is_dollars(char *str)
 {
-	char *tmp;
+	int	i;
 
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '$')
+			return (i);
+		i++;
+	}
+	return (0);
+}
+
+char	*ft_trim_name(char *cmd)
+{
+	char	*tmp;
+	
 	tmp = ft_strtrim(cmd, "+");
 	return (tmp);
 }
 
-/*char *ft_add_env_var(char *after_equal)
+char *ft_add_env_var(char *after_equal, char *env_var)
 {
 	t_env *verify;
-	t_env *export_content;
+	t_env *env_value;
+	char *new_after_equal;
+	char **tab;
+	char *tmp;
+	char *tmp2;
+	char *temp;
+	int i = 0;
+	char **split_bydollars;
 
 	verify = g_list;
-	export_content = g_list;
+	env_value = g_list;
+	split_bydollars == NULL;
+	if (after_equal[0] == '$')
+	{
+		tmp2 = ft_strtrim(after_equal, "$");
+		tmp = ft_strjoin(tmp2, "=");
+	}
+	else
+	{
+		split_bydollars = ft_split(after_equal, '$');
+/* 		tmp2 = ft_strtrim(after_equal, "$");
+		free(tmp2); */
+		tmp2 = ft_substr(after_equal, ft_find_where_is_dollars(after_equal) + 1, ft_strlen(after_equal)); // tpm = $USER
+		tmp = ft_strjoin(tmp2, "=");
+		//tmp = USER=
+		//tmp2 = USER
+		// trim USER 
+		i = 1;
+	}
+	free(tmp2);
 	while (verify) 
 	{
 		if (ft_strncmp(verify->content, tmp, ft_strlen(tmp)) == SUCCESS)
 			break ;
 				verify = verify->next;
-		if (verify == NULL)
-			return (after_equal);
-	}
-	while (export_content)
-	{
-		if (ft_strncmp(export_content->content, tmp, ft_strlen(tmp)) == SUCCESS)
+		if (verify == NULL && ft_strchr(after_equal, '$'))
 		{
-			tmp2 = ft_substr(export_content->content, ft_find_where_is_equal(export_content->content) + 1, ft_strlen(export_content->content));			
-			new_after_equal = tmp2;
+			printf("iciiiiiiii\n");
+			free(tmp);
+			if (i == 0)
+				after_equal = ft_strdup("");
+			else if (i == 1)
+				after_equal = ft_strdup(split_bydollars[0]);
+			if (i == 1)
+				free_str(split_bydollars);
+			return (after_equal);
+		}
+	}
+	while (env_value)
+	{
+		if (ft_strncmp(env_value->content, tmp, ft_strlen(tmp)) == SUCCESS)
+		{
+			if (i == 1)
+			{
+				tmp2 = ft_substr(env_value->content, ft_find_where_is_equal(env_value->content) + 1, ft_strlen(env_value->content));
+				new_after_equal = ft_strjoin(split_bydollars[0], tmp2);
+				free(tmp2);
+				free_str(split_bydollars);
+				printf("ou ici\n");
+				break ;
+			}
+			new_after_equal = ft_substr(env_value->content, ft_find_where_is_equal(env_value->content) + 1, ft_strlen(env_value->content));
+			printf("sinon c la\n");
 			break ;
 		}
-		export_content = export_content->next;
+		env_value = env_value->next;
 	}
+	free(tmp);
 	return (new_after_equal); 
-}
-*/
-char *ft_add_content(char *avant_equal, char *after_equal)
-{
-	t_env *export_content;
-	t_env *verify;
-	char *new_after_equal;
-	char *tmp;
-	char *tmp2;
-
-	verify = g_list; //liste qui va verifier l'existence de la var
-	export_content = g_list; // va nous servir a ajouter la var
-	tmp = ft_strjoin(avant_equal, "=");
-	while (verify) /// je verifie si la variable existe deja pour eviter un segfault
-	{
-		if (ft_strncmp(verify->content, tmp, ft_strlen(tmp)) == SUCCESS)
-			break ; //si elle existe je sors de la boucle
-				verify = verify->next;
-		if (verify == NULL) //si elle n'existe pas je renvoit after_equal pour eviter segfault
-			return (after_equal);
-	}
-	while (export_content) // je rajoute le content dans la variable 
-	{
-		if (ft_strncmp(export_content->content, tmp, ft_strlen(tmp)) == SUCCESS)
-		{
-			tmp2 = ft_substr(export_content->content, ft_find_where_is_equal(export_content->content) + 1, ft_strlen(export_content->content));			
-			new_after_equal = ft_strjoin(tmp2, after_equal); //je prend la contenu de la var apres le = et je le join
-			break ;
-		}
-		export_content = export_content->next;
-	}
-	return (new_after_equal);
 }
 
 int	ft_check_variable_after_equal(char *cmd)
@@ -143,7 +171,8 @@ int	ft_check_variable_after_equal(char *cmd)
 				|| (cmd[i] == '}' || cmd[i] == '[')
 				|| (cmd[i] == ']' || cmd[i] == '#')
 				|| (cmd[i] == '~' || cmd[i] == '/')
-				|| (cmd[i] == '@' || cmd[i] == '%')))
+				|| (cmd[i] == '@' || cmd[i] == '%')
+				|| (cmd[i] == '\'' || cmd[i] == '"')))
 			return (ft_custom_error("export: not valid identifier1"));
 		i++;
 	}
@@ -169,7 +198,8 @@ int	ft_check_variable_before_equal(char *cmd)
 				|| (cmd[i] >= 'A' && cmd[i] <= 'Z')
 				|| (cmd[i] >= '0' && cmd[i] <= '9')
 				|| (cmd[i] == '_' || cmd[i] == '=')
-				|| (cmd[i] == '$' || (cmd[j - 1] == '+' && cmd[j - 2] != '+'))))
+				|| (cmd[i] == '$' || (cmd[j - 1] == '+' && cmd[j - 2] != '+')
+				|| (cmd[i] == ' '))))
 			return (ft_custom_error("export: not valid identifier3"));
 		i++;
 	}

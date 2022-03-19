@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 17:19:35 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/15 18:54:48 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/17 13:54:48 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,10 @@ t_lst_cmd	*create_lst(char *prompt_line, int nb_pipe, t_lst_cmd *lst)
 t_lst_cmd	*init_shell(char *buffer, t_lst_cmd *lst)
 {
 	int		nb_pipe;
-	//t_redir *red;
+	t_redir red;
 
-	//red = ft_count_simple_redirect(buffer);
-	//free(red);
+	if (ft_check_redirection(buffer) == SUCCESS)
+		red = ft_count_redirection(buffer);
 	nb_pipe = count_pipe(buffer);
 	if (nb_pipe != 0)
 		lst = create_lst(buffer, nb_pipe, lst);

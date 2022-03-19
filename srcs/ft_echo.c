@@ -5,8 +5,9 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/23 22:05:30 by user42            #+#    #+#             */
-/*   Updated: 2022/03/16 20:15:31 by adaloui          ###   ########.fr       */                                                                       */
+/*   Created: 2022/03/16 22:01:53 by benmoham          #+#    #+#             */
+/*   Updated: 2022/03/18 11:27:09 by benmoham         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
@@ -58,8 +59,8 @@ void	ft_echo_dollar(char	**cmd, int i, int j)
 		if (ft_strncmp(echo_env->content, tmp, ft_strlen(tmp)) == SUCCESS)
 		{
 			tmp2 = ft_substr(echo_env->content,
-					ft_find_where_is_equal(echo_env->content) + 1,
-					ft_strlen(echo_env->content));
+			ft_find_where_is_equal(echo_env->content) + 1,
+			ft_strlen(echo_env->content));
 			ft_putstr_fd(tmp2, 1);
 			if (cmd[i + 1])
 				write(1, " ", 1);

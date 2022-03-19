@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/16 16:25:32 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/19 13:05:53 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,6 @@ extern struct s_env	*g_list;
 typedef struct s_env
 {
 	char				*content;
-	int					index_env;
-	int					limit_free;
-	char				**env_2;
-	struct s_lst_cmd	*tmp;
 	struct s_env		*next;
 }				t_env;
 
@@ -105,11 +101,14 @@ int			ft_check_variable_after_equal(char *cmd);
 int			ft_check_variable_before_equal(char *cmd);
 char		*ft_trim_name(char *cmd);
 char 		*ft_add_content(char *avant_equal, char *after_equal);
+char 		*ft_add_env_var(char *after_equal, char *env_var);
+int			ft_len(char *cmd[]);
+
 
 
 /*			INIT SHELL  		*/
 t_env		*cpy_env(char **envp);
-t_env		*file_env(char *str, int i);
+t_env		*file_env(char *str);
 t_lst_cmd	*create_lst(char *prompt_line, int nb_pipe, t_lst_cmd *lst);
 t_lst_cmd	*file_lst(char *split_bypipe);
 t_lst_cmd	*init_shell(char *buffer, t_lst_cmd *lst);
@@ -158,7 +157,9 @@ char		**ft_get_var_env(char **envp, char *str);
 char		**ft_get_var_env_2(char **envp, char *var_env);
 
 /*			FT_PIPE_CMD					*/
-t_redir		*ft_count_simple_redirect(char *str);
+int			ft_check_redirection(char *str);
+t_redir		ft_count_redirection(char *str);
+
 
 void		status_child(void);
 char		**ft_env_cpy(char **envp, char **envp_2);

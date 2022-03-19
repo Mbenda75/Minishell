@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 10:44:12 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/16 16:12:06 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/16 22:28:25 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@
 	//echo ""'''$US'E'R'''"" == $USER
 	// echo ""'''"USER"'''"" == "USER"
 	//echo """'"USER"'""" == 'USER'
-
-// tant que je nai pas la meme quote
-// alors je strjoin(s)
+	
 int	count_dquote(char *str, int quote)
 {
 	int	i;

@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:23:39 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/15 20:45:36 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/16 20:21:49 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	builtin_or_exec(t_lst_cmd *mshell, char **env, t_init ishell)
 			printf("exit exec\n");
 			free_str(pipex->split_path);
 			free(pipex->exec_path);
+			free(pipex);
 			return (1);
 		}
 		pipex->child = fork();

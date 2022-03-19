@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:40:02 by user42            #+#    #+#             */
-/*   Updated: 2022/03/16 21:29:45 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/19 13:06:33 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@ t_env	*ft_list_push_back(t_env *cpy_env, char *str)
 			i++;
 		}
 		i++;
-		list->next = file_env(str, i);
+		list->next = file_env(str);
 	}
+	printf("JE SUIS LE N6\n");
 	return (list);
 }
 
@@ -45,6 +46,7 @@ t_env	*ft_modify_lst(t_env *lst, char *env_var_cpy, char *env_var)
 	{
 		if (ft_strncmp(head->content, str, ft_strlen(env_var_cpy)) == 0)
 		{
+			free(head->content);
 			head->content = env_var;
 			break ;
 		}
@@ -64,6 +66,7 @@ int	ft_built_in_export_modify(char *env_var, char *apres_egal)
 
 	if (ft_strchr(env_var, '='))
 	{
+		printf("JE SUIS LE N5\n");
 		env_var_cpy = ft_strdup(env_var);
 		env_var = ft_strjoin(env_var, "");
 		g_list = ft_modify_lst(g_list, env_var_cpy, env_var);
@@ -71,6 +74,7 @@ int	ft_built_in_export_modify(char *env_var, char *apres_egal)
 	}
 	else
 	{
+		printf("JE SUIS LE N4\n");
 		env_var = ft_strjoin(env_var, "=");
 		env_var_cpy = ft_strdup(env_var);
 		env_var2 = ft_strjoin(env_var, apres_egal); // need to correct leak
@@ -85,53 +89,61 @@ int	ft_built_in_export_add(char *env_var, char *apres_egal)
 {
 	t_env	*head;
 	t_env	*tail;
+	char	*safe;
 	char	*tmp;
-	char	*before_equal;
+	char	*tmp2;
+	int i= 0;
+	int j = 0;
 
 	if (ft_check_variable_before_equal(env_var) == 1)
 		return (FAILURE);
 	if (ft_check_variable_after_equal(apres_egal) == 1)
 		return (FAILURE);
-	if (ft_strrchr(env_var, '+'))
+	printf("JE SUIS LE N0\n");
+	printf("apres egal == %s   env_var %s\n", apres_egal, env_var);
+	if (ft_strchr(apres_egal, '$'))
 	{
-		before_equal = ft_trim_name(env_var);
-		apres_egal = ft_add_content(before_equal, apres_egal);
+		apres_egal = ft_add_env_var(apres_egal, env_var);
+		i = 1;
 	}
-	/*if (ft_strchr(apres_egal, "$"))
-	{
-		
-	}*/
 	head = g_list;
 	tail = head;
+	printf("env_var = %s\n", env_var);
 	while (head != NULL)
 	{
-		if (ft_strncmp(head->content, before_equal, ft_strlen(before_equal)) == 0)
+		if (ft_strncmp(head->content, env_var, ft_strlen(env_var)) == 0)
 		{
-			ft_built_in_export_modify(before_equal, apres_egal);
+			printf("JE SUIS LE N1\n");
+			ft_built_in_export_modify(env_var, apres_egal);
+			if (i == 1)
+				free(apres_egal);
 			return (SUCCESS);
 		}
 		head = head->next;
 	}
-	if (ft_strchr(before_equal, '='))
+	printf("ICI MEME\n");
+	if (ft_strchr(env_var, '='))
 	{
-		tmp = before_equal;
-		before_equal = ft_strjoin(before_equal, apres_egal);
+		tmp = env_var;
+		env_var = ft_strjoin(env_var, apres_egal);
 		free(tmp);
 	}
 	else
 	{
-		before_equal = ft_strjoin(before_equal, "=");
-		tmp = before_equal;
-		before_equal = ft_strjoin(before_equal, apres_egal); // need to correct leaks
+		env_var = ft_strjoin(env_var, "=");
+		tmp = env_var;
+		env_var = ft_strjoin(env_var, apres_egal); // need to correct leaks
 		free(tmp);
 	}
-	tail = ft_list_push_back(g_list, before_equal);
-
+	tail = ft_list_push_back(g_list, env_var);
+	if (i == 1)
+		free(apres_egal);
 	return (SUCCESS);
 }
 
 int	ft_built_in_export(char **cmd)
 {
+
 	char		*env_var;
 	char		temp;
 	t_decompte	k;
@@ -159,6 +171,8 @@ int	ft_built_in_export(char **cmd)
 				k.j = ft_find_where_is_equal(env_var);
 				ft_built_in_export_add(env_var, env_var + k.j + 1);
 			}
+			//if (k.i == 1)
+			//	return (ft_custom_error("export: not valid identifier3"));
 		}
 	}
 	return (SUCCESS);

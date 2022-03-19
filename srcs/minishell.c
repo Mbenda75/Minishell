@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:46:47 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/16 16:02:19 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/17 20:45:50 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,17 @@ void	start_minishell(t_init ishell, char **env)
 	free(ishell.prompt_line);
 }
 
+char *get_prompt(void)
+{
+	char *tmp;
+	char *ret;
+
+	tmp = getcwd(NULL, 0);
+	ret = ft_strjoin(tmp, " ");
+	free(tmp);
+	return (ret);	
+}
+
 void	minishell(char **env)
 {
 	t_init	ishell;
@@ -40,7 +51,7 @@ void	minishell(char **env)
 	g_list = cpy_env(env);
 	while (1)
 	{
-		ishell.pwd = getcwd(NULL, 0);
+		ishell.pwd = get_prompt();
 		ishell.prompt_line = readline(ishell.pwd);
 		ishell.cmd = ft_split(ishell.prompt_line, ' ');
 		free(ishell.pwd);
@@ -52,12 +63,7 @@ void	minishell(char **env)
 		else if (ishell.cmd[0] != NULL)
 		{
 			/*			PARSING NOT FINISH 				*/
-			if (check_first_quote(ishell.prompt_line) == 1)
-				ishell.new_line = skip_quote(ishell.prompt_line);
-			else if (check_first_quote(ishell.prompt_line) == 2)
-				ishell.new_line = skip_quote(ishell.prompt_line);
-			else if (check_first_quote(ishell.prompt_line) == 0)
-				ishell.new_line = ft_strdup(ishell.prompt_line);
+			ishell.new_line = skip_quote(ishell.prompt_line);
 			add_history(ishell.prompt_line);
 			//pipex->nb_cmd = count_pipe(ishell.new_line);
 			if (check_pipe(ishell.new_line) == 1)

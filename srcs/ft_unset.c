@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 22:59:07 by user42            #+#    #+#             */
-/*   Updated: 2022/03/15 19:02:09 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/17 15:20:41 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ void	ft_built_in_unset_2(char *cmd)
 			if (head->next != NULL)
 			{
 				tmp = head->next;
-				if (head->index_env >= g_list->limit_free)
-					free(head->content);
+				free(head->content);
 				head->content = head->next->content;
 				head->next = head->next->next;
 				free(tmp);
@@ -63,8 +62,7 @@ void	ft_built_in_unset_2(char *cmd)
 			{
 				while (temp->next->next != NULL)
 					temp = temp->next;
-				if (temp->next->index_env >= g_list->limit_free)
-					free(temp->next->content);
+				free(temp->next->content);
 				free(temp->next);
 				lastnode = temp->next;
 				temp->next = NULL;

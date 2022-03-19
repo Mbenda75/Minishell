@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:18:17 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/15 18:38:53 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/16 22:17:42 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ void	*free_env(t_env *lst)
 	while (lst != NULL)
 	{
 		tmp = lst;
-		if (tmp->index_env >= g_list->limit_free)
-			free(tmp->content);
+		free(tmp->content);
 		lst = lst->next;
 		free(tmp);
 	}

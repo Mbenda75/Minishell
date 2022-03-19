@@ -38,6 +38,8 @@
 	//export HO$LA=BON a gerer  LE DOLLAR FAIT TOUT SUPPRIMER APRES LUI
 	/export HOLA+=BOU LE  LE PLUS N'est valide qu'a la fin
 	//export HOLA=$USER DONNE LA VALEUR DE LA VARIABLE D'ENVIRONNEMENT
+	//export s=sasa soso ---> S=sasa sans soso et le notre affiche tout 
+
 ARG1 : si ce nest pas une redirection cest une commande
 	tant que largument nest pas un pipe
 		si ce nest pas une redirection alors
@@ -46,6 +48,8 @@ ARG1 : si ce nest pas une redirection cest une commande
 			arg = redirecton
 			arg++
 			l'argument est un fichier
+
+
 ARG1 : SI C'est une redirection alors
 	le prochain argument est un fichier
 	et celui juste apr`es (arg++) est une commande FORCEMENT
@@ -68,9 +72,18 @@ if (count_pipe(prompt_line) == 0)
 
 //$ ne prend pas les simple quote
 // echo -n popo$USERpolo --> seul popo doit s'afficher
-
+//export S=$USER avec guillemet sa marche --->benmoham sinon avec squote --->$USER
 if + in export 
 	check si variable export nexiste pas
 	tu la cree
 	sinon si variable export existe
 	strjoin anciencontent + new
+	
+//export S=$USSDGDFH == segfault
+export M = MONO
+
+export POPO= LOLO --> affiche POPO=
+export POPO = LOLO --> affiche export: `=': not a valid identifier
+export POPO =LOLO --> affiche export: `=LOLO': not a valid identifier
+
+export =MOMO --> nous affiche pas derrreur mais cree rien aussi

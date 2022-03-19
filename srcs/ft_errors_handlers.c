@@ -3,27 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_errors_handlers.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 14:04:09 by user42            #+#    #+#             */
-/*   Updated: 2022/02/21 15:10:31 by user42           ###   ########.fr       */
+/*   Updated: 2022/03/18 11:50:44 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	ft_free_charr(char **path)
-{
-	int	i;
-
-	i = 0;
-	while (path[i])
-	{
-		free(path[i]);
-		i++;
-	}
-	free(path);
-}
 
 int	ft_system_error(void)
 {
