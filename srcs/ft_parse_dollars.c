@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 18:08:49 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/20 21:34:38 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/20 22:02:52 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,21 +93,20 @@ int	count_dollar(char *str)
 }
 char *ft_transform_dollar(char *str)
 {
-    int i; // simple index pour slit_by_space
-    int j; // va servir a connaitre la position de j
-    char *word; // va servir de char* a envoyer dans le check env et le add env
-    char **split_byspace; // split str par espace pour avoir toutes les strings
+    int i;
+    int j;
+    char *word;
+    char **split_byspace;
     char **split_bydollar;
     char **receive_value;
     int k;
 
-    i = -1; // -1 pour la norme
+    i = -1;
     j = 0;
     int dollar = count_dollar(str);
-    //printf("dollar = %d\n", dollar);
-    split_byspace = ft_split(str, ' '); // je split par espace
+    split_byspace = ft_split(str, ' ');
     receive_value = malloc(sizeof(char *) * count_dollar(str) + 1);
-    while (split_byspace[++i]) // je fais boucler mon split
+    while (split_byspace[++i])
     {
         word = split_byspace[i];
         k = 0;
@@ -118,14 +117,17 @@ char *ft_transform_dollar(char *str)
             {
                 if (ft_checK_env_var_existence(split_bydollar[k]) == SUCCESS)
                 {
+                    printf("ICI WORD %s\n", word);
                     word = ft_change_dollar_var(split_bydollar[k]);
                     receive_value[j] = word;
                     j++;
                 }
-                //else 
-                //{
-                    //split_byspace[i] = ft_strdup(word);
-                //}
+                else
+                {
+                    printf("LA WORD %s\n", word);
+                    receive_value[j] = "";
+                    j++;
+                }
                 k++;
             }
             receive_value[j] = '\0';
@@ -134,12 +136,11 @@ char *ft_transform_dollar(char *str)
         {
             receive_value[j] = word;
             receive_value[j] = ft_strjoin(receive_value[j], " ");
-            //printf("ICI 1receive_value %s\n", receive_value[j]);
             j++;
         }
     }
-    return (ft_modify_newline_content(receive_value)); //sert simplement  a vider str et 
-    // et remplace str avec le nouveau contenu et free tout
+    return (ft_modify_newline_content(receive_value));
+
 }
 
 char *ft_transform_dollar_2(char *str)

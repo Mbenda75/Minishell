@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:40:02 by user42            #+#    #+#             */
-/*   Updated: 2022/03/20 18:32:41 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/20 22:05:45 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,15 +100,14 @@ int	ft_built_in_export_add(char *env_var, char *apres_egal)
 	if (ft_check_variable_after_equal(apres_egal) == 1)
 		return (FAILURE);
 	printf("JE SUIS LE N0\n");
-	printf("apres egal == %s   env_var %s\n", apres_egal, env_var);
 	if (ft_strchr(apres_egal, '$'))
 	{
 		apres_egal = ft_transform_dollar(apres_egal);
-		i = 1;
 	}
+	if (ft_strchr(env_var, '$'))
+		env_var = ft_transform_dollar(env_var);
 	head = g_list;
 	tail = head;
-	printf("env_var = %s\n", env_var);
 	while (head != NULL)
 	{
 		if (ft_strncmp(head->content, env_var, ft_strlen(env_var)) == 0)
