@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 18:51:40 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/20 18:29:29 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/20 22:31:30 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,9 +207,9 @@ int	ft_check_variable_before_equal(char *cmd)
 		if (!((cmd[i] >= 'a' && cmd[i] <= 'z' )
 				|| (cmd[i] >= 'A' && cmd[i] <= 'Z')
 				|| (cmd[i] >= '0' && cmd[i] <= '9')
-				|| (cmd[i] == '_' || cmd[i] == '=')
-				|| (cmd[i] == '$' || (cmd[j - 1] == '+' && cmd[j - 2] != '+')
-				|| (cmd[i] == ' '))))
+				|| (cmd[i] == '_' || cmd[i] == '$') 
+				|| (cmd[j - 1] == '+' && cmd[j - 2] != '+')
+				|| (cmd[i] == ' ')))
 			return (ft_custom_error("export: not valid identifier3"));
 		i++;
 	}

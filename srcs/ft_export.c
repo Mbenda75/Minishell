@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:40:02 by user42            #+#    #+#             */
-/*   Updated: 2022/03/20 22:05:45 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/20 22:31:22 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,8 +167,8 @@ int	ft_built_in_export(char **cmd)
 				k.j = ft_find_where_is_equal(env_var);
 				ft_built_in_export_add(env_var, env_var + k.j + 1);
 			}
-			//if (k.i == 1)
-			//	return (ft_custom_error("export: not valid identifier3"));
+			if (k.i == 1)
+				printf("export: '%s': not a valid identifer\n", cmd[k.l]);
 		}
 	}
 	return (SUCCESS);

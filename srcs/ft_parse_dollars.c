@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 18:08:49 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/20 22:02:52 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/20 23:27:05 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int ft_checK_env_var_existence(char *complete_var)
             return (SUCCESS);
         verify = verify->next;
     }
-    //free(complete_var);
     return (FAILURE);
 }
 

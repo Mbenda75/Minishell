@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 22:01:53 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/20 22:16:30 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/20 23:37:18 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,26 @@ int ft_echo_single_dollar(char **cmd, int i, t_env *echo_env)
 		j++;
 	}
 	split_bydollar = ft_split(cmd[i], '$');
+	if (split_bydollar[0] == NULL || split_bydollar[1] == NULL)
+	{
+		ft_putstr_fd("$", 1);
+		if (cmd[i + 1])
+			write(1, " ", 1);
+		return (SUCCESS);
+	}
+	if (ft_strchr(split_bydollar[jump], '?'))
+	{
+		j = 1;
+		ft_putnbr_fd(g_list->exit_value, 1);
+		while (split_bydollar[jump][j] == '?')
+		{
+			ft_putchar_fd(split_bydollar[jump][j], 1);
+			j++;
+		}
+		if (cmd[i + 1])
+			write(1, " ", 1);
+		return (SUCCESS);
+	}
 	split_bydollar[jump] == ft_strjoin(split_bydollar[jump], "=");
 	if (ft_checK_env_var_existence(split_bydollar[jump]) == SUCCESS)
 	{

@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:46:47 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/20 21:00:49 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/20 22:45:46 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	start_minishell(t_init ishell, char **env)
 	{
 	//	printf("tmpl == %s\n", tmp->split_byspace[0]);
 		g_list->exit_value = builtin_or_exec(tmp, env, ishell);
+
 		//printf("exit__value = %d\n", g_list->exit_value);
 		tmp = tmp->next;
 
