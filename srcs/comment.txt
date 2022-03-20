@@ -1,0 +1,185 @@
+if (ft_find_dollars(cmd[i]) == SUCCESS)
+            {
+                
+                split_bydollar = ft_split(env_var_whole, '$');
+                while (split_bydollar[j])
+                {
+                    if (ft_checK_env_var_existence(split_bydollar[j]) == SUCCESS)
+                        printf("\033[0;32mLA VARIABLE AVANT = %s EXISTE\n\033[0;37m", split_bydollar[j]);
+                    else 
+                        printf("\033[0;31mLA VARIABLE AVANT = %s N'EXISTE PAS\n\033[0;37m", split_bydollar[j]);
+                    j++;
+                }
+            }
+            j = 0;
+
+if (ft_find_dollars(env_var_whole + k + 1) == SUCCESS)
+            {
+                split_bydollar = ft_split(env_var_whole + k + 1, '$');
+                while (split_bydollar[j])
+                {
+                    if (ft_checK_env_var_existence(split_bydollar[j]) == SUCCESS)
+                        printf("\033[0;32mLA VARIABLE APRES = %s EXISTE\n\033[0;37m", split_bydollar[j]);
+                    else 
+                        printf("\033[0;31mLA VARIABLE APRES = %s N'EXISTE PAS\n\033[0;37m", split_bydollar[j]);
+                    j++;
+                }
+            }
+            j = 0;
+
+wait(&status)
+
+WIFEXITED(status)
+    return (WEXITSTATUS(status)
+WIFSIGNALED(status)
+    return (WTERMSIG(status) + 128
+
+/*int ft_checK_env_var_existence(char *before_equal, char *after_equal)
+{
+    t_env *verify;
+    char *tmp_trim_dollar; //variable qui sert a retirer le dollar
+    char *tmp_add_equal; //variable qui sert a ajouter le =
+
+    verify = g_list;
+    tmp_trim_dollar = ft_strtrim(before_equal, "$"); //on retire le dollar pour avoir le nom exact de la variable
+    tmp_add_equal = ft_strjoin(tmp_trim_dollar, "="); //on ajoute un egal pour ne pas avoir de variables synonymes ex : TERM et TERMCOLORS
+    free(tmp_trim_dollar);
+    while (verify)
+    {
+        if (ft_strncmp(verify->content, tmp_add_equal, ft_strlen(tmp_add_equal)) == SUCCESS) // sert a verifier l'existence de la variable
+            return (SUCCESS); // la variable d'env existe, on renvoie SUCCESS
+        verify = verify->next; // on boucle tant que la variable existe
+    }
+    return (FAILURE); // la variable d'env n'existe pas
+}*/
+
+int ft_built_in_export(char **cmd)
+{
+    int i; // simple index pour naviguer dans cmd et envoyer plusieurs exports
+    int j; // sert a naviguer dans les caracteres de l'env_var_whole;
+    int k;
+    char temp;
+    char *env_var_whole; // comprend le nom complet de l'env var --> NAME=VALUE
+    char **split_bydollar;
+
+    
+    i = 0;
+    j = 0;
+    k = 0;
+    if (cmd[0] == NULL)
+        ft_built_in_env(cmd);
+    else
+    {
+        while (cmd[++i])
+        {
+            env_var_whole = cmd[i]; // je donne NAME=VALUE contenu dans cmd[i] a env_var_whole
+            k = ft_find_where_is_equal(env_var_whole);
+            temp = env_var_whole[k];
+            env_var_whole[k] = 0; 
+            printf("\033[0;32menv_var_whole = %s\n\033[0;37m", env_var_whole);
+            printf("\033[0;32menv_var_whole = %s\n\033[0;37m", env_var_whole + k + 1);
+            if (ft_find_dollars(cmd[i]) == SUCCESS)
+            {
+                
+                split_bydollar = ft_split(env_var_whole, '$');
+                while (split_bydollar[j])
+                {
+                    if (ft_checK_env_var_existence(split_bydollar[j]) == SUCCESS)
+                        printf("\033[0;32mLA VARIABLE AVANT = %s EXISTE\n\033[0;37m", split_bydollar[j]); //si la variable existe, il faut la modifier
+                    else 
+                    {
+                        printf("\033[0;31mLA VARIABLE AVANT = %s N'EXISTE PAS\n\033[0;37m", split_bydollar[j]);
+                        printf("export: '%s': not a valid identifier\n", env_var_whole + k + 1); 
+                        break ;
+                    }
+                    j++;
+                }
+            }
+            j = 0;
+            if (ft_find_dollars(env_var_whole + k + 1) == SUCCESS)
+            {
+                split_bydollar = ft_split(env_var_whole + k + 1, '$');
+                while (split_bydollar[j])
+                {
+                    if (ft_checK_env_var_existence(split_bydollar[j]) == SUCCESS)
+                        printf("\033[0;32mLA VARIABLE APRES = %s EXISTE\n\033[0;37m", split_bydollar[j]);
+                    else 
+                        printf("\033[0;31mLA VARIABLE APRES = %s N'EXISTE PAS\n\033[0;37m", split_bydollar[j]);
+                    j++;
+                }
+            }
+            j = 0;
+            //printf("cmd[%d] == %s\n", i, cmd[i]);
+            //if (ft_checK_env_var_name(env_var_whole) == FAILURE) //check avant d'envoyer
+             //   return (ft_custom_error("export: not a valid identifier"));
+           /* je vais chercher l'existence d'un egal dans la string
+             TROIS CAS DE FIGURE
+            -il y'a un NAME=VALUE on renvoit SUCCESS
+            -il y'a un NAME= donc un nom mais pas de valeur apres egal on renvoit SUCCESS
+            -il y'a un NAME mais pas de egal ni de value --> on renvoit -1*/
+         /*  if (ft_find_if_equal_exists(env_var_whole) == SUCCESS) //il y'a un egal dans la chaine ex : POPO=LOLO
+           {
+               j = ft_find_where_is_equal(env_var_whole);
+               ft_add_or_mdy_env_var(env_var_whole, env_var_whole + j + 1); //j'envoie a ma fct NAME et VALUE en sautant le '=' grace a j + 1
+            }
+            if (ft_find_if_equal_exists(env_var_whole) == FAILURE) // il n'y a pas d'egal
+                return (FAILURE);*/
+        }
+    }
+    return (SUCCESS);
+}
+
+// MA FONCTION AVEC LES COMMENTAIRES
+char *ft_transform_dollar(char *str)
+{
+    int i; // simple index pour slit_by_space
+    int j; // va servir a connaitre la position de j
+    char temp; // va servir a decouper le char * word pour envoyer les caracteres apres USER
+    char *word; // va servir de char* a envoyer dans le check env et le add env
+    char **split_byspace; // split str par espace pour avoir toutes les strings
+    
+    i = -1; // -1 pour la norme
+    split_byspace = ft_split(str, ' '); // je split par espace
+    while (split_byspace[++i]) // je fais boucler mon split
+    {
+        word = split_byspace[i]; // je je donne a word tous les split[i] pour les checker un par un dans l'env
+        if (ft_find_dollars(word) == SUCCESS) // s'il y'a un dollar alors
+        {
+            j = ft_find_where_is_dollars(word);
+            temp = word[j];
+            word[j] = 0; 
+            //printf("word = %s\n", word + j + 1);
+            if (ft_checK_env_var_existence(word + j + 1) == SUCCESS)
+            {
+                //printf("\033[0;32mLA VARIABLE  %s EXISTE\n\033[0;37m", word + j + 1);
+                word = ft_change_dollar_var(word + j + 1);
+                split_byspace[i] = ft_strdup(word);
+                //printf("\033[0;32mWORD  %s\n\033[0;37m", word);
+              //  printf("split by space %s\n", split_byspace[i]);
+            }
+            else
+            {
+                //printf("\033[0;31mLA VARIABLE  %s N'EXISTE PAS\n\033[0;37m", word + j + 1);
+                split_byspace[i] = ft_strdup(word);
+            }
+        }
+        j = 0;
+        
+    }
+    i = 0;
+    char *str_2;
+    //printf("str = %s\n", str);
+    ft_bzero(str, ft_strlen(str));
+    while (split_byspace[i])
+    {
+        //printf("split by space %s\n", split_byspace[i]);
+        str_2 = ft_strjoin(split_byspace[i], " ");
+        str = ft_strjoin(str, str_2);
+        free(str_2);
+        free(split_byspace[i]);
+        i++;
+    }
+    free(split_byspace);
+    //printf("str = %s\n", str);
+    return (str);
+}

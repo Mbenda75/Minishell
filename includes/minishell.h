@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/18 16:25:34 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/20 19:55:30 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,8 @@ extern struct s_env	*g_list;
 
 typedef struct s_env
 {
+	int					exit_value;
 	char				*content;
-	int					index_env;
-	int					limit_free;
-	char				**env_2;
-	struct s_lst_cmd	*tmp;
 	struct s_env		*next;
 }				t_env;
 
@@ -100,16 +97,18 @@ int			len_lst(t_lst_cmd *lst);
 int			check_pipe(char *str);
 
 int			ft_find_the_equal(char *str);
+int			ft_find_dollars(char *str);
 int			ft_find_where_is_equal(char *str);
 int			ft_check_variable_after_equal(char *cmd);
 int			ft_check_variable_before_equal(char *cmd);
 char		*ft_trim_name(char *cmd);
 char 		*ft_add_content(char *avant_equal, char *after_equal);
 char 		*ft_add_env_var(char *after_equal, char *env_var);
+int			ft_len(char *cmd[]);
 
 /*			INIT SHELL  		*/
 t_env		*cpy_env(char **envp);
-t_env		*file_env(char *str, int i);
+t_env		*file_env(char *str);
 t_lst_cmd	*create_lst(char *prompt_line, int nb_pipe, t_lst_cmd *lst);
 t_lst_cmd	*file_lst(char *split_bypipe);
 t_lst_cmd	*init_shell(char *buffer, t_lst_cmd *lst);
@@ -142,7 +141,7 @@ int			ft_built_in_cd(char **path, char **envp);
 int			ft_built_in_exit(t_lst_cmd *mshell);
 
 /*			FT_ENV				*/
-void		ft_built_in_env(char **built_in);
+int			ft_built_in_env(char **built_in);
 
 /*			FT_ECHO			*/
 int			ft_built_echo(char *args[]);
@@ -164,4 +163,15 @@ t_redir		ft_count_redirection(char *str);
 
 void		status_child(void);
 char		**ft_env_cpy(char **envp, char **envp_2);
+
+char 	*ft_transform_dollar(char *str);
+int		ft_find_where_is_dollars(char *str);
+int		ft_find_dollars(char *str);
+char	*ft_transform_dollar_2(char *str);
+int ft_checK_env_var_existence(char *complete_var);
+char *ft_change_dollar_var(char *word);
+
+
+
+
 #endif

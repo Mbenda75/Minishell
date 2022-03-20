@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 17:19:35 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/17 14:01:40 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/20 17:13:23 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ t_lst_cmd	*file_lst(char *split_bypipe)
 	lst = malloc(sizeof(t_lst_cmd));
 	lst->split_byspace = ft_split(split_bypipe, ' ');
 	lst->next = NULL;
-/*	for (int i = 0; lst->split_byspace[i]; i++)
-	printf("split by pipe== %s\n", lst->split_byspace[i]);*/
+//	for (int i = 0; lst->split_byspace[i]; i++)
+//	printf("split by pipe== %s\n", lst->split_byspace[i]);
 	return (lst);
 }
 
@@ -60,10 +60,10 @@ t_lst_cmd	*create_lst(char *prompt_line, int nb_pipe, t_lst_cmd *lst)
 t_lst_cmd	*init_shell(char *buffer, t_lst_cmd *lst)
 {
 	int		nb_pipe;
-	t_redir red;
+	//t_redir red;
 
-	if (ft_check_redirection(buffer) == SUCCESS)
-		red = ft_count_redirection(buffer);
+	//if (ft_check_redirection(buffer) == SUCCESS)
+		//red = ft_count_redirection(buffer);
 	nb_pipe = count_pipe(buffer);
 	if (nb_pipe != 0)
 		lst = create_lst(buffer, nb_pipe, lst);

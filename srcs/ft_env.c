@@ -3,22 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 21:10:54 by user42            #+#    #+#             */
-/*   Updated: 2022/03/15 18:44:02 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/19 20:45:53 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_env	*file_env(char *str, int i)
+t_env	*file_env(char *str)
 {
 	t_env	*lst;
 
 	lst = malloc(sizeof(t_env));
 	lst->content = str;
-	lst->index_env = i;
 	lst->next = NULL;
 	return (lst);
 }
@@ -44,40 +43,42 @@ t_env	*cpy_env(char **env)
 	{
 		if (!g_list)
 		{
-			g_list = file_env(env[i], i);
+			g_list = file_env(ft_strdup(env[i]));
 			tmp = g_list;
 		}
 		else
 		{
-			tmp->next = file_env(env[i], i);
+			tmp->next = file_env(ft_strdup(env[i]));
 			tmp = tmp->next;
 		}
 		i++;
 	}
-	g_list->limit_free = limit_env(env);
 	return (g_list);
 }
 
-void	ft_built_in_env(char **built_in)
+int	ft_built_in_env(char **built_in)
 {
-	int		i;
 	t_env	*head;
 	t_env	*tail;
+	int		i;
 
 	i = 0;
 	head = g_list;
 	tail = head;
-	if (built_in[1])
-		ft_custom_error("env: aucun argument n'est possible");
-	else
+	while (built_in[i])
 	{
-		while (tail != NULL)
+		if (ft_strcmp(built_in[i], "env") != 0)
 		{
-			if (tail->content)
-			{	
-				printf("env == %s\n", tail->content);
-			}
-			tail = tail->next;
+			printf("env: '%s' No such file or directory\n", built_in[i]);
+			return (FAILURE);
 		}
+		i++;
 	}
+	while (tail != NULL)
+	{
+		if (tail->content)
+			printf("env == %s\n", tail->content);
+		tail = tail->next;
+	}
+	return (SUCCESS);
 }

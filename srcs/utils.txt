@@ -34,6 +34,11 @@
 
 	//|>| file2 == cree le fichier
 	//| >| file = cree aussi
+	/// gere echo avec le $
+	//export HO$LA=BON a gerer  LE DOLLAR FAIT TOUT SUPPRIMER APRES LUI
+	/export HOLA+=BOU LE  LE PLUS N'est valide qu'a la fin
+	//export HOLA=$USER DONNE LA VALEUR DE LA VARIABLE D'ENVIRONNEMENT
+	//export s=sasa soso ---> S=sasa sans soso et le notre affiche tout 
 
 ARG1 : si ce nest pas une redirection cest une commande
 	tant que largument nest pas un pipe
@@ -43,6 +48,8 @@ ARG1 : si ce nest pas une redirection cest une commande
 			arg = redirecton
 			arg++
 			l'argument est un fichier
+
+
 ARG1 : SI C'est une redirection alors
 	le prochain argument est un fichier
 	et celui juste apr`es (arg++) est une commande FORCEMENT
@@ -65,86 +72,20 @@ if (count_pipe(prompt_line) == 0)
 
 //$ ne prend pas les simple quote
 // echo -n popo$USERpolo --> seul popo doit s'afficher
+//export S=$USER avec guillemet sa marche --->benmoham sinon avec squote --->$USER
+if + in export 
+	check si variable export nexiste pas
+	tu la cree
+	sinon si variable export existe
+	strjoin anciencontent + new
+	
+//export S=$USSDGDFH == segfault
+export M = MONO
 
-export : 
-gerer le cas ou 
-export POPO=$USER export POPO+=$USER ca fait dans le parsing = adaloui$USER --> trouver un moyen de retirer ce au'il ya avant
- 
-// export POPO=POPO$USER --> POPO=POPOadaloui
- export POPO=$USER$USER$USER --> doit afficher adalouiadalouiadaloui
+export POPO= LOLO --> affiche POPO=
+export POPO = LOLO --> affiche export: `=': not a valid identifier
+export POPO =LOLO --> affiche export: `=LOLO': not a valid identifier
 
- //
+export =MOMO --> nous affiche pas derrreur mais cree rien aussi
 
- faire un nouveau readline 
- sauvegarder le contenu du readline dans un pipe (ecrire l'ouvrture et )
-
-NE PAS OBLIER LE : POPO > LOLO >[ ] avec un espace dans le check d'erreur
-
-
- /*int ft_create_file(char **str)
-{
-	int i;
-	int file_open;
-
-	i = 0;
-	while (str[i])
-	{
-		if (ft_strcmp(str[i], ">") == 0)
-		{
-			file_open = open(str[i + 1], O_WRONLY | O_TRUNC | O_CREAT, 0755 );
-			if (file_open < 0)
-				return (ft_custom_error("Error > chevron"));
-			close (file_open);
-			str[i] = NULL;
-			str[i + 1] == NULL;
-			i = i + 2;
-		}
-		else if (ft_strcmp(str[i], ">>") == 0)
-		{
-			file_open = open(str[i + 1], O_WRONLY | O_APPEND | O_CREAT, 0755 );
-			if (file_open < 0)
-				return (ft_custom_error("Error >> chevron"));
-			close (file_open);
-			str[i] = NULL;
-			str[i + 1] == NULL;
-			i = i + 2;
-		}
-		i++;
-	}
-	return (SUCCESS);
-}
-
-int ft_check_open_pas_colle(char **split_by_spa)
-{
-	int i;
-	int file_open;
-
-	i = 0;
-	while (split_by_spa[i])
-	{
-		if (ft_strcmp(split_by_spa[i], "<") == 0)
-		{
-			printf("COUCOU 2\n");
-			file_open = open(split_by_spa[i + 1], O_RDONLY);
-			if (file_open < 0)
-				return (ft_custom_error("No such file or directory"));
-			close (file_open);
-			split_by_spa[i] = NULL;
-			split_by_spa[i + 1] = NULL;
-			i = i + 1;
-		}
-		if (ft_strcmp(split_by_spa[i], ">") == 0)
-		{
-			file_open = open(split_by_spa[i + 1], O_WRONLY | O_TRUNC | O_CREAT, 0755 );
-			if (file_open < 0)
-				return (ft_custom_error("Error > chevron"));
-			close (file_open);
-			split_by_spa[i] = NULL;
-			split_by_spa[i + 1] == NULL;
-			i = i + 1;
-		}
-		i++;
-	}
-	printf("SUCCESS OPEN 2\n");
-	return (SUCCESS);
-}*/
+prevenir mohamed pour $?

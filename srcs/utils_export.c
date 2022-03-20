@@ -6,11 +6,9 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 18:51:40 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/18 16:39:43 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/20 18:29:29 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "../includes/minishell.h"
 
 #include "../includes/minishell.h"
 
@@ -43,6 +41,7 @@ int	ft_find_the_equal(char *str)
 	return (FAILURE);
 }
 
+
 int	ft_find_where_is_equal(char *str)
 {
 	int	i;
@@ -71,6 +70,20 @@ int	ft_find_where_is_dollars(char *str)
 	return (0);
 }
 
+int	ft_find_dollars(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '$')
+			return (SUCCESS);
+		i++;
+	}
+	return (FAILURE);
+}
+
 char	*ft_trim_name(char *cmd)
 {
 	char	*tmp;
@@ -84,13 +97,16 @@ char *ft_add_env_var(char *after_equal, char *env_var)
 	t_env *verify;
 	t_env *env_value;
 	char *new_after_equal;
+	char **tab;
 	char *tmp;
 	char *tmp2;
+	char *temp;
 	int i = 0;
 	char **split_bydollars;
 
 	verify = g_list;
 	env_value = g_list;
+	split_bydollars == NULL;
 	if (after_equal[0] == '$')
 	{
 		tmp2 = ft_strtrim(after_equal, "$");
@@ -98,17 +114,11 @@ char *ft_add_env_var(char *after_equal, char *env_var)
 	}
 	else
 	{
-		split_bydollars = ft_split(after_equal, '$');
-		tmp2 = ft_strtrim(after_equal, "$");
+		split_bydollars = ft_split(after_equal, '$'); 
 		tmp2 = ft_substr(after_equal, ft_find_where_is_dollars(after_equal) + 1, ft_strlen(after_equal)); // tpm = $USER
 		tmp = ft_strjoin(tmp2, "=");
-		//tmp = USER=
-		//tmp2 = USER
-		// trim USER 
 		i = 1;
-		printf("TMP = %s TMP2 = %s\n", tmp, tmp2);
 	}
-	printf("tmp == %s   tmp2 == %s\n", tmp, tmp2);
 	free(tmp2);
 	while (verify) 
 	{
@@ -121,8 +131,10 @@ char *ft_add_env_var(char *after_equal, char *env_var)
 			free(tmp);
 			if (i == 0)
 				after_equal = ft_strdup("");
-			else 
+			else if (i == 1)
 				after_equal = ft_strdup(split_bydollars[0]);
+			if (i == 1)
+				free_str(split_bydollars);
 			return (after_equal);
 		}
 	}
@@ -132,11 +144,15 @@ char *ft_add_env_var(char *after_equal, char *env_var)
 		{
 			if (i == 1)
 			{
-				new_after_equal = ft_substr(env_value->content, ft_find_where_is_equal(env_value->content) + 1, ft_strlen(env_value->content));
-				new_after_equal = ft_strjoin(split_bydollars[0], new_after_equal);
+				tmp2 = ft_substr(env_value->content, ft_find_where_is_equal(env_value->content) + 1, ft_strlen(env_value->content));
+				new_after_equal = ft_strjoin(split_bydollars[0], tmp2);
+				free(tmp2);
+				free_str(split_bydollars);
+				printf("ou ici\n");
 				break ;
 			}
 			new_after_equal = ft_substr(env_value->content, ft_find_where_is_equal(env_value->content) + 1, ft_strlen(env_value->content));
+			printf("sinon c la\n");
 			break ;
 		}
 		env_value = env_value->next;
@@ -144,38 +160,6 @@ char *ft_add_env_var(char *after_equal, char *env_var)
 	free(tmp);
 	return (new_after_equal); 
 }
-
-/* char *ft_add_content(char *avant_equal, char *after_equal)
-{
-	t_env *export_content;
-	t_env *verify;
-	char *new_after_equal;
-	char *tmp;
-	char *tmp2;
-
-	verify = g_list; //liste qui va verifier l'existence de la var
-	export_content = g_list; // va nous servir a ajouter la var
-	tmp = ft_strjoin(avant_equal, "=");
-	while (verify) /// je verifie si la variable existe deja pour eviter un segfault
-	{
-		if (ft_strncmp(verify->content, tmp, ft_strlen(tmp)) == SUCCESS)
-			break ; //si elle existe je sors de la boucle
-				verify = verify->next;
-		if (verify == NULL) //si elle n'existe pas je renvoit after_equal pour eviter segfault
-			return (after_equal);
-	}
-	while (export_content) // je rajoute le content dans la variable 
-	{
-		if (ft_strncmp(export_content->content, tmp, ft_strlen(tmp)) == SUCCESS)
-		{
-			tmp2 = ft_substr(export_content->content, ft_find_where_is_equal(export_content->content) + 1, ft_strlen(export_content->content));			
-			new_after_equal = ft_strjoin(tmp2, after_equal); //je prend la contenu de la var apres le = et je le join
-			break ;
-		}
-		export_content = export_content->next;
-	}
-	return (new_after_equal);
-} */
 
 int	ft_check_variable_after_equal(char *cmd)
 {

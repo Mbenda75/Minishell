@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:07:53 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/15 18:19:38 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/19 23:44:10 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main(int ac, char **av, char **env)
 {
 	if (ac != 1 && !av)
 		exit(1);
-	//ft_signals();
+	ft_signals();
 	minishell(env);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_signals.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:27:34 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/15 18:54:05 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/20 02:25:22 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,6 @@ void	ft_signals_handler(int signal)
 void	ft_signals()
 {
 	signal(SIGINT, ft_signals_handler);
-	signal(SIGSEGV, ft_signals_handler);
+	//signal(SIGSEGV, ft_signals_handler);
 	signal(SIGQUIT, SIG_IGN);
 }
