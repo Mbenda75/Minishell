@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 11:26:11 by user42            #+#    #+#             */
-/*   Updated: 2022/03/19 17:36:34 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/21 12:55:09 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ int ft_check_chev_errors(char *str)
 				return (FAILURE);
 		}
 	}
-	
-	printf("str[i - 1] == [%c]\nstr[i] == [%c]\n", str[i - 1], str[i]);
 	if (str[i - 1] == '<' || str[i - 1] == '>' ||  str[i - 1] == ' ')
 		return (FAILURE);
 	printf("SUCCESS CHECK REDIR\n");

@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:07:53 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/15 18:19:38 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/21 19:28:48 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	count_pipe(char *str)
 	pipe = 0;
 	while (str[i])
 	{
-		if (str[i] == '|' && str[i + 1] != '|' && str[0] != '|')
+		if (str[i] == '|' && str[i + 1] != '|')
 			pipe++;
 		i++;
 	}

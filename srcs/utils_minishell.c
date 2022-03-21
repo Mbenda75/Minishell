@@ -6,18 +6,19 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 17:19:35 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/17 13:54:48 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/21 18:50:16 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_lst_cmd	*file_lst(char *split_bypipe)
+t_lst_cmd	*file_lst(char *str)
 {
 	t_lst_cmd	*lst;
 
 	lst = malloc(sizeof(t_lst_cmd));
-	lst->split_byspace = ft_split(split_bypipe, ' ');
+	lst->split_byspace = ft_split(str, ' ');
+	lst->pipex = init_pipex(lst->split_byspace, str);
 	lst->next = NULL;
 	for (int i = 0; lst->split_byspace[i]; i++)
 	printf("split by pipe== %s\n", lst->split_byspace[i]);

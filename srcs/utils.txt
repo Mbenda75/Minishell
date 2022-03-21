@@ -87,3 +87,7 @@ export POPO = LOLO --> affiche export: `=': not a valid identifier
 export POPO =LOLO --> affiche export: `=LOLO': not a valid identifier
 
 export =MOMO --> nous affiche pas derrreur mais cree rien aussi
+echo $ >|d cree le fichier et exec echo
+echo $ >| d cree le fichier et exec echo
+echo $ > | d erreur
+echo $ > |d erreur

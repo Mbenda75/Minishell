@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/19 13:05:53 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/21 19:54:37 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ extern struct s_env	*g_list;
 typedef struct s_env
 {
 	char				*content;
+	int					nb_pipe;
+	int					**pfd;
 	struct s_env		*next;
 }				t_env;
 
@@ -42,8 +44,8 @@ typedef struct s_pipex
 	char	**split_path;
 	char	*line_path;
 	char	*exec_path;
-	int		nb_cmd;
-	int		*pfd;
+	int		nb_pipe;
+	int		**pfd;
 	pid_t	child;
 }		t_pipex;
 
@@ -66,6 +68,7 @@ typedef struct s_init
 typedef struct s_lst_cmd
 {
 	char				**split_byspace;
+	struct s_pipex *pipex;
 	struct s_lst_cmd	*next;
 	int					exit_value;
 }				t_lst_cmd;
@@ -121,7 +124,10 @@ void		minishell( char **env);
 char		*search_path(t_env *lst);
 char		*ft_strcat2(char *dest, char *src);
 char		*boucle_path(char **array_path, char **array_cmd);
-int			builtin_or_exec(t_lst_cmd *mshell, char **env, t_init ishell);
+void	exec_cmd(t_lst_cmd *mshell, char **env);
+ void	cmd(t_lst_cmd *tmp, char **env, int i);
+t_pipex 	*init_pipex(char **split_byspace, char *str);
+
 
 /*		FT_ERRORS_HANDLERS		*/
 void		ft_free_charr(char **path);
