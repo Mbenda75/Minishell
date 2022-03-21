@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/20 21:51:00 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/21 17:56:26 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,8 @@ char	*ft_transform_dollar_2(char *str);
 int ft_checK_env_var_existence(char *complete_var);
 char *ft_change_dollar_var(char *word);
 
+/*		FT_UTILS_REDIR		*/
+int ft_check_all_redir_errors(char *str);
 
 
 

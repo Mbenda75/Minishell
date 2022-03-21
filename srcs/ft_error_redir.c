@@ -3,69 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error_redir.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 11:26:11 by user42            #+#    #+#             */
-/*   Updated: 2022/03/19 19:08:33 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/21 23:10:18 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-t_redir ft_count_redirection(char *str)
-{
-    int i;
-    t_redir red;
-
-    i = 0;
-    red.redirection_normal = 0;
-    red.redirection_inverse = 0;
-    red.double_red_norm = 0;
-    red.double_red_inv = 0;
-    while (str[i])
-    {
-        if (str[i] == '<' && str[i + 1] != '<' && str[i - 1] != '<')
-            red.redirection_inverse++;
-        if (str[i] == '<' && str[i + 1] == '<')
-            red.double_red_inv++;
-        if (str[i] == '>' && str[i + 1] != '>' && str[i - 1] != '>')
-            red.redirection_normal++;
-        if (str[i] == '>' && str[i + 1] == '>')
-            red.double_red_norm++;
-        i++;
-    }
-    return (red);
-}
-
-int ft_check_chev_errors(char *str)
-{
-	int i;
-
-	i = -1;
-	while (str[++i])
-	{
-		if (str[i] == '>')
-		{
-			if (str[i + 1] == '<' || str[i + 1] == '>' && str[i - 1] == '>')
-				return (FAILURE);
-			if (str[i + 1] == ' ' && str[i + 2] == '>' || str[i + 1] == ' ' && str[i + 2] == '<')
-				return (FAILURE);
-		}
-		if (str[i] == '<')
-		{
-			if (str[i + 1] == '>' || str[i + 1] == '<' && str[i - 1] == '<')
-				return (FAILURE);
-			if (str[i + 1] == ' ' && str[i + 2] == '>' || str[i + 1] == ' ' && str[i + 2] == '<')
-				return (FAILURE);
-		}
-	}
-	
-	//printf("str[i - 1] == [%c]\nstr[i] == [%c]\n", str[i - 1], str[i]);
-	if (str[i - 1] == '<' || str[i - 1] == '>' ||  str[i - 1] == ' ')
-		return (FAILURE);
-	//printf("SUCCESS CHECK REDIR\n");
-	return (SUCCESS);
-}
 
 int ft_colle_chevron_inverse(char *split_by_spa)
 {
@@ -177,6 +122,7 @@ int ft_pas_colle_double_chevron(char **str, int i)
 
 void open_redir(char **tab, int i, int j)
 {
+	
 	if (tab[i][j] == '>' && tab[i][j + 1] != '>')
 	{
 		ft_colle_chevron_normal(tab[i]);
@@ -197,32 +143,15 @@ void open_redir(char **tab, int i, int j)
 		ft_colle_double_chevron_normal(tab[i]);
 		j++;
 	}
-	if (tab[i][j] == '<' && tab[i][j + 1] != '<') 
-	{
-		ft_colle_chevron_inverse(tab[i]);
-		j++;
-	}
 }
 
-void create_redir(char **tab, int i)
+int create_redir(char **tab, int i)
 {
-//	int i;
-
-//	i = 0;
-//	while (tab[i])
-//	{
-		if (tab[i][0] == '>')
-		{
-			ft_pas_colle_chevron(tab, i);
-			//i++;
-		}
-		if (tab[i][0] == '>' && tab[i][1] == '>')
-		{
-			ft_pas_colle_double_chevron(tab, i);
-			//i++;
-		}
-		//i++;
-//	}
+	if (tab[i][0] == '>')
+		ft_pas_colle_chevron(tab, i);
+	if (tab[i][0] == '>' && tab[i][1] == '>')
+		ft_pas_colle_double_chevron(tab, i);
+	return (SUCCESS);
 }
 
 int	ft_check_redirection(char *str)
@@ -234,16 +163,19 @@ int	ft_check_redirection(char *str)
 	i = 0;
 	j = 0;
 	tab = NULL;
- 	if (ft_check_chev_errors(str) == 1)
+ 	if (ft_check_all_redir_errors(str) == FAILURE)
 	{
-//		printf("ERROR CHEVRON\n");
+		printf("ERROR CHEVRON\n");
 		return (FAILURE);
 	}
 	tab = ft_split(str, ' ');
 	while (tab[i])
 	{
 		j = 0;
-		create_redir(tab, i);
+		if (tab[i][2] == '\0')
+		{
+			create_redir(tab, i);
+		}
 		while (tab[i][j])
 		{
 			open_redir(tab, i, j);
@@ -251,9 +183,6 @@ int	ft_check_redirection(char *str)
 		}
 		i++;
 	}
-//	ft_pas_colle_chevron_inverse(tab);
-//	ft_pas_colle_chevron(tab);
-	free_str(tab);
-//	printf("REUSSITE CHEVRON\n");
+	printf("REUSSITE CHEVRON\n");
 	return (SUCCESS);
 }

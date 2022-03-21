@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_minishell.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 17:19:35 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/20 17:13:23 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/21 17:20:27 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,8 @@ t_lst_cmd	*create_lst(char *prompt_line, int nb_pipe, t_lst_cmd *lst)
 t_lst_cmd	*init_shell(char *buffer, t_lst_cmd *lst)
 {
 	int		nb_pipe;
-	//t_redir red;
 
-	//if (ft_check_redirection(buffer) == SUCCESS)
-		//red = ft_count_redirection(buffer);
+	ft_check_redirection(buffer);
 	nb_pipe = count_pipe(buffer);
 	if (nb_pipe != 0)
 		lst = create_lst(buffer, nb_pipe, lst);
