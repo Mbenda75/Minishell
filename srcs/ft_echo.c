@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 22:01:53 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/21 09:58:51 by user42           ###   ########.fr       */
+/*   Updated: 2022/03/21 14:03:41 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int ft_echo_several_dollars(char **cmd, int i, t_env *echo_env)
 	j = 0;
 	while (cmd[i][++k] != '$')
 		ft_putchar_fd(cmd[i][k], 1);
+
 	k = 0;
 	split_bydollar = ft_split(cmd[i], '$');
 	while (split_bydollar[k])
@@ -93,6 +94,16 @@ int ft_echo_several_dollars(char **cmd, int i, t_env *echo_env)
 			k++;
 		}
 	}
+	j = 0;
+	while (cmd[i][j])
+		j++;
+	if (cmd[i][j - 1] == '$')
+	{
+		ft_putstr_fd("$", 1);
+		if (cmd[i + 1])
+			write(1, " ", 1);
+		return (SUCCESS);
+	}
 	if (cmd[i + 1])
 		write(1, " ", 1);
 	ft_free_charr(split_bydollar);
@@ -101,14 +112,14 @@ int ft_echo_several_dollars(char **cmd, int i, t_env *echo_env)
 
 int ft_echo_single_dollar(char **cmd, int i, t_env *echo_env)
 {
-	int jump;
+	int jump; // sert à sauter en cas de présence d'une écriture avant un dollar, on saute une case ex : echo popololo$user : jump sera égal à 1
 	int j;
 	int space;
 	int space_2;
 	char **split_bydollar;
 
 	j = 0;
-	jump = 0;
+	jump = 0; //jump à 0 dans le cas où y'a pas de caractère avant le $
 	space = 0;
 	space_2 = 0;
 	while (cmd[i][j] != '$')
@@ -118,16 +129,21 @@ int ft_echo_single_dollar(char **cmd, int i, t_env *echo_env)
 		space_2 = 1;
 		j++;
 	}
-	split_bydollar = ft_split(cmd[i], '$');
-	/*if (split_bydollar[1] == NULL)
+	j = 0;
+	while (cmd[i][j])
+		j++;
+	if (cmd[i][j - 1] == '$')
 	{
 		ft_putstr_fd("$", 1);
 		if (cmd[i + 1])
 			write(1, " ", 1);
-	}*/
+		return (SUCCESS);
+	}
+	split_bydollar = ft_split(cmd[i], '$');
 	if (ft_strchr(split_bydollar[jump], '?'))
 	{
 		j = 1;
+	
 		ft_putnbr_fd(g_list->exit_value, 1);
 		while (split_bydollar[jump][j])
 		{
