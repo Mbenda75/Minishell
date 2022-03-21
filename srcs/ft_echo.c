@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 22:01:53 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/20 23:37:18 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/21 08:53:59 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,13 +103,13 @@ int ft_echo_single_dollar(char **cmd, int i, t_env *echo_env)
 		j++;
 	}
 	split_bydollar = ft_split(cmd[i], '$');
-	if (split_bydollar[0] == NULL || split_bydollar[1] == NULL)
+	/*if (split_bydollar[0] == NULL || split_bydollar[1] == NULL)
 	{
 		ft_putstr_fd("$", 1);
 		if (cmd[i + 1])
 			write(1, " ", 1);
 		return (SUCCESS);
-	}
+	}*/
 	if (ft_strchr(split_bydollar[jump], '?'))
 	{
 		j = 1;
