@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 21:10:54 by user42            #+#    #+#             */
-/*   Updated: 2022/03/21 15:06:16 by user42           ###   ########.fr       */
+/*   Updated: 2022/03/22 15:15:43 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,15 @@ int	ft_built_in_env(char **built_in)
 	i = 0;
 	head = g_list;
 	tail = head;
-	while (built_in[i])
+	/*while (built_in[i])
 	{
-		if (ft_strcmp(built_in[i], "env") != 0)
+		if (ft_strcmp(built_in[i], "env") != 0 || ft_strcmp(built_in[i], ">") != 0)
 		{
-			printf("env: '%s' No such file or directory\n", built_in[i]);
+			printf("env: '%s' OUINo such file or directory\n", built_in[i]);
 			return (FAILURE);
 		}
 		i++;
-	}
+	}*/
 	while (tail != NULL)
 	{
 		if (tail->content)

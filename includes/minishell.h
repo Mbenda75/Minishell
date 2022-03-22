@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/22 10:46:44 by user42           ###   ########.fr       */
+/*   Updated: 2022/03/22 16:23:42 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ extern struct s_env	*g_list;
 typedef struct s_env
 {
 	int					exit_value;
+	int 				file_open;
 	char				*content;
 	struct s_env		*next;
 }				t_env;
@@ -47,6 +48,13 @@ typedef struct s_pipex
 	int		*pfd;
 	pid_t	child;
 }		t_pipex;
+
+typedef struct s_fd
+{
+	int stdin;
+	int stdout;
+	int stderr;
+}		t_fd;
 
 typedef struct s_redir
 {
@@ -175,8 +183,8 @@ char *ft_change_dollar_var(char *word);
 int ft_check_all_redir_errors(char *str);
 
 /*		FT_UTILS_REDIR_CREATE_FILES		*/
-int		ft_pas_colle_chevron(char **str, int i);
-int		ft_pas_colle_double_chevron(char **str, int i);
-int		ft_pas_colle_chevron_inverse(char **str, int i);
+int		ft_pas_colle_chevron(char **str, int i, t_fd fd);
+int		ft_pas_colle_double_chevron(char **str, int i, t_fd fd);
+int		ft_pas_colle_chevron_inverse(char **str, int i, t_fd fd);
 
 #endif

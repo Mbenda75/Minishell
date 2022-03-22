@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 11:26:11 by user42            #+#    #+#             */
-/*   Updated: 2022/03/22 10:49:23 by user42           ###   ########.fr       */
+/*   Updated: 2022/03/22 17:32:26 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,48 @@ void open_redir(char **tab, int i, int j)
 	}
 }
 
-int create_redir(char **tab, int i)
+int create_redir(char **tab, int i, t_fd fd)
 {
 	if (tab[i][0] == '>')
-		ft_pas_colle_chevron(tab, i);
+		ft_pas_colle_chevron(tab, i, fd);
 	if (tab[i][0] == '>' && tab[i][1] == '>')
-		ft_pas_colle_double_chevron(tab, i);
+		ft_pas_colle_double_chevron(tab, i, fd);
 	if (tab[i][0] == '<')
-		ft_pas_colle_chevron_inverse(tab, i);
+		ft_pas_colle_chevron_inverse(tab, i, fd);
+	return (SUCCESS);
+}
+int	ft_heredoc(char **tab, int i)
+{
+	int fd[2];
+	char *input;
+	char *temp;
+	char *ret;
+	char *delimiter;
+
+	ret = calloc(sizeof(char), 1);
+	input = calloc(sizeof(char), 1);
+	fd[1] = open(tab[i - 1], O_RDWR);
+	if (fd[1] < 0)
+		return (ft_custom_error("Error open HEREDOC"));
+	if (dup2(fd[STDOUT_FILENO], STDOUT_FILENO) < 0)
+		return (ft_custom_error("Error with HEREDOC for dup2"));
+	signal(SIGINT, ft_signals_handler);
+	delimiter = tab[i + 1];
+	while (1)
+	{
+		input = readline("prompt>");
+		add_history(input);
+		if (strcmp(input, delimiter) == 0)
+			break ;
+		ret = ft_strjoin(ret, input);
+		temp = ret;
+		ret = ft_strjoin(ret, "\n");
+	}
+	free(temp);
+	ft_putstr_fd(ret, fd[STDOUT_FILENO]);
+	close(fd[STDOUT_FILENO]);
+	free(input);
+	free(ret);
 	return (SUCCESS);
 }
 
@@ -101,6 +135,7 @@ int	ft_check_redirection(char *str)
 {
 	char **tab;
 	char *str_2;
+	t_fd fd;
 	int i;
 	int j;
 	
@@ -112,8 +147,10 @@ int	ft_check_redirection(char *str)
 	while (tab[i])
 	{
 		j = 0;
+		if (strcmp(tab[i], "<<") == 0)
+			ft_heredoc(tab, i);
 		if (tab[i][2] == '\0')
-			create_redir(tab, i);
+			create_redir(tab, i, fd);
 		else 
 		{
 			while (tab[i][j])
@@ -125,6 +162,5 @@ int	ft_check_redirection(char *str)
 		i++;
 	}
 	ft_free_charr(tab);
-	printf("REUSSITE CHEVRON\n");
 	return (SUCCESS);
 }
