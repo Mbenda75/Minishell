@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/22 16:23:42 by user42           ###   ########.fr       */
+/*   Updated: 2022/03/22 19:03:14 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ typedef struct s_decompte
 void		ft_signals(void);
 void		ft_signals_handler(int signal);
 
-/* FUNCT MEMORY */
+/* 			FUNCT MEMORY 		*/
 void		free_str(char **s);
 void		*free_lst(t_lst_cmd *lst);
 void		*free_env(t_env *lst);
@@ -131,12 +131,12 @@ char		*ft_strcat2(char *dest, char *src);
 char		*boucle_path(char **array_path, char **array_cmd);
 int			builtin_or_exec(t_lst_cmd *mshell, char **env, t_init ishell);
 
-/*		FT_ERRORS_HANDLERS		*/
+/*			FT_ERRORS_HANDLERS		*/
 void		ft_free_charr(char **path);
 int			ft_custom_error(char *errstr);
 int			ft_system_error(void);
 
-/*		FT_BUILT_IN_CHECKER		*/
+/*			FT_BUILT_IN_CHECKER		*/
 int			ft_is_built_in(char *cmd);
 int			exec_built_in(t_lst_cmd *mshell, char **env);
 /*			FT_PWD				*/
@@ -153,6 +153,10 @@ int			ft_built_in_env(char **built_in);
 
 /*			FT_ECHO			*/
 int			ft_built_echo(char *args[]);
+
+/*			UTILS_ECHO		*/
+int 		ft_echo_single_dollar(char **cmd, int i, t_env *echo_env);
+int			ft_echo_several_dollars(char **cmd, int i, t_env *echo_env);
 
 /*			FT_UNSET				*/
 int			ft_built_in_unset(char **cmd);
@@ -179,12 +183,12 @@ char	*ft_transform_dollar_2(char *str);
 int ft_checK_env_var_existence(char *complete_var);
 char *ft_change_dollar_var(char *word);
 
-/*		FT_UTILS_REDIR		*/
-int ft_check_all_redir_errors(char *str);
+/*			FT_UTILS_REDIR		*/
+int 		ft_check_all_redir_errors(char *str);
 
-/*		FT_UTILS_REDIR_CREATE_FILES		*/
-int		ft_pas_colle_chevron(char **str, int i, t_fd fd);
-int		ft_pas_colle_double_chevron(char **str, int i, t_fd fd);
-int		ft_pas_colle_chevron_inverse(char **str, int i, t_fd fd);
+/*			FT_UTILS_REDIR_CREATE_FILES		*/
+int			ft_pas_colle_chevron(char **str, int i, t_fd fd);
+int			ft_pas_colle_double_chevron(char **str, int i, t_fd fd);
+int			ft_pas_colle_chevron_inverse(char **str, int i, t_fd fd);
 
 #endif

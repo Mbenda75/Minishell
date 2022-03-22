@@ -6,20 +6,15 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 18:08:49 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/22 11:15:08 by user42           ###   ########.fr       */
+/*   Updated: 2022/03/22 19:31:07 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-
-/* Le but de cette fonction est de verifier si la variable d'environnement existee. Pour cela, on check
-le non de la variable en lui retirant son '$' et en lui ajoutant un '=' pour le faire boucler dans un ft_strcmp*/
-
 int ft_checK_env_var_existence(char *complete_var)
 {
     t_env *verify;
-    char *tmp_trim_dollar;
     char *tmp_add_equal;
 
     verify = g_list;
@@ -27,9 +22,13 @@ int ft_checK_env_var_existence(char *complete_var)
     while (verify)
     {
         if (ft_strncmp(verify->content, tmp_add_equal, ft_strlen(tmp_add_equal)) == SUCCESS)
+        {
+            free(tmp_add_equal);
             return (SUCCESS);
+        }
         verify = verify->next;
     }
+    free(tmp_add_equal);
     return (FAILURE);
 }
 
@@ -45,10 +44,12 @@ char *ft_change_dollar_var(char *word)
         if (ft_strncmp(verify->content, tmp_add_equal, ft_strlen(tmp_add_equal)) == SUCCESS)
         {
             word = ft_substr(verify->content, ft_find_where_is_equal(verify->content) + 1, ft_strlen(verify->content));
+            free(tmp_add_equal);
             return (word);
         } 
         verify = verify->next; 
     }
+    free(tmp_add_equal);
     return (word);
 }
 /* Sers a join toutes les var dans une seule string*/

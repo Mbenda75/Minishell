@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 22:01:53 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/21 14:03:41 by user42           ###   ########.fr       */
+/*   Updated: 2022/03/22 19:00:59 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,119 +56,6 @@ int ft_count_dollars(char **cmd, int i)
 	return (dollar);
 }
 
-int ft_echo_several_dollars(char **cmd, int i, t_env *echo_env)
-{
-	int k;
-	int j;
-	char **split_bydollar;
-
-	k = -1;
-	j = 0;
-	while (cmd[i][++k] != '$')
-		ft_putchar_fd(cmd[i][k], 1);
-
-	k = 0;
-	split_bydollar = ft_split(cmd[i], '$');
-	while (split_bydollar[k])
-	{
-		if (ft_strchr(split_bydollar[k], '?'))
-		{
-			j = 1;
-			ft_putnbr_fd(g_list->exit_value, 1);
-			while (split_bydollar[k][j])
-			{
-				ft_putchar_fd(split_bydollar[k][j], 1);
-				j++;
-			}
-			k++;
-		}
-		else
-		{
-			if (ft_checK_env_var_existence(split_bydollar[k]) == SUCCESS)
-			{
-				split_bydollar[k] = ft_change_dollar_var(split_bydollar[k]);
-				ft_putstr_fd(split_bydollar[k], 1);
-			}
-			else
-				ft_putstr_fd("", 1);
-			k++;
-		}
-	}
-	j = 0;
-	while (cmd[i][j])
-		j++;
-	if (cmd[i][j - 1] == '$')
-	{
-		ft_putstr_fd("$", 1);
-		if (cmd[i + 1])
-			write(1, " ", 1);
-		return (SUCCESS);
-	}
-	if (cmd[i + 1])
-		write(1, " ", 1);
-	ft_free_charr(split_bydollar);
-	return (SUCCESS);
-}
-
-int ft_echo_single_dollar(char **cmd, int i, t_env *echo_env)
-{
-	int jump; // sert à sauter en cas de présence d'une écriture avant un dollar, on saute une case ex : echo popololo$user : jump sera égal à 1
-	int j;
-	int space;
-	int space_2;
-	char **split_bydollar;
-
-	j = 0;
-	jump = 0; //jump à 0 dans le cas où y'a pas de caractère avant le $
-	space = 0;
-	space_2 = 0;
-	while (cmd[i][j] != '$')
-	{
-		ft_putchar_fd(cmd[i][j], 1);
-		jump = 1;
-		space_2 = 1;
-		j++;
-	}
-	j = 0;
-	while (cmd[i][j])
-		j++;
-	if (cmd[i][j - 1] == '$')
-	{
-		ft_putstr_fd("$", 1);
-		if (cmd[i + 1])
-			write(1, " ", 1);
-		return (SUCCESS);
-	}
-	split_bydollar = ft_split(cmd[i], '$');
-	if (ft_strchr(split_bydollar[jump], '?'))
-	{
-		j = 1;
-	
-		ft_putnbr_fd(g_list->exit_value, 1);
-		while (split_bydollar[jump][j])
-		{
-			ft_putchar_fd(split_bydollar[jump][j], 1);
-			j++;
-		}
-		if (cmd[i + 1])
-			write(1, " ", 1);
-		return (SUCCESS);
-	}
-	split_bydollar[jump] == ft_strjoin(split_bydollar[jump], "=");
-	if (ft_checK_env_var_existence(split_bydollar[jump]) == SUCCESS)
-	{
-		split_bydollar[jump] = ft_change_dollar_var(split_bydollar[jump]);
-		ft_putstr_fd(split_bydollar[jump], 1);
-	}
-	else
-	{
-		space = 1;
-		ft_putstr_fd("", 1);
-	}
-	if ((cmd[i + 1] && space == 0) || (cmd[i + 1] && space == 1 && space_2 == 1) )
-		write(1, " ", 1);
-	return (SUCCESS);
-}
 
 
 int	ft_echo_dollar(char	**cmd, int i, int j)
