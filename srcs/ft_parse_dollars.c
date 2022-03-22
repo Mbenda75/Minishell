@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse_dollars.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 18:08:49 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/20 23:27:05 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/22 11:15:08 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int	count_dollar(char *str)
 	}
 	return (dollar);
 }
+
 char *ft_transform_dollar(char *str)
 {
     int i;
@@ -116,14 +117,12 @@ char *ft_transform_dollar(char *str)
             {
                 if (ft_checK_env_var_existence(split_bydollar[k]) == SUCCESS)
                 {
-                    printf("ICI WORD %s\n", word);
                     word = ft_change_dollar_var(split_bydollar[k]);
                     receive_value[j] = word;
                     j++;
                 }
                 else
                 {
-                    printf("LA WORD %s\n", word);
                     receive_value[j] = "";
                     j++;
                 }
@@ -141,91 +140,3 @@ char *ft_transform_dollar(char *str)
     return (ft_modify_newline_content(receive_value));
 
 }
-
-char *ft_transform_dollar_2(char *str)
-{
-    int i; // simple index pour slit_by_space
-    int j; // va servir a connaitre la position de j
-    char *word; // va servir de char* a envoyer dans le check env et le add env
-    char **split_byspace; // split str par espace pour avoir toutes les strings
-    char **split_bydollar;
-    char **receive_value;
-    int k;
-
-    i = -1; // -1 pour la norme
-    j = 0;
-    int dollar = count_dollar(str);
-    //printf("dollar = %d\n", dollar);
-    split_byspace = ft_split(str, ' '); // je split par espace
-    receive_value = malloc(sizeof(char *) * count_dollar(str) + 1);
-    while (split_byspace[++i]) // je fais boucler mon split
-    {
-        word = split_byspace[i];
-        k = 0;
-        if (ft_find_dollars(word) == SUCCESS)
-        {
-            split_bydollar = ft_split(word, '$');
-            while (split_bydollar[k])
-            {
-                if (ft_checK_env_var_existence(split_bydollar[k]) == SUCCESS)
-                {
-                    word = ft_change_dollar_var(split_bydollar[k]);
-                    receive_value[j] = word;
-                    j++;
-                }
-                else 
-                {
-                    printf("WORd = %s\n", split_bydollar[k]);
-                    receive_value[j] = "";
-                    printf("receive_value %s\n", receive_value[j]);
-                    j++;
-                }
-                k++;
-            }
-            receive_value[j] = '\0';
-        }
-        else
-        {
-            receive_value[j] = word;
-            receive_value[j] = ft_strjoin(receive_value[j], " ");
-            j++;
-        }
-    }
-    j = 0;
-    while (receive_value[j])
-    {
-        printf("RECEIVE_VALUE = %s\n", receive_value[j]);
-        j++;
-    }
-    return (ft_modify_newline_content(receive_value)); 
-}
-
-
-/*char *ft_transform_dollar(char *str)
-{
-    int i;
-    char *word;
-    char **split_bydollar;
-    char *str_2;
-    
-    i = -1;
-    split_bydollar = ft_split(str, '$');
-    while (split_bydollar[++i])
-    {
-        word = split_bydollar[i];
-        printf("\033[0;33mWORD = %s\n\033[0;37m", word);
-        if (ft_checK_env_var_existence(word) == SUCCESS)
-        {
-            word = ft_change_dollar_var(word);
-            split_bydollar[i] = ft_strdup(word);
-        }
-        else //sinon, on lui laisse le contenu de word
-        {
-            printf("\033[0;31mLA VARIABLE  %s N'EXISTE PAS\n\033[0;37m", word);
-            word = ft_change_dollar_var(word);
-            split_bydollar[i] = ft_strdup(word);
-            printf("split_bysapce %s\n", split_bydollar[i]);
-        }
-    }
-    return (ft_modify_newline_content(str, split_bydollar));
-}*/
