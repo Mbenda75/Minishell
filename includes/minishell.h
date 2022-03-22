@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/21 17:56:26 by user42           ###   ########.fr       */
+/*   Updated: 2022/03/22 10:46:44 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,9 @@ char *ft_change_dollar_var(char *word);
 /*		FT_UTILS_REDIR		*/
 int ft_check_all_redir_errors(char *str);
 
-
-
+/*		FT_UTILS_REDIR_CREATE_FILES		*/
+int		ft_pas_colle_chevron(char **str, int i);
+int		ft_pas_colle_double_chevron(char **str, int i);
+int		ft_pas_colle_chevron_inverse(char **str, int i);
 
 #endif
