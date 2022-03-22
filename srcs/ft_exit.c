@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:09:23 by user42            #+#    #+#             */
-/*   Updated: 2022/03/19 17:58:01 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/22 10:48:20 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int ft_calc_exit_nb(char *cmd, int *exit_value)
 
 void	ft_free_lst_print_and_exit(t_lst_cmd *mshell, int exit_value)
 {
+	if(g_list->nb_pipe != 0)
+		free_fd(g_list->pfd);
 	free_env(g_list);
 	free_lst(mshell); // on free tout avec tes fonctions
 	exit(exit_value); // ont exit avec la valeur de exit value obtenue soit au travers des cas d'erreurs soit avec ft_calc_exit_nb	

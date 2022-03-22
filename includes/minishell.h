@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/21 19:54:37 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/22 17:51:48 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ typedef struct s_pipex
 	char	**split_path;
 	char	*line_path;
 	char	*exec_path;
-	int		nb_pipe;
-	int		**pfd;
 	pid_t	child;
 }		t_pipex;
 
@@ -68,7 +66,8 @@ typedef struct s_init
 typedef struct s_lst_cmd
 {
 	char				**split_byspace;
-	struct s_pipex *pipex;
+	struct s_pipex 		*pipex;
+	
 	struct s_lst_cmd	*next;
 	int					exit_value;
 }				t_lst_cmd;
@@ -88,6 +87,8 @@ void		ft_signals_handler(int signal);
 void		free_str(char **s);
 void		*free_lst(t_lst_cmd *lst);
 void		*free_env(t_env *lst);
+void	free_fd(int **fd);
+
 
 /* 			PARSING SHELL		 */
 char		*skip_quote(char *str);
@@ -111,22 +112,28 @@ int			ft_len(char *cmd[]);
 
 /*			INIT SHELL  		*/
 t_env		*cpy_env(char **envp);
-t_env		*file_env(char *str);
-t_lst_cmd	*create_lst(char *prompt_line, int nb_pipe, t_lst_cmd *lst);
-t_lst_cmd	*file_lst(char *split_bypipe);
+t_env		*fill_env(char *str);
+t_lst_cmd	*create_lst(char *prompt_line, t_lst_cmd *lst);
+t_lst_cmd	*fill_lst(char *split_bypipe);
 t_lst_cmd	*init_shell(char *buffer, t_lst_cmd *lst);
+t_lst_cmd	*create_norm(t_lst_cmd *lst, char **split_bypipe, char *prompt_line);
+
 
 /* 			MINISHELL 			*/
 void		start_minishell(t_init ishell, char **env);
 void		minishell( char **env);
 
-/* 			PIPEX				*/
+/* 			EXEC PART				*/
 char		*search_path(t_env *lst);
 char		*ft_strcat2(char *dest, char *src);
 char		*boucle_path(char **array_path, char **array_cmd);
-void	exec_cmd(t_lst_cmd *mshell, char **env);
- void	cmd(t_lst_cmd *tmp, char **env, int i);
+void		exec_cmd(t_lst_cmd *mshell, char **env);
+ void		cmd_fork(t_lst_cmd *tmp, char **env, int i);
 t_pipex 	*init_pipex(char **split_byspace, char *str);
+void		close_wait(t_init ishell, t_lst_cmd *mshell);
+void		dup_exec(int i);
+void		*init_pfd(t_init ishell);
+
 
 
 /*		FT_ERRORS_HANDLERS		*/

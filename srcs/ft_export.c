@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:40:02 by user42            #+#    #+#             */
-/*   Updated: 2022/03/19 13:06:33 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/22 11:55:03 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_env	*ft_list_push_back(t_env *cpy_env, char *str)
 			i++;
 		}
 		i++;
-		list->next = file_env(str);
+		list->next = fill_env(str);
 	}
 	printf("JE SUIS LE N6\n");
 	return (list);

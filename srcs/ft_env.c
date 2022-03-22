@@ -6,13 +6,13 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 21:10:54 by user42            #+#    #+#             */
-/*   Updated: 2022/03/19 12:53:38 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/22 11:43:23 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_env	*file_env(char *str)
+t_env	*fill_env(char *str)
 {
 	t_env	*lst;
 
@@ -43,12 +43,12 @@ t_env	*cpy_env(char **env)
 	{
 		if (!g_list)
 		{
-			g_list = file_env(ft_strdup(env[i]));
+			g_list = fill_env(ft_strdup(env[i]));
 			tmp = g_list;
 		}
 		else
 		{
-			tmp->next = file_env(ft_strdup(env[i]));
+			tmp->next = fill_env(ft_strdup(env[i]));
 			tmp = tmp->next;
 		}
 		i++;
