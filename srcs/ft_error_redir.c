@@ -3,67 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error_redir.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 11:26:11 by user42            #+#    #+#             */
-/*   Updated: 2022/03/21 12:55:09 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/23 15:11:34 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-t_redir ft_count_redirection(char *str)
-{
-    int i;
-    t_redir red;
-
-    i = 0;
-    red.redirection_normal = 0;
-    red.redirection_inverse = 0;
-    red.double_red_norm = 0;
-    red.double_red_inv = 0;
-    while (str[i])
-    {
-        if (str[i] == '<' && str[i + 1] != '<' && str[i - 1] != '<')
-            red.redirection_inverse++;
-        if (str[i] == '<' && str[i + 1] == '<')
-            red.double_red_inv++;
-        if (str[i] == '>' && str[i + 1] != '>' && str[i - 1] != '>')
-            red.redirection_normal++;
-        if (str[i] == '>' && str[i + 1] == '>')
-            red.double_red_norm++;
-        i++;
-    }
-    return (red);
-}
-
-int ft_check_chev_errors(char *str)
-{
-	int i;
-
-	i = -1;
-	while (str[++i])
-	{
-		if (str[i] == '>')
-		{
-			if (str[i + 1] == '<' || str[i + 1] == '>' && str[i - 1] == '>')
-				return (FAILURE);
-			if (str[i + 1] == ' ' && str[i + 2] == '>' || str[i + 1] == ' ' && str[i + 2] == '<')
-				return (FAILURE);
-		}
-		if (str[i] == '<')
-		{
-			if (str[i + 1] == '>' || str[i + 1] == '<' && str[i - 1] == '<')
-				return (FAILURE);
-			if (str[i + 1] == ' ' && str[i + 2] == '>' || str[i + 1] == ' ' && str[i + 2] == '<')
-				return (FAILURE);
-		}
-	}
-	if (str[i - 1] == '<' || str[i - 1] == '>' ||  str[i - 1] == ' ')
-		return (FAILURE);
-	printf("SUCCESS CHECK REDIR\n");
-	return (SUCCESS);
-}
 
 int ft_colle_chevron_inverse(char *split_by_spa)
 {
@@ -71,7 +18,6 @@ int ft_colle_chevron_inverse(char *split_by_spa)
 	int file_open;
 
 	i = 0;
-	printf("COLLE <\n");
 	split_by_spa = ft_strtrim(split_by_spa, "<");
 	file_open = open(split_by_spa, O_RDONLY);
 	if (file_open < 0)
@@ -90,7 +36,6 @@ int ft_colle_chevron_normal(char *str)
 	int file_open;
 
 	i = 0;
-	printf("COLLE >\n");
 	str = ft_strtrim(str, ">");
 	file_open = open(str, O_WRONLY | O_TRUNC | O_CREAT, 0755 );
 	if (file_open < 0)
@@ -99,7 +44,6 @@ int ft_colle_chevron_normal(char *str)
 		return (ft_custom_error("Error > chevron"));
 	}
 	close (file_open);
-	printf("Creation de %s\n", str);
 	free(str);
 	return (SUCCESS);
 }
@@ -110,7 +54,6 @@ int ft_colle_double_chevron_normal(char *str)
 	int file_open;
 
 	i = 0;
-	printf("COLLE >>\n");
 	str = ft_strtrim(str, ">>");
 	file_open = open(str, O_WRONLY | O_APPEND | O_CREAT, 0755 );
 	if (file_open < 0)
@@ -119,62 +62,14 @@ int ft_colle_double_chevron_normal(char *str)
 		return (ft_custom_error("Error > chevron"));
 	}
 	close (file_open);
-	printf("Creation de %s\n", str);
+ {
 	free(str);
-	return (SUCCESS);
-}
-
-int ft_pas_colle_chevron_inverse(char **str)
-{
-	int i;
-	int file_open;
-
-	i = 0;
-	while (str[i])
-	{
-		if (ft_strcmp(str[i], "<") == 0)
-		{
-			file_open = open(str[i + 1], O_RDONLY);
-			if (file_open < 0)
-				return (ft_custom_error("No such file or directory"));
-			close (file_open);
-			str[i] = NULL;
-			str[i + 1] = NULL;
-			i = i + 1;
-		}
-		i++;
-	}
-	return (SUCCESS);
-}
-
-int ft_pas_colle_chevron(char **str, int i)
-{
-	int file_open;
-
-	printf("JE SUIS DANS PAS COLLE >\n");
-	file_open = open(str[i + 1], O_WRONLY | O_TRUNC | O_CREAT, 0755);
-	if (file_open < 0)
-		return (ft_custom_error("Error > pas colle"));
-	close (file_open);
-	printf("Creation de %s\n", str[i]);
-	return (SUCCESS);
-}
-
-int ft_pas_colle_double_chevron(char **str, int i)
-{
-	int file_open;
-
-	printf("JE SUIS DANS PAS COLLE >>\n");
-	file_open = open(str[i + 1], O_WRONLY | O_APPEND | O_CREAT, 0755);
-	if (file_open < 0)
-		return (ft_custom_error("Error >> pas colle"));
-	close (file_open);
-	printf("Creation de %s\n", str[i]);
 	return (SUCCESS);
 }
 
 void open_redir(char **tab, int i, int j)
 {
+	
 	if (tab[i][j] == '>' && tab[i][j + 1] != '>')
 	{
 		ft_colle_chevron_normal(tab[i]);
@@ -190,68 +85,84 @@ void open_redir(char **tab, int i, int j)
 		ft_colle_chevron_inverse(tab[i]);
 		j++;
 	}
-	if (tab[i][j] == '>' && tab[i][j + 1] == '>')
-	{
-		ft_colle_double_chevron_normal(tab[i]);
-		j++;
-	}
-	if (tab[i][j] == '<' && tab[i][j + 1] != '<') 
-	{
-		ft_colle_chevron_inverse(tab[i]);
-		j++;
-	}
 }
 
-void create_redir(char **tab, int i)
+int create_redir(char **tab, int i)
 {
-//	int i;
+	if (tab[i][0] == '>')
+		ft_pas_colle_chevron(tab, i);
+	if (tab[i][0] == '>' && tab[i][1] == '>')
+		ft_pas_colle_double_chevron(tab, i);
+	if (tab[i][0] == '<')
+		ft_pas_colle_chevron_inverse(tab, i);
+	return (SUCCESS);
+}
+int	ft_heredoc(char **tab, int i)
+{
+	char *input;
+	char *temp;
+	char *ret;
+	char *delimiter;
 
-//	i = 0;
-//	while (tab[i])
-//	{
-		if (tab[i][0] == '>')
+	//signal(SIGINT, ft_signals_handler);
+	//signal(SIGINT, ft_signals_handler);
+
+	ret = ft_calloc(sizeof(char), 1);
+	delimiter = tab[i + 1];
+	while (1)
+	{
+		input = readline("prompt>");
+		add_history(input);
+		if (strcmp(input, delimiter) == 0 || signal(SIGINT, ft_signals_handler))
 		{
-			ft_pas_colle_chevron(tab, i);
-			//i++;
+			free(input);
+			break ;
 		}
-		if (tab[i][0] == '>' && tab[i][1] == '>')
-		{
-			ft_pas_colle_double_chevron(tab, i);
-			//i++;
-		}
-		//i++;
-//	}
+		temp = ret;
+		ret = ft_strjoin(ret, input);
+		free(input);
+		free(temp);
+		temp = ret;
+		ret = ft_strjoin(ret, "\n");
+		free(temp);
+	}
+	ft_putstr_fd(ret, STDOUT_FILENO);
+	free(ret);
+	return (SUCCESS);
 }
 
 int	ft_check_redirection(char *str)
 {
 	char **tab;
+	char *str_2;
 	int i;
 	int j;
 	
 	i = 0;
-	j = 0;
 	tab = NULL;
- 	if (ft_check_chev_errors(str) == 1)
-	{
-		printf("ERROR CHEVRON\n");
+ 	if (ft_check_all_redir_errors(str) == FAILURE)
 		return (FAILURE);
-	}
 	tab = ft_split(str, ' ');
 	while (tab[i])
 	{
 		j = 0;
-		create_redir(tab, i);
-		while (tab[i][j])
+		if (strcmp(tab[i], "<<") == 0)
 		{
-			open_redir(tab, i, j);
-			j++;
+			ft_heredoc(tab, i);
+			i++;
+		}
+		if (tab[i][2] == '\0')
+			create_redir(tab, i);
+		else 
+		{
+			while (tab[i][j])
+			{
+				open_redir(tab, i, j);
+				j++;
+			}
 		}
 		i++;
 	}
-//	ft_pas_colle_chevron_inverse(tab);
-//	ft_pas_colle_chevron(tab);
 	free_str(tab);
-	printf("REUSSITE CHEVRON\n");
 	return (SUCCESS);
 }

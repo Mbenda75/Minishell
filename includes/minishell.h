@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/22 17:51:48 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/23 15:11:34 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_env
 	char				*content;
 	int					nb_pipe;
 	int					**pfd;
+	int					exit_value;
 	struct s_env		*next;
 }				t_env;
 
@@ -137,7 +138,7 @@ void		*init_pfd(t_init ishell);
 
 
 /*		FT_ERRORS_HANDLERS		*/
-void		ft_free_charr(char **path);
+void		free_str(char **path);
 int			ft_custom_error(char *errstr);
 int			ft_system_error(void);
 
@@ -159,11 +160,26 @@ void		ft_built_in_env(char **built_in);
 /*			FT_ECHO			*/
 int			ft_built_echo(char *args[]);
 
+/*			UTILS_ECHO		*/
+int 		ft_echo_single_dollar(char **cmd, int i, t_env *echo_env);
+int			ft_echo_several_dollars(char **cmd, int i, t_env *echo_env);
+
+/*			UTILS_ECHO_2		*/
+int			ft_len(char **cmd);
+int			ft_count_dollars(char **cmd, int i);
+
 /*			FT_UNSET				*/
 int			ft_built_in_unset(char **cmd);
 
 /*			FT_EXPORT				*/
 int			ft_built_in_export(char **cmd);
+
+/*			UTILS_EXPORT	*/
+int			ft_find_dollars(char *str);
+int			ft_find_where_is_equal(char *str);
+int			ft_check_variable_after_equal(char *cmd);
+int			ft_check_variable_before_equal(char *cmd);
+int			ft_find_the_equal(char *str);
 
 /*			FT_GET_VAR_ENV			*/
 char		**ft_get_var_env(char **envp, char *str);
@@ -176,4 +192,21 @@ t_redir		ft_count_redirection(char *str);
 
 void		status_child(void);
 char		**ft_env_cpy(char **envp, char **envp_2);
+
+/*			FT_UTILS_REDIR		*/
+int 		ft_check_all_redir_errors(char *str);
+
+/*			FT_UTILS_REDIR_CREATE_FILES		*/
+int			ft_pas_colle_chevron(char **str, int i);
+int			ft_pas_colle_double_chevron(char **str, int i);
+int			ft_pas_colle_chevron_inverse(char **str, int i);
+
+/*			FT_PARSE_DOLLAR		*/
+char		*ft_transform_dollar(char *str);
+int			ft_find_where_is_dollars(char *str);
+int			ft_find_dollars(char *str);
+char		*ft_transform_dollar_2(char *str);
+int			ft_checK_env_var_existence(char *complete_var);
+char		*ft_change_dollar_var(char *word);
+
 #endif
