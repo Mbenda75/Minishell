@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 22:01:53 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/22 19:00:59 by user42           ###   ########.fr       */
+/*   Updated: 2022/03/23 13:29:52 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	check_option(char *str)
 {
 	int	i;
-  
+
 	i = 0;
 	while (str[i])
 	{
@@ -30,39 +30,12 @@ int	check_option(char *str)
 	return (1);
 }
 
-int	ft_len(char *cmd[])
-{
-	int	i;
-
-	i = 0;
-	while (cmd[i])
-		i++;
-	return (i);
-}
-
-int ft_count_dollars(char **cmd, int i)
-{
-	int dollar;
-	int j;
-
-	dollar = 0;
-	j = 0;
-	while (cmd[i][j])
-	{
-		if (cmd[i][j] == '$')
-			dollar++;
-		j++;
-	}
-	return (dollar);
-}
-
-
-
 int	ft_echo_dollar(char	**cmd, int i, int j)
 {
 	t_env	*echo_env;
-	int dollar = 0;
+	int		dollar;
 
+	dollar = 0;
 	echo_env = g_list;
 	dollar = ft_count_dollars(cmd, i);
 	if (dollar == 1)
@@ -74,6 +47,32 @@ int	ft_echo_dollar(char	**cmd, int i, int j)
 	{
 		ft_echo_several_dollars(cmd, i, echo_env);
 		return (SUCCESS);
+	}
+}
+
+void	ft_write_echo(char **cmd, int i, int j)
+{
+	while (cmd[i])
+	{
+		j = 0;
+		while (cmd[i][j])
+		{
+			if (ft_find_dollars(cmd[i]) == SUCCESS)
+			{
+				j++;
+				ft_echo_dollar(cmd, i, j);
+				break ;
+			}
+			else
+			{
+				ft_putstr_fd(cmd[i], 1);
+				if (cmd[i + 1])
+					write(1, " ", 1);
+				break ;
+			}
+		j++;
+		}
+	i++;
 	}
 }
 
@@ -92,28 +91,7 @@ int	ft_built_echo(char *cmd[])
 			m.l = 1;
 			m.i++;
 		}
-		while (cmd[m.i])
-		{
-			m.j = 0;
-			while (cmd[m.i][m.j])
-			{
-				if (ft_find_dollars(cmd[m.i]) == SUCCESS)
-				{
-					m.j++;
-					ft_echo_dollar(cmd, m.i, m.j);
-					break ;
-				}
-				else
-				{
-					ft_putstr_fd(cmd[m.i], 1);
-					if (cmd[m.i + 1])
-						write(1, " ", 1);
-					break ;
-				}
-			m.j++;
-			}
-		m.i++;
-		}
+		ft_write_echo(cmd, m.i, m.j);
 	}
 	if (!m.l)
 		write(1, "\n", 1);

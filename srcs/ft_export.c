@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:40:02 by user42            #+#    #+#             */
-/*   Updated: 2022/03/22 12:37:43 by user42           ###   ########.fr       */
+/*   Updated: 2022/03/23 15:06:12 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_env	*ft_list_push_back(t_env *cpy_env, char *str)
 			i++;
 		}
 		i++;
-		list->next = file_env(str);
+		list->next = fill_env(str);
 	}
 	printf("JE SUIS LE N6\n");
 	return (list);

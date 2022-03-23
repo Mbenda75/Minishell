@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils_redir_create_files.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 10:38:01 by user42            #+#    #+#             */
-/*   Updated: 2022/03/22 17:23:14 by user42           ###   ########.fr       */
+/*   Updated: 2022/03/23 15:02:22 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int ft_pas_colle_chevron(char **str, int i, t_fd fd)
+int ft_pas_colle_chevron(char **str, int i)
 {
 	int file_open;
 
@@ -25,7 +25,7 @@ int ft_pas_colle_chevron(char **str, int i, t_fd fd)
 	return (SUCCESS);
 }
 
-int ft_pas_colle_double_chevron(char **str, int i, t_fd fd)
+int ft_pas_colle_double_chevron(char **str, int i)
 {
 	int file_open;
 
@@ -38,7 +38,7 @@ int ft_pas_colle_double_chevron(char **str, int i, t_fd fd)
 	return (SUCCESS);
 }
 
-int ft_pas_colle_chevron_inverse(char **str, int i, t_fd fd)
+int ft_pas_colle_chevron_inverse(char **str, int i)
 {
 	int file_open;
 

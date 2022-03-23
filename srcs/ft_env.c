@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 21:10:54 by user42            #+#    #+#             */
-/*   Updated: 2022/03/22 15:15:43 by user42           ###   ########.fr       */
+/*   Updated: 2022/03/22 11:43:23 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_env	*file_env(char *str)
+t_env	*fill_env(char *str)
 {
 	t_env	*lst;
 
@@ -43,12 +43,12 @@ t_env	*cpy_env(char **env)
 	{
 		if (!g_list)
 		{
-			g_list = file_env(ft_strdup(env[i]));
+			g_list = fill_env(ft_strdup(env[i]));
 			tmp = g_list;
 		}
 		else
 		{
-			tmp->next = file_env(ft_strdup(env[i]));
+			tmp->next = fill_env(ft_strdup(env[i]));
 			tmp = tmp->next;
 		}
 		i++;
@@ -56,29 +56,24 @@ t_env	*cpy_env(char **env)
 	return (g_list);
 }
 
-int	ft_built_in_env(char **built_in)
+void	ft_built_in_env(char **built_in)
 {
+	int		i;
 	t_env	*head;
 	t_env	*tail;
-	int		i;
 
 	i = 0;
 	head = g_list;
 	tail = head;
-	/*while (built_in[i])
+	if (built_in[1])
+		ft_custom_error("env: aucun argument n'est possible");
+	else
 	{
-		if (ft_strcmp(built_in[i], "env") != 0 || ft_strcmp(built_in[i], ">") != 0)
+		while (tail != NULL)
 		{
-			printf("env: '%s' OUINo such file or directory\n", built_in[i]);
-			return (FAILURE);
+			if (tail->content)
+				printf("env == %s\n", tail->content);
+			tail = tail->next;
 		}
-		i++;
-	}*/
-	while (tail != NULL)
-	{
-		if (tail->content)
-			printf("env == %s\n", tail->content);
-		tail = tail->next;
 	}
-	return (SUCCESS);
 }

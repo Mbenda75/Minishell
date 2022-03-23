@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error_redir.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 11:26:11 by user42            #+#    #+#             */
-/*   Updated: 2022/03/22 18:48:14 by user42           ###   ########.fr       */
+/*   Updated: 2022/03/23 15:11:34 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,14 @@ void open_redir(char **tab, int i, int j)
 	}
 }
 
-int create_redir(char **tab, int i, t_fd fd)
+int create_redir(char **tab, int i)
 {
 	if (tab[i][0] == '>')
-		ft_pas_colle_chevron(tab, i, fd);
+		ft_pas_colle_chevron(tab, i);
 	if (tab[i][0] == '>' && tab[i][1] == '>')
-		ft_pas_colle_double_chevron(tab, i, fd);
+		ft_pas_colle_double_chevron(tab, i);
 	if (tab[i][0] == '<')
-		ft_pas_colle_chevron_inverse(tab, i, fd);
+		ft_pas_colle_chevron_inverse(tab, i);
 	return (SUCCESS);
 }
 int	ft_heredoc(char **tab, int i)
@@ -103,14 +103,16 @@ int	ft_heredoc(char **tab, int i)
 	char *ret;
 	char *delimiter;
 
-	signal(SIGINT, ft_signals_handler);
+	//signal(SIGINT, ft_signals_handler);
+	//signal(SIGINT, ft_signals_handler);
+
 	ret = ft_calloc(sizeof(char), 1);
 	delimiter = tab[i + 1];
 	while (1)
 	{
 		input = readline("prompt>");
 		add_history(input);
-		if (strcmp(input, delimiter) == 0)
+		if (strcmp(input, delimiter) == 0 || signal(SIGINT, ft_signals_handler))
 		{
 			free(input);
 			break ;
@@ -132,7 +134,6 @@ int	ft_check_redirection(char *str)
 {
 	char **tab;
 	char *str_2;
-	t_fd fd;
 	int i;
 	int j;
 	
@@ -150,7 +151,7 @@ int	ft_check_redirection(char *str)
 			i++;
 		}
 		if (tab[i][2] == '\0')
-			create_redir(tab, i, fd);
+			create_redir(tab, i);
 		else 
 		{
 			while (tab[i][j])
@@ -161,6 +162,6 @@ int	ft_check_redirection(char *str)
 		}
 		i++;
 	}
-	ft_free_charr(tab);
+	free_str(tab);
 	return (SUCCESS);
 }

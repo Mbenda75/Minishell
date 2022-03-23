@@ -2,7 +2,7 @@
 	{
 		ft_putstr_fd("exit\n", 0);
 		ft_putstr_fd("exit: numeric argument required\n", 0);
-		ft_free_charr(mshell->split_byspace);
+		free_str(mshell->split_byspace);
 		exit (2);
 	}*/
 
@@ -87,5 +87,7 @@ export POPO = LOLO --> affiche export: `=': not a valid identifier
 export POPO =LOLO --> affiche export: `=LOLO': not a valid identifier
 
 export =MOMO --> nous affiche pas derrreur mais cree rien aussi
-
-prevenir mohamed pour $?
+echo $ >|d cree le fichier et exec echo
+echo $ >| d cree le fichier et exec echo
+echo $ > | d erreur
+echo $ > |d erreur

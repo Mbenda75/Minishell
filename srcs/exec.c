@@ -3,75 +3,91 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:23:39 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/22 16:30:47 by user42           ###   ########.fr       */
+/*   Updated: 2022/03/22 20:28:49 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/* int *init_pipe(int count)
+
+void	close_wait(t_init ishell, t_lst_cmd *mshell)
 {
-	int *fd;
 	int i;
+	t_lst_cmd *tmp;
 	
-	fd = malloc(sizeof(int) * count - 1);
-	i = 0;
-	while (i < count - 1)
+	i = -1;
+	tmp  = mshell;
+ 	while (tmp)
 	{
-		
-		pipe(fd[i * 2]);
-		i++;
+		i = -1;
+		while (g_list->nb_pipe != 0 &&  ++i < g_list->nb_pipe)
+		{
+			close(g_list->pfd[i][0]);
+			close(g_list->pfd[i][1]);
+		}
+	 	waitpid(tmp->pipex->child, NULL, 0);
+		tmp = tmp->next;
 	}
-	return (fd);	
-} */
+	free_lst(mshell);
+	free(ishell.new_line);
+	free_str(ishell.cmd);
+	free(ishell.prompt_line);
+}
 
-int	builtin_or_exec(t_lst_cmd *mshell, char **env, t_init ishell)
+void	dup_exec(int i)
 {
-	t_pipex	*pipex;
-	pid_t i;
-	int status;
+	int k;
 
-	pipex = NULL;
-	if (ft_is_built_in(mshell->split_byspace[0]) == 1)
-		exec_built_in(mshell, env);
-	else
+	k = -1;
+	if (i != 0) //pour dup notre entre standart dans les pipes pour les prochaine commande
 	{
-		pipex = malloc(sizeof(t_pipex));
-		pipex->line_path = search_path(g_list);
-		pipex->split_path = ft_split(pipex->line_path, ':');
-		pipex->exec_path = boucle_path(pipex->split_path, mshell->split_byspace);
-		printf("split_path == %s\n", pipex->exec_path);
-		if (pipex->exec_path == NULL)
-		{
-			printf("exit exec\n");
-			free_str(pipex->split_path);
-			free(pipex->exec_path);
-			free(pipex);
-			return (1);
-		}
-		pipex->child = fork();
-		if (pipex->child == -1)
-		{
-			write(2, "fork failed\n", 13);
-			exit (1);
-		}
-		if (pipex->child == 0)
-		{
-			signal(SIGQUIT, SIG_DFL);
-			if (access(pipex->exec_path, F_OK) == 0)
-				execve(pipex->exec_path, mshell->split_byspace, env);
-		}
-		i = waitpid(pipex->child, &status, 0);
-		free_str(pipex->split_path);
-		free(pipex->exec_path);
-		free(pipex);
-		if (WIFEXITED(status))
-    		return (WEXITSTATUS(status));
-		if (WIFSIGNALED(status))
-    		return (WTERMSIG(status) + 128);
+		printf("premier\n");
+		printf("i premier == %d\n", i);
+
+		dup2(g_list->pfd[i - 1][0], 0); // dup2(pfd[0][0]) dans le canal de lecture du pipe dans stdin
+
 	}
-	return (0);
+	if (i != g_list->nb_pipe) // pour dup la derniere commande avec notre sortie standar
+	{
+		printf("2eme\n");
+		printf("i 2emme == %d\n", i);
+		
+		dup2(g_list->pfd[i][1], 1); // dup2(pfd[0][1], 1) canal decriture du pipe dans stdout
+	}
+ 	while (g_list->nb_pipe != 0 && ++k < g_list->nb_pipe)
+	{
+		close(g_list->pfd[k][0]);
+		close(g_list->pfd[k][1]);
+	}
+}
+
+
+void	exec_cmd(t_lst_cmd *mshell, char **env)
+{
+	if (mshell->pipex->exec_path == NULL)
+	{
+		printf("exit exec\n");
+		return ;
+	}
+	if (access(mshell->pipex->exec_path, F_OK) == 0)
+		execve(mshell->pipex->exec_path, mshell->split_byspace, env);
+}
+
+void	cmd_fork(t_lst_cmd *tmp, char **env, int i)
+{
+	tmp->pipex->child = fork();
+	
+	if (tmp->pipex->child == -1)
+	{
+		write(2, "fork failed\n", 13);
+		exit (1);
+	}
+	if (tmp->pipex->child == 0)
+	{
+		dup_exec(i);
+		exec_cmd(tmp, env);
+	}
 }

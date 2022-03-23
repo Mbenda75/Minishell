@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:18:17 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/16 22:17:42 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/22 10:43:13 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,27 @@ void	free_str(char **s)
 	free(s);
 }
 
+void	free_fd(int **fd)
+{
+	int	line;
+
+	line = 0;
+	while (line < g_list->nb_pipe);
+	{
+		free(fd[line]);
+		line++;
+	}
+}
+
 void	*free_lst(t_lst_cmd *lst)
 {
 	t_lst_cmd	*tmp;
 
 	while (lst != NULL)
 	{
+		free_str(lst->pipex->split_path);
+	 	free(lst->pipex->exec_path);
+		free(lst->pipex);
 		free_str(lst->split_byspace);
 		tmp = lst;
 		lst = lst->next;

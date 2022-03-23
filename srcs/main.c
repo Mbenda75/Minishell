@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:07:53 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/19 23:44:10 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/22 19:36:32 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	count_pipe(char *str)
 	pipe = 0;
 	while (str[i])
 	{
-		if (str[i] == '|' && str[i + 1] != '|' && str[0] != '|')
+		if (str[i] == '|' && str[i + 1] != '|')
 			pipe++;
 		i++;
 	}
@@ -51,6 +51,7 @@ int	main(int ac, char **av, char **env)
 {
 	if (ac != 1 && !av)
 		exit(1);
+	int fdin = dup(STDIN_FILENO);
 	ft_signals();
 	minishell(env);
 	return (0);
