@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/23 15:11:34 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/23 17:12:53 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,11 @@ typedef struct s_decompte
 void		ft_signals(void);
 void		ft_signals_handler(int signal);
 
-/* FUNCT MEMORY */
+/* 			FUNCT MEMORY */
 void		free_str(char **s);
 void		*free_lst(t_lst_cmd *lst);
 void		*free_env(t_env *lst);
-void	free_fd(int **fd);
-
+void		free_fd(int **fd);
 
 /* 			PARSING SHELL		 */
 char		*skip_quote(char *str);
@@ -109,8 +108,6 @@ char 		*ft_add_content(char *avant_equal, char *after_equal);
 char 		*ft_add_env_var(char *after_equal, char *env_var);
 int			ft_len(char *cmd[]);
 
-
-
 /*			INIT SHELL  		*/
 t_env		*cpy_env(char **envp);
 t_env		*fill_env(char *str);
@@ -118,7 +115,6 @@ t_lst_cmd	*create_lst(char *prompt_line, t_lst_cmd *lst);
 t_lst_cmd	*fill_lst(char *split_bypipe);
 t_lst_cmd	*init_shell(char *buffer, t_lst_cmd *lst);
 t_lst_cmd	*create_norm(t_lst_cmd *lst, char **split_bypipe, char *prompt_line);
-
 
 /* 			MINISHELL 			*/
 void		start_minishell(t_init ishell, char **env);
@@ -135,14 +131,12 @@ void		close_wait(t_init ishell, t_lst_cmd *mshell);
 void		dup_exec(int i);
 void		*init_pfd(t_init ishell);
 
-
-
-/*		FT_ERRORS_HANDLERS		*/
+/*			FT_ERRORS_HANDLERS		*/
 void		free_str(char **path);
 int			ft_custom_error(char *errstr);
 int			ft_system_error(void);
 
-/*		FT_BUILT_IN_CHECKER		*/
+/*			FT_BUILT_IN_CHECKER		*/
 int			ft_is_built_in(char *cmd);
 int			exec_built_in(t_lst_cmd *mshell, char **env);
 /*			FT_PWD				*/
@@ -203,10 +197,13 @@ int			ft_pas_colle_chevron_inverse(char **str, int i);
 
 /*			FT_PARSE_DOLLAR		*/
 char		*ft_transform_dollar(char *str);
-int			ft_find_where_is_dollars(char *str);
-int			ft_find_dollars(char *str);
-char		*ft_transform_dollar_2(char *str);
-int			ft_checK_env_var_existence(char *complete_var);
+char		*ft_modify_newline_content(char **r_value);
+char		**ft_transform_dollar_malloc(char *str);
+char		*ft_assign_value(char *s_byspace, char **r_value, t_decompte *index);
+
+/*			UTILS_PARSE_DOLLAR		*/
+int			ft_count_dollar(char *str);
+int			ft_check_env_var_existence(char *complete_var);
 char		*ft_change_dollar_var(char *word);
 
 #endif

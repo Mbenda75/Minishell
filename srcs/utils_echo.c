@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 18:59:16 by user42            #+#    #+#             */
-/*   Updated: 2022/03/23 15:11:34 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/23 16:53:50 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_print_several_dollars(char **split_bydollar, int k, int j, char *str)
 		}
 		else
 		{
-			if (ft_checK_env_var_existence(split_bydollar[k]) == SUCCESS)
+			if (ft_check_env_var_existence(split_bydollar[k]) == SUCCESS)
 			{
 				str = ft_change_dollar_var(split_bydollar[k]);
 				ft_putstr_fd(str, 1);
@@ -73,7 +73,7 @@ t_decompte	ft_echo_print_single_dollar(char **cmd, int i,
 {
 	char	*str;
 
-	if (ft_checK_env_var_existence(split_bydollar[j_et_s.l]) == SUCCESS)
+	if (ft_check_env_var_existence(split_bydollar[j_et_s.l]) == SUCCESS)
 	{
 		str = ft_change_dollar_var(split_bydollar[j_et_s.l]);
 		ft_putstr_fd(str, 1);

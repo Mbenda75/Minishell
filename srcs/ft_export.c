@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:40:02 by user42            #+#    #+#             */
-/*   Updated: 2022/03/23 15:06:12 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/23 17:50:35 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ int	ft_built_in_export_add(char *env_var, char *apres_egal)
 {
 	t_env	*head;
 	t_env	*tail;
-	char	*safe;
 	char	*tmp;
 
 	head = g_list;
@@ -89,7 +88,7 @@ int	ft_built_in_export_add(char *env_var, char *apres_egal)
 	if (ft_check_variable_before_equal(env_var) == FAILURE ||
 	ft_check_variable_after_equal(apres_egal) == FAILURE)
 		return (FAILURE);
-	if (ft_checK_env_var_existence(env_var) == SUCCESS)
+	if (ft_check_env_var_existence(env_var) == SUCCESS)
 	{
 		ft_built_in_export_modify(env_var, apres_egal);
 		return (SUCCESS);
@@ -98,7 +97,7 @@ int	ft_built_in_export_add(char *env_var, char *apres_egal)
 	tmp = env_var;
 	env_var = ft_strjoin(env_var, apres_egal); // need to correct leaks
 	free(tmp);
-	tail = ft_list_push_back(g_list, env_var);
+	tail = ft_list_push_back(g_list, env_var); 
 	return (SUCCESS);
 }
 
@@ -127,6 +126,7 @@ int	ft_built_in_export(char **cmd)
 			}
 			if (k.i == FAILURE)
 				printf("export: '%s': not a valid identifer\n", cmd[k.l]);
+		}
 	}
 	return (SUCCESS);
 }

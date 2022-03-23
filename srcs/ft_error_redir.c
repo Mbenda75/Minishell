@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 11:26:11 by user42            #+#    #+#             */
-/*   Updated: 2022/03/23 15:11:34 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/23 16:28:20 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int ft_colle_double_chevron_normal(char *str)
 		return (ft_custom_error("Error > chevron"));
 	}
 	close (file_open);
- {
 	free(str);
 	return (SUCCESS);
 }
