@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:40:02 by user42            #+#    #+#             */
 /*   Updated: 2022/03/23 15:06:12 by adaloui          ###   ########.fr       */
@@ -77,6 +77,7 @@ int	ft_built_in_export_add(char *env_var, char *apres_egal)
 {
 	t_env	*head;
 	t_env	*tail;
+	char	*safe;
 	char	*tmp;
 
 	head = g_list;
@@ -103,6 +104,7 @@ int	ft_built_in_export_add(char *env_var, char *apres_egal)
 
 int	ft_built_in_export(char **cmd)
 {
+
 	char		*env_var;
 	char		temp;
 	t_decompte	k;
@@ -125,7 +127,6 @@ int	ft_built_in_export(char **cmd)
 			}
 			if (k.i == FAILURE)
 				printf("export: '%s': not a valid identifer\n", cmd[k.l]);
-		}
 	}
 	return (SUCCESS);
 }

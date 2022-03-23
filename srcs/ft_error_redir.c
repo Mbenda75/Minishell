@@ -62,6 +62,7 @@ int ft_colle_double_chevron_normal(char *str)
 		return (ft_custom_error("Error > chevron"));
 	}
 	close (file_open);
+ {
 	free(str);
 	return (SUCCESS);
 }
