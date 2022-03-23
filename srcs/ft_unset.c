@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 22:59:07 by user42            #+#    #+#             */
-/*   Updated: 2022/03/17 15:20:41 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/23 14:03:57 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,27 @@ int	ft_check_variable_unset(char **cmd)
 		}
 		i++;
 	}
-	return (0);
+	return (SUCCESS);
 }	
+
+void	ft_free_middle_node(t_env *tmp, t_env *head)
+{
+	tmp = head->next;
+	free(head->content);
+	head->content = head->next->content;
+	head->next = head->next->next;
+	free(tmp);
+}
+
+void	ft_free_last_node(t_env *temp, t_env *lastnode)
+{
+	while (temp->next->next != NULL)
+		temp = temp->next;
+	free(temp->next->content);
+	free(temp->next);
+	lastnode = temp->next;
+	temp->next = NULL;
+}
 
 void	ft_built_in_unset_2(char *cmd)
 {
@@ -51,22 +70,11 @@ void	ft_built_in_unset_2(char *cmd)
 		{
 			if (head->next != NULL)
 			{
-				tmp = head->next;
-				free(head->content);
-				head->content = head->next->content;
-				head->next = head->next->next;
-				free(tmp);
+				ft_free_middle_node(tmp, head);
 				break ;
 			}
 			if (head->next == NULL)
-			{
-				while (temp->next->next != NULL)
-					temp = temp->next;
-				free(temp->next->content);
-				free(temp->next);
-				lastnode = temp->next;
-				temp->next = NULL;
-			}
+				ft_free_last_node(temp, lastnode);
 			break ;
 		}
 		head = head->next;
@@ -78,20 +86,18 @@ void	ft_built_in_unset_2(char *cmd)
 int	ft_built_in_unset(char **cmd)
 {
 	int	i;
-	int	j;
 
-	j = 1;
+	i = 1;
 	if (cmd[1] == NULL)
 		ft_putstr_fd("", 0);
 	else
 	{
-		i = ft_check_variable_unset(cmd);
-		if (i == 1)
+		if (ft_check_variable_unset(cmd) == FAILURE)
 			return (FAILURE);
-		while (cmd[j])
+		while (cmd[i])
 		{
-			ft_built_in_unset_2(cmd[j]);
-			j++;
+			ft_built_in_unset_2(cmd[i]);
+			i++;
 		}
 	}
 	return (SUCCESS);

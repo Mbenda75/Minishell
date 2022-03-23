@@ -2,7 +2,7 @@
 	{
 		ft_putstr_fd("exit\n", 0);
 		ft_putstr_fd("exit: numeric argument required\n", 0);
-		ft_free_charr(mshell->split_byspace);
+		free_str(mshell->split_byspace);
 		exit (2);
 	}*/
 
