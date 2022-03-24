@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 18:08:49 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/23 19:41:22 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/24 13:41:59 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ char	*ft_assign_value(char *s_byspace, char **r_value, t_decompte *index)
 		s_bydollar = ft_split(word, '$');
 		while (s_bydollar[++index->l])
 		{
-			printf("LA\n");
 			if (ft_check_env_var_existence(s_bydollar[index->l]) == SUCCESS)
 			{
 				word = ft_change_dollar_var(s_bydollar[index->l]);
@@ -86,6 +85,5 @@ char	*ft_transform_dollar(char *str)
 	r_value = ft_transform_dollar_malloc(str);
 	while (s_byspace[++index.i])
 		ft_assign_value(s_byspace[index.i], r_value, &index);
-	printf("OKOK\n");
 	return (ft_modify_newline_content(r_value));
 }

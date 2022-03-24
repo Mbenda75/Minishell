@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 11:26:11 by user42            #+#    #+#             */
-/*   Updated: 2022/03/23 16:28:20 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/24 18:05:17 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,16 +86,6 @@ void open_redir(char **tab, int i, int j)
 	}
 }
 
-int create_redir(char **tab, int i)
-{
-	if (tab[i][0] == '>')
-		ft_pas_colle_chevron(tab, i);
-	if (tab[i][0] == '>' && tab[i][1] == '>')
-		ft_pas_colle_double_chevron(tab, i);
-	if (tab[i][0] == '<')
-		ft_pas_colle_chevron_inverse(tab, i);
-	return (SUCCESS);
-}
 int	ft_heredoc(char **tab, int i)
 {
 	char *input;
@@ -112,8 +102,9 @@ int	ft_heredoc(char **tab, int i)
 	{
 		input = readline("prompt>");
 		add_history(input);
-		if (strcmp(input, delimiter) == 0 || signal(SIGINT, ft_signals_handler))
+		if (strcmp(input, delimiter) == SUCCESS)
 		{
+			printf("JE SUIS LA\n");
 			free(input);
 			break ;
 		}
@@ -135,33 +126,32 @@ int	ft_check_redirection(char *str)
 	char **tab;
 	char *str_2;
 	int i;
-	int j;
 	
 	i = 0;
 	tab = NULL;
  	if (ft_check_all_redir_errors(str) == FAILURE)
 		return (FAILURE);
 	tab = ft_split(str, ' ');
+	g_list->fd_stdout = dup(STDOUT_FILENO);
+	g_list->fd_stdin = dup(STDIN_FILENO);
+	g_list->check_stds = 1;
+	printf("OUT %d IN %d\n",g_list->fd_stdout, g_list->fd_stdin);
 	while (tab[i])
 	{
-		j = 0;
 		if (strcmp(tab[i], "<<") == 0)
 		{
 			ft_heredoc(tab, i);
 			i++;
 		}
-		if (tab[i][2] == '\0')
-			create_redir(tab, i);
-		else 
-		{
-			while (tab[i][j])
-			{
-				open_redir(tab, i, j);
-				j++;
-			}
-		}
+		if (tab[i][0] == '>')
+			ft_pas_colle_chevron(tab, i);
+		if (tab[i][0] == '>' && tab[i][1] == '>')
+			ft_pas_colle_double_chevron(tab, i);
+		if (tab[i][0] == '<')
+			ft_pas_colle_chevron_inverse(tab, i);
 		i++;
 	}
+	//printf("file open == %d\n", g_list->file_open);
 	free_str(tab);
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 10:38:01 by user42            #+#    #+#             */
-/*   Updated: 2022/03/23 15:02:22 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/24 17:59:04 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,42 +14,35 @@
 
 int ft_pas_colle_chevron(char **str, int i)
 {
-	int file_open;
-
-	file_open = open(str[i + 1], O_WRONLY | O_TRUNC | O_CREAT, 0755);
-	if (file_open < 0)
+	g_list->file_open = open(str[i + 1], O_WRONLY | O_TRUNC | O_CREAT, 0755);
+	if (g_list->file_open < 0)
 		return (ft_custom_error("Error > pas colle"));
-	if (dup2(file_open, STDOUT_FILENO) < 0 )
+	if (dup2(g_list->file_open, STDOUT_FILENO) < 0 )
 		return (ft_custom_error("Error with > for dup2"));
-	close (file_open);
 	return (SUCCESS);
 }
 
 int ft_pas_colle_double_chevron(char **str, int i)
 {
-	int file_open;
-
-	file_open = open(str[i + 1], O_WRONLY | O_APPEND | O_CREAT, 0755);
-	if (file_open < 0)
+	g_list->file_open = open(str[i + 1], O_APPEND | O_WRONLY | O_CREAT, 0755);
+	if (g_list->file_open < 0)
 		return (ft_custom_error("Error >> pas colle"));
-	if (dup2(file_open, STDOUT_FILENO) < 0 )
+	if (dup2(g_list->file_open, STDOUT_FILENO) < 0 )
 		return (ft_custom_error("Error with >> for dup2"));
-	close (file_open);
+	printf("JAPPEND\n");
 	return (SUCCESS);
 }
 
 int ft_pas_colle_chevron_inverse(char **str, int i)
 {
-	int file_open;
 
-	file_open = open(str[i + 1], O_RDONLY);
-	if (file_open < 0)
+	g_list->file_open = open(str[i + 1], O_RDONLY);
+	if (g_list->file_open < 0)
 	{
-		printf("No such file or directory %s\n", str[i]);
+		printf("%s: No such file or directory\n", str[i + 1]);
 		return (FAILURE);
 	}
-	if (dup2(file_open, STDIN_FILENO) < 0 )
+	if (dup2(g_list->file_open, STDIN_FILENO) < 0 )
 		return (ft_custom_error("Error with < for dup2"));
-	close (file_open);
 	return (SUCCESS);
 }

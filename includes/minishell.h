@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/23 17:12:53 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/24 17:51:31 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@ typedef struct s_env
 	char				*content;
 	int					nb_pipe;
 	int					**pfd;
+	int					fd_stdout;
+	int					fd_stdin;
+	int					check_stds;
+	int					file_open;
 	int					exit_value;
 	struct s_env		*next;
 }				t_env;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:23:39 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/22 20:28:49 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/24 17:43:06 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ void	exec_cmd(t_lst_cmd *mshell, char **env)
 		printf("exit exec\n");
 		return ;
 	}
+	printf("split_byspace == %s\n", mshell->split_byspace[1]);
+	//printf("path == %s\n", mshell->pipex->exec_path);
 	if (access(mshell->pipex->exec_path, F_OK) == 0)
 		execve(mshell->pipex->exec_path, mshell->split_byspace, env);
 }
@@ -89,5 +91,6 @@ void	cmd_fork(t_lst_cmd *tmp, char **env, int i)
 	{
 		dup_exec(i);
 		exec_cmd(tmp, env);
+		
 	}
 }
