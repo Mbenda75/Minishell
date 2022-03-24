@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_redir_create_files.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 10:38:01 by user42            #+#    #+#             */
-/*   Updated: 2022/03/24 17:59:04 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/24 22:09:48 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ int ft_pas_colle_chevron_inverse(char **str, int i)
 	g_list->file_open = open(str[i + 1], O_RDONLY);
 	if (g_list->file_open < 0)
 	{
+		dup2(g_list->fd_stdin, STDIN_FILENO);
+		close(g_list->file_open);
+		close(g_list->fd_stdin);
 		printf("%s: No such file or directory\n", str[i + 1]);
 		return (FAILURE);
 	}

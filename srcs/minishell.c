@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:46:47 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/24 17:54:06 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/24 23:17:54 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	start_minishell(t_init ishell, char **env)
 	mshell = NULL;
 	mshell = init_shell(ishell.new_line, mshell);
 	tmp = mshell;
+	printf("JE SUIS ICI\n");
 	while (tmp)
 	{
 		if (ft_is_built_in(mshell->split_byspace[0]) == 1)
@@ -30,6 +31,7 @@ void	start_minishell(t_init ishell, char **env)
 			cmd_fork(tmp, env, ++i);
 		tmp = tmp->next;
 	}
+	printf("JE SUIS LA\n");
 	if (g_list->check_stds == 1)
 	{
 		dup2(g_list->fd_stdout, STDOUT_FILENO);
@@ -39,7 +41,11 @@ void	start_minishell(t_init ishell, char **env)
 		close(g_list->fd_stdin);
 		g_list->check_stds = 0;
 	}
-	close_wait(ishell, mshell);
+
+		printf("JE SUIS ICI 2\n");
+	g_list->exit_value = close_wait(ishell, mshell);
+			printf("JE SUIS ICI 3\n");
+
 }
 
 char *get_prompt(void)

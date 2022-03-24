@@ -3,19 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:23:39 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/24 17:43:06 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/24 23:17:23 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 
-void	close_wait(t_init ishell, t_lst_cmd *mshell)
+int	close_wait(t_init ishell, t_lst_cmd *mshell)
 {
 	int i;
+	pid_t j;
+	int status;
 	t_lst_cmd *tmp;
 	
 	i = -1;
@@ -28,13 +30,23 @@ void	close_wait(t_init ishell, t_lst_cmd *mshell)
 			close(g_list->pfd[i][0]);
 			close(g_list->pfd[i][1]);
 		}
-	 	waitpid(tmp->pipex->child, NULL, 0);
+		printf("NE ME TOUCHEZ PAS 1\n");
+	 	j = waitpid(tmp->pipex->child, &status, 0);
+		printf("NE ME TOUCHEZ PAS 1\n");
 		tmp = tmp->next;
+		printf("NE ME TOUCHEZ PAS 2\n");
+
 	}
 	free_lst(mshell);
 	free(ishell.new_line);
 	free_str(ishell.cmd);
 	free(ishell.prompt_line);
+	printf("NE ME TOUCHEZ PAS popololo\n");
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	if (WIFSIGNALED(status))
+		return (WTERMSIG(status) + 128);
+	return (status);
 }
 
 void	dup_exec(int i)
@@ -67,13 +79,20 @@ void	dup_exec(int i)
 
 void	exec_cmd(t_lst_cmd *mshell, char **env)
 {
+	int j;
+
+	j = 0;
+	
 	if (mshell->pipex->exec_path == NULL)
 	{
 		printf("exit exec\n");
 		return ;
 	}
-	printf("split_byspace == %s\n", mshell->split_byspace[1]);
-	//printf("path == %s\n", mshell->pipex->exec_path);
+	while (mshell->split_byspace[j])
+	{
+		printf("JE SUIS LA = %s\n", mshell->split_byspace[j]);
+		j++;
+	}
 	if (access(mshell->pipex->exec_path, F_OK) == 0)
 		execve(mshell->pipex->exec_path, mshell->split_byspace, env);
 }

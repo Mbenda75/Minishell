@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/24 17:51:31 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/24 20:27:07 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ char		*boucle_path(char **array_path, char **array_cmd);
 void		exec_cmd(t_lst_cmd *mshell, char **env);
  void		cmd_fork(t_lst_cmd *tmp, char **env, int i);
 t_pipex 	*init_pipex(char **split_byspace, char *str);
-void		close_wait(t_init ishell, t_lst_cmd *mshell);
+int			close_wait(t_init ishell, t_lst_cmd *mshell);
 void		dup_exec(int i);
 void		*init_pfd(t_init ishell);
 

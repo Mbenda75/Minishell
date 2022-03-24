@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 17:19:35 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/24 17:23:07 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/24 23:05:25 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,44 @@
 t_lst_cmd	*fill_lst(char *str)
 {
 	t_lst_cmd	*lst;
+	int j;
+	int i;
 
+	j = 0;
+	i = 0;
 	lst = malloc(sizeof(t_lst_cmd));
 	if (!lst)
 		return(NULL);
 	lst->split_byspace = ft_split(str, ' ');
+	while (lst->split_byspace[i])
+	{
+		printf("SALUT\n");
+		if (lst->split_byspace[i][0] == '>' && lst->split_byspace[i][1] != '>')
+		{
+						printf("iE SUIS LA\n");
+
+			lst->split_byspace[i] = NULL;
+			i++;
+		}
+		if (lst->split_byspace[i][0] == '>' && lst->split_byspace[i][1] == '>')
+		{
+			lst->split_byspace[i] = NULL;
+			i++;
+		}
+		if (lst->split_byspace[i][0] == '<' && lst->split_byspace[i][1] != '<')
+		{
+			printf("iE SUIS LA\n");
+			lst->split_byspace[i] = NULL;
+			i++;
+		}
+		if (lst->split_byspace[i][0] == '<' && lst->split_byspace[i][1] == '<')
+		{
+			lst->split_byspace[i] = NULL;
+			i++;
+		}
+		i++;
+	}
+	printf("SASASA\n");
 	lst->pipex = init_pipex(lst->split_byspace, str);
 	lst->next = NULL;
 	return (lst);
@@ -66,7 +99,7 @@ t_lst_cmd	*init_shell(char *buffer, t_lst_cmd *lst)
 {
 	int		nb_pipe;
 
-	ft_check_redirection(buffer);
+	ft_check_redirection(buffer); // changer de place retirer l'absence de chevron des erreurs et y ajouter l'open de <
 	if (g_list->nb_pipe != 0)
 		lst = create_lst(buffer, lst);
 	else if (g_list->nb_pipe == 0)

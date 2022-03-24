@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error_redir.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 11:26:11 by user42            #+#    #+#             */
-/*   Updated: 2022/03/24 18:05:17 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/24 23:14:11 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ int	ft_heredoc(char **tab, int i)
 
 	ret = ft_calloc(sizeof(char), 1);
 	delimiter = tab[i + 1];
+	if (dup2(g_list->file_open, STDIN_FILENO) < 0 )
+		return (FAILURE);	
 	while (1)
 	{
 		input = readline("prompt>");
@@ -116,7 +118,6 @@ int	ft_heredoc(char **tab, int i)
 		ret = ft_strjoin(ret, "\n");
 		free(temp);
 	}
-	ft_putstr_fd(ret, STDOUT_FILENO);
 	free(ret);
 	return (SUCCESS);
 }
@@ -130,7 +131,10 @@ int	ft_check_redirection(char *str)
 	i = 0;
 	tab = NULL;
  	if (ft_check_all_redir_errors(str) == FAILURE)
+	{
+		printf("FAILURE\n");
 		return (FAILURE);
+	}
 	tab = ft_split(str, ' ');
 	g_list->fd_stdout = dup(STDOUT_FILENO);
 	g_list->fd_stdin = dup(STDIN_FILENO);
@@ -151,6 +155,7 @@ int	ft_check_redirection(char *str)
 			ft_pas_colle_chevron_inverse(tab, i);
 		i++;
 	}
+	printf("JE SORS DE FT_ERROR_REDIR\n");
 	//printf("file open == %d\n", g_list->file_open);
 	free_str(tab);
 	return (SUCCESS);
