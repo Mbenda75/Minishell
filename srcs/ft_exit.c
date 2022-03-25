@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:09:23 by user42            #+#    #+#             */
-/*   Updated: 2022/03/22 10:48:20 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/25 18:02:26 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int ft_skip_whitespaces(char *cmd, int i)
+int ft_skip_whitespaces(char *cmd)
 {
+	int i;
+
 	i = 0;
 	while (cmd[i] == ' ' || cmd[i] == '\t' || cmd[i] == '\n') //on évite les whitespace
 		i++;
@@ -44,7 +46,8 @@ int ft_calc_exit_nb(char *cmd, int *exit_value)
 	unsigned long long int_lim; //sert à vérifier que la valeur envoyée par cmd ne soit pas > MAX_INT ou < MIN INT, d'où l'usage du type ulong long
 
 	int_lim = 0; // on met int_lim à 0 car la formule 0 * 10 = 0 et après on ajoutera les chiffres les uns après les autres avec + cmd[i] - 48
-	i = ft_skip_whitespaces(cmd, i); //nous fait skip les whitespaces et incrémente i; Cette fonction est présente pour cause de norme
+	sign = 0;
+	i = ft_skip_whitespaces(cmd); //nous fait skip les whitespaces et incrémente i; Cette fonction est présente pour cause de norme
 	if (cmd[i] == '-' || cmd[i] == '+') //nous permet de savoir si, juste après d'éventuels whitespace il y'a un signe + ou - pour déterminer le signe
 	{
 		sign = ft_check_signs(cmd, i, sign); // nous permet de savoir s'il y'a un signe + ou - et nous permet d'éviter le cas de figure ++++ ou --- ou -+ ou +-
@@ -55,7 +58,6 @@ int ft_calc_exit_nb(char *cmd, int *exit_value)
 	while(cmd[i] >= '0' && cmd[i] <= '9')//on a donc un index qui est suffisement incrémenté pour être arrivé aux chiffres, donc tant qu'on est sur des chiffres
 	{
 		int_lim = int_lim * 10 + (cmd[i] - 48); //la variable long va prendre un à un les chiffres de cmd
-		printf("int_lim = %lld\n", int_lim);
 		if ((int_lim > __LONG_LONG_MAX__ && sign == 1) || (int_lim > __LONG_LONG_MAX__ && sign == -1)) //si ces derniers sont > MAX_INT ou < MAX_INT on renvoit une erreur --> exit ne traite pas ces cas là
 			return (FAILURE);
 		i++;
@@ -102,4 +104,5 @@ int	ft_built_in_exit(t_lst_cmd *mshell)
 	else  //aucun des cas de figure précédant donc un simple exit suivant d'un nombre compris dans long long (limite debash avant de renvoyer numeric arg required bash)
 		printf("exit\n");
 	ft_free_lst_print_and_exit(mshell, exit_value); //sert simplement à free et à écrire exit --> mesure due à la norme
+	return(SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 22:01:53 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/23 13:29:52 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/25 18:05:03 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,23 @@ int	check_option(char *str)
 	return (1);
 }
 
-int	ft_echo_dollar(char	**cmd, int i, int j)
+int	ft_echo_dollar(char	**cmd, int i)
 {
-	t_env	*echo_env;
 	int		dollar;
 
 	dollar = 0;
-	echo_env = g_list;
 	dollar = ft_count_dollars(cmd, i);
 	if (dollar == 1)
 	{
-		ft_echo_single_dollar(cmd, i, echo_env);
+		ft_echo_single_dollar(cmd, i);
 		return (SUCCESS);
 	}
 	if (dollar > 1)
 	{
-		ft_echo_several_dollars(cmd, i, echo_env);
+		ft_echo_several_dollars(cmd, i);
 		return (SUCCESS);
 	}
+	return (SUCCESS);
 }
 
 void	ft_write_echo(char **cmd, int i, int j)
@@ -60,7 +59,7 @@ void	ft_write_echo(char **cmd, int i, int j)
 			if (ft_find_dollars(cmd[i]) == SUCCESS)
 			{
 				j++;
-				ft_echo_dollar(cmd, i, j);
+				ft_echo_dollar(cmd, i);
 				break ;
 			}
 			else
@@ -79,7 +78,6 @@ void	ft_write_echo(char **cmd, int i, int j)
 int	ft_built_echo(char *cmd[])
 {
 	t_decompte	m;
-	char		*tmp;
 
 	m.i = 1;
 	m.l = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:23:39 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/24 23:17:23 by user42           ###   ########.fr       */
+/*   Updated: 2022/03/25 18:07:14 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 int	close_wait(t_init ishell, t_lst_cmd *mshell)
 {
 	int i;
-	pid_t j;
 	int status;
 	t_lst_cmd *tmp;
 	
@@ -30,18 +29,14 @@ int	close_wait(t_init ishell, t_lst_cmd *mshell)
 			close(g_list->pfd[i][0]);
 			close(g_list->pfd[i][1]);
 		}
-		printf("NE ME TOUCHEZ PAS 1\n");
-	 	j = waitpid(tmp->pipex->child, &status, 0);
-		printf("NE ME TOUCHEZ PAS 1\n");
+	 	waitpid(tmp->pipex->child, &status, 0);
 		tmp = tmp->next;
-		printf("NE ME TOUCHEZ PAS 2\n");
 
 	}
 	free_lst(mshell);
 	free(ishell.new_line);
 	free_str(ishell.cmd);
 	free(ishell.prompt_line);
-	printf("NE ME TOUCHEZ PAS popololo\n");
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	if (WIFSIGNALED(status))
@@ -86,7 +81,7 @@ void	exec_cmd(t_lst_cmd *mshell, char **env)
 	if (mshell->pipex->exec_path == NULL)
 	{
 		printf("exit exec\n");
-		return ;
+		exit(1);
 	}
 	while (mshell->split_byspace[j])
 	{

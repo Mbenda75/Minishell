@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:46:47 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/24 23:17:54 by user42           ###   ########.fr       */
+/*   Updated: 2022/03/25 17:49:55 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	start_minishell(t_init ishell, char **env)
 	mshell = NULL;
 	mshell = init_shell(ishell.new_line, mshell);
 	tmp = mshell;
-	printf("JE SUIS ICI\n");
 	while (tmp)
 	{
 		if (ft_is_built_in(mshell->split_byspace[0]) == 1)
@@ -31,7 +30,6 @@ void	start_minishell(t_init ishell, char **env)
 			cmd_fork(tmp, env, ++i);
 		tmp = tmp->next;
 	}
-	printf("JE SUIS LA\n");
 	if (g_list->check_stds == 1)
 	{
 		dup2(g_list->fd_stdout, STDOUT_FILENO);
@@ -41,11 +39,7 @@ void	start_minishell(t_init ishell, char **env)
 		close(g_list->fd_stdin);
 		g_list->check_stds = 0;
 	}
-
-		printf("JE SUIS ICI 2\n");
 	g_list->exit_value = close_wait(ishell, mshell);
-			printf("JE SUIS ICI 3\n");
-
 }
 
 char *get_prompt(void)
@@ -59,7 +53,7 @@ char *get_prompt(void)
 	return (ret);	
 }
 
-void	*init_pfd(t_init ishell)
+int	init_pfd(t_init ishell)
 {
 	int i;
 	g_list->nb_pipe = count_pipe(ishell.new_line);
@@ -70,26 +64,25 @@ void	*init_pfd(t_init ishell)
 		g_list->pfd = NULL;
 		g_list->pfd = malloc(sizeof(int **) * g_list->nb_pipe);
 		if (!g_list->pfd)
-			return (NULL);
+			return (FAILURE);
 		while(++i < g_list->nb_pipe)
 		{
 			printf("nb de pfd\n");
 			g_list->pfd[i] = malloc(sizeof(int) * 2);
 			if (!g_list->pfd)
-				return (NULL);
+				return (FAILURE);
 		}
 		i = -1;
 		while (++i < g_list->nb_pipe)
 			pipe(g_list->pfd[i]);
 	}
+	return (SUCCESS);
 }
 
 void	minishell(char **env)
 {
 	t_init	ishell;
-	int i;
 
-	i = -1;
 	memset(&g_list, 0, sizeof(g_list));
 	g_list = cpy_env(env);
 	while (1)

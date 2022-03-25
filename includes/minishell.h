@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/24 20:27:07 by user42           ###   ########.fr       */
+/*   Updated: 2022/03/25 17:48:42 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,10 +130,10 @@ char		*ft_strcat2(char *dest, char *src);
 char		*boucle_path(char **array_path, char **array_cmd);
 void		exec_cmd(t_lst_cmd *mshell, char **env);
  void		cmd_fork(t_lst_cmd *tmp, char **env, int i);
-t_pipex 	*init_pipex(char **split_byspace, char *str);
+t_pipex 	*init_pipex(char **split_byspace);
 int			close_wait(t_init ishell, t_lst_cmd *mshell);
 void		dup_exec(int i);
-void		*init_pfd(t_init ishell);
+int			init_pfd(t_init ishell);
 
 /*			FT_ERRORS_HANDLERS		*/
 void		free_str(char **path);
@@ -143,6 +143,7 @@ int			ft_system_error(void);
 /*			FT_BUILT_IN_CHECKER		*/
 int			ft_is_built_in(char *cmd);
 int			exec_built_in(t_lst_cmd *mshell, char **env);
+
 /*			FT_PWD				*/
 int			ft_builtin_pwd(char **argv);
 
@@ -159,8 +160,8 @@ void		ft_built_in_env(char **built_in);
 int			ft_built_echo(char *args[]);
 
 /*			UTILS_ECHO		*/
-int 		ft_echo_single_dollar(char **cmd, int i, t_env *echo_env);
-int			ft_echo_several_dollars(char **cmd, int i, t_env *echo_env);
+int 		ft_echo_single_dollar(char **cmd, int i);
+int			ft_echo_several_dollars(char **cmd, int i);
 
 /*			UTILS_ECHO_2		*/
 int			ft_len(char **cmd);
@@ -193,6 +194,11 @@ char		**ft_env_cpy(char **envp, char **envp_2);
 
 /*			FT_UTILS_REDIR		*/
 int 		ft_check_all_redir_errors(char *str);
+int			ft_check_if_no_redir(char *str);
+
+/*			FT_REDIR_HANDLER	*/
+int			ft_redir_handler(char *str);
+void		ft_heredoc(char **tab, int i);
 
 /*			FT_UTILS_REDIR_CREATE_FILES		*/
 int			ft_pas_colle_chevron(char **str, int i);

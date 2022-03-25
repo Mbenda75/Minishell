@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 22:59:07 by user42            #+#    #+#             */
-/*   Updated: 2022/03/23 14:03:57 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/25 17:54:52 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ int	ft_check_variable_unset(char **cmd)
 	return (SUCCESS);
 }	
 
-void	ft_free_middle_node(t_env *tmp, t_env *head)
+void	ft_free_middle_node(t_env *head)
 {
+	t_env	*tmp;
+
 	tmp = head->next;
 	free(head->content);
 	head->content = head->next->content;
@@ -44,13 +46,12 @@ void	ft_free_middle_node(t_env *tmp, t_env *head)
 	free(tmp);
 }
 
-void	ft_free_last_node(t_env *temp, t_env *lastnode)
+void	ft_free_last_node(t_env *temp)
 {
 	while (temp->next->next != NULL)
 		temp = temp->next;
 	free(temp->next->content);
 	free(temp->next);
-	lastnode = temp->next;
 	temp->next = NULL;
 }
 
@@ -58,8 +59,6 @@ void	ft_built_in_unset_2(char *cmd)
 {
 	t_env	*head;
 	t_env	*temp;
-	t_env	*lastnode;
-	t_env	*tmp;
 
 	head = g_list;
 	temp = head;
@@ -70,11 +69,11 @@ void	ft_built_in_unset_2(char *cmd)
 		{
 			if (head->next != NULL)
 			{
-				ft_free_middle_node(tmp, head);
+				ft_free_middle_node(head);
 				break ;
 			}
 			if (head->next == NULL)
-				ft_free_last_node(temp, lastnode);
+				ft_free_last_node(temp);
 			break ;
 		}
 		head = head->next;

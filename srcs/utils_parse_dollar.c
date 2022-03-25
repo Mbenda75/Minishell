@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 17:06:47 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/23 17:47:48 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/25 17:44:39 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ int	ft_check_env_var_existence(char *complete_var)
 
 	check = g_list;
     if (ft_strcmp(complete_var, "?") == 0)
+	{
         return (SUCCESS);
+	}
 	tmp_add_equal = ft_strjoin(complete_var, "=");
 	while (check)
 	{
@@ -58,7 +60,9 @@ char	*ft_change_dollar_var(char *word)
 
 	check = g_list;
     if (ft_strcmp(word, "?") == 0)
+	{
         return (word = ft_itoa(g_list->exit_value));
+	}
 	tmp_add_equal = ft_strjoin(word, "=");
 	while (check)
 	{

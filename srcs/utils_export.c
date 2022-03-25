@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 18:51:40 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/23 16:46:00 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/25 17:32:42 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int	ft_find_dollars(char *str)
 int	ft_check_variable_after_equal(char *cmd)
 {
 	int	i;
-	int	j;
 
 	i = 0;
 	while (cmd[i])
