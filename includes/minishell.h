@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/25 17:48:42 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/25 19:04:58 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ extern struct s_env	*g_list;
 typedef struct s_env
 {
 	char				*content;
+	char				*ret_herdc;
 	int					nb_pipe;
 	int					**pfd;
 	int					fd_stdout;

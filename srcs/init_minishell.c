@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 17:19:35 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/25 17:50:18 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/25 19:44:39 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,14 @@ t_lst_cmd	*fill_lst(char *str)
 	t_lst_cmd	*lst;
 	int i;
 
-	i = 0;
+	i = 1;
 	lst = malloc(sizeof(t_lst_cmd));
 	if (!lst)
 		return(NULL);
 	lst->split_byspace = ft_split(str, ' ');
 	while (lst->split_byspace[i])
 	{
+		
 		if (lst->split_byspace[i][0] == '>' && lst->split_byspace[i][1] != '>')
 		{
 			lst->split_byspace[i] = NULL;
@@ -41,9 +42,16 @@ t_lst_cmd	*fill_lst(char *str)
 		}
 		if (lst->split_byspace[i][0] == '<' && lst->split_byspace[i][1] == '<')
 		{
-			lst->split_byspace[i] = NULL;
+			lst->split_byspace[i] = g_list->ret_herdc;
 			i++;
 		}
+		i++;
+	}
+	printf("JE SUIS LA\n");
+	i = 0;
+	while (lst->split_byspace[i])
+	{
+		printf("split == %s\n", lst->split_byspace[i]);
 		i++;
 	}
 	lst->pipex = init_pipex(lst->split_byspace);
@@ -91,11 +99,7 @@ t_lst_cmd	*create_lst(char *prompt_line, t_lst_cmd *lst)
 t_lst_cmd	*init_shell(char *buffer, t_lst_cmd *lst)
 {
 	if (ft_check_if_no_redir(buffer) == SUCCESS)
-	{
-		if (ft_check_redirection(buffer) == SUCCESS) // changer de place retirer l'absence de chevron des erreurs et y ajouter l'open de <
-			ft_redir_handler(buffer);
-	}
-	printf("BUFFER = %s\n", buffer);
+		ft_redir_handler(buffer);
 	if (g_list->nb_pipe != 0)
 		lst = create_lst(buffer, lst);
 	else if (g_list->nb_pipe == 0)

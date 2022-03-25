@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:23:39 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/25 18:07:14 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/25 18:59:08 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,21 +49,10 @@ void	dup_exec(int i)
 	int k;
 
 	k = -1;
-	if (i != 0) //pour dup notre entre standart dans les pipes pour les prochaine commande
-	{
-		printf("premier\n");
-		printf("i premier == %d\n", i);
-
-		dup2(g_list->pfd[i - 1][0], 0); // dup2(pfd[0][0]) dans le canal de lecture du pipe dans stdin
-
-	}
-	if (i != g_list->nb_pipe) // pour dup la derniere commande avec notre sortie standar
-	{
-		printf("2eme\n");
-		printf("i 2emme == %d\n", i);
-		
-		dup2(g_list->pfd[i][1], 1); // dup2(pfd[0][1], 1) canal decriture du pipe dans stdout
-	}
+	if (i != 0)
+		dup2(g_list->pfd[i - 1][0], 0);
+	if (i != g_list->nb_pipe)
+		dup2(g_list->pfd[i][1], 1);
  	while (g_list->nb_pipe != 0 && ++k < g_list->nb_pipe)
 	{
 		close(g_list->pfd[k][0]);

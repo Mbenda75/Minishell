@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 10:38:01 by user42            #+#    #+#             */
-/*   Updated: 2022/03/25 17:29:28 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/25 19:38:14 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int ft_pas_colle_double_chevron(char **str, int i)
 
 int ft_pas_colle_chevron_inverse(char **str, int i)
 {
-
 	g_list->file_open = open(str[i + 1], O_RDONLY);
 	if (g_list->file_open < 0)
 	{

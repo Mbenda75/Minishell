@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 11:26:11 by user42            #+#    #+#             */
-/*   Updated: 2022/03/25 18:03:27 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/25 18:20:18 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,43 +79,6 @@ void open_redir(char **tab, int i, int j)
 		j++;
 	}
 }
-
-/*char *ft_heredoc(char **tab, int i)
-{
-	char *input;
-	char *temp;
-	char *ret;
-	char *delimiter;
-
-	//signal(SIGINT, ft_signals_handler);
-	//signal(SIGINT, ft_signals_handler);
-
-	ret = ft_calloc(sizeof(char), 1);
-	delimiter = tab[i + 1];
-	if (dup2(g_list->file_open, STDIN_FILENO) < 0 )
-		return (FAILURE);	
-	while (1)
-	{
-		input = readline("prompt>");
-		add_history(input);
-		if (strcmp(input, delimiter) == SUCCESS)
-		{
-			printf("JE SUIS LA\n");
-			free(input);
-			break ;
-		}
-		temp = ret;
-		ret = ft_strjoin(ret, input);
-		free(input);
-		free(temp);
-		//temp = ret;
-		//ret = ft_strjoin(ret, "\n");
-		//free(temp);
-	}
-	printf("ret = %s", ret);
-	//free(ret);
-	return (ret);
-}*/
 
 int	ft_check_redirection(char *str)
 {

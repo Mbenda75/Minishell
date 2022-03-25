@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:46:47 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/25 17:49:55 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/25 19:33:26 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	minishell(char **env)
 		{
 			ishell.new_line = skip_quote(ishell.prompt_line);
 			add_history(ishell.prompt_line);
-			if (check_pipe(ishell.new_line) == 1)
+			if (check_pipe(ishell.new_line) == 1 || ft_check_redirection(ishell.new_line) == FAILURE)
 			{
 				printf("error pipe\n");
 				free(ishell.new_line);

@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 17:27:19 by user42            #+#    #+#             */
-/*   Updated: 2022/03/25 17:32:16 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/25 18:25:49 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,13 +109,13 @@ int ft_check_file_existence(char *str)
     split_byspace = ft_split(str, ' ');
     while (split_byspace[index.i])
     {
-        if (split_byspace[index.i][0] == '<')
+        if (split_byspace[index.i][0] == '<' && split_byspace[index.i][1] != '<')
         {
             index.j = open(split_byspace[index.i + 1], O_RDONLY);
 	        if (index.j < 0)
 	        {
 		        close(index.j);
-		        printf("%s: No such file or directory\n", split_byspace[index.i + 1]);
+		        printf("%s: No such POPO file or directory\n", split_byspace[index.i + 1]);
 		        return (FAILURE);
             }
             else

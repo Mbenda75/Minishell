@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:45:36 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/25 16:08:16 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/25 19:43:00 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ void ft_heredoc(char **tab, int i)
 {
 	char *input;
 	char *temp;
-	char *ret;
+	//char *ret;
 	char *delimiter;
 
-	ret = ft_calloc(sizeof(char), 1);
+	g_list->ret_herdc = ft_calloc(sizeof(char), 1);
 	delimiter = tab[i + 1];
 	while (1)
 	{
@@ -30,16 +30,16 @@ void ft_heredoc(char **tab, int i)
 			free(input);
 			break ;
 		}
-		temp = ret;
-		ret = ft_strjoin(ret, input);
+		temp = g_list->ret_herdc;
+		g_list->ret_herdc = ft_strjoin(g_list->ret_herdc, input);
 		free(input);
 		free(temp);
-		temp = ret;
-		ret = ft_strjoin(ret, "\n");
+		temp = g_list->ret_herdc;
+		g_list->ret_herdc = ft_strjoin(g_list->ret_herdc, "\n");
 		free(temp);
 	}
-	printf("ret = %s\n", ret);
-	free(ret);
+	//printf("ret = %s\n", ret);
+	//free(ret);
 }
 
 int ft_redir_handler(char *str)
@@ -60,10 +60,11 @@ int ft_redir_handler(char *str)
 			ft_pas_colle_chevron(tab, i);
 		if (tab[i][0] == '>' && tab[i][1] == '>')
 			ft_pas_colle_double_chevron(tab, i);
-		if (tab[i][0] == '<')
+		if (tab[i][0] == '<' && tab[i][1] != '<')
 			ft_pas_colle_chevron_inverse(tab, i);	
 		i++;
 	}
+	printf("SORTI DU ft_redir_handler\n");
 	free_str(tab);
 	return (SUCCESS);
 }
