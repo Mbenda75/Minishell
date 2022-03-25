@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:09:23 by user42            #+#    #+#             */
-/*   Updated: 2022/03/22 10:48:20 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/25 17:08:29 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,5 @@ int	ft_built_in_exit(t_lst_cmd *mshell)
 	else  //aucun des cas de figure précédant donc un simple exit suivant d'un nombre compris dans long long (limite debash avant de renvoyer numeric arg required bash)
 		printf("exit\n");
 	ft_free_lst_print_and_exit(mshell, exit_value); //sert simplement à free et à écrire exit --> mesure due à la norme
+	return (0);
 }

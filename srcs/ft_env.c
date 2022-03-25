@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 21:10:54 by user42            #+#    #+#             */
-/*   Updated: 2022/03/22 11:43:23 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/25 17:07:43 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ t_env	*cpy_env(char **env)
 
 void	ft_built_in_env(char **built_in)
 {
-	int		i;
 	t_env	*head;
 	t_env	*tail;
 

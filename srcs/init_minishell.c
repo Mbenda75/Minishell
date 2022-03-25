@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 17:19:35 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/22 17:49:04 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/25 17:05:52 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,11 @@ t_lst_cmd	*fill_lst(char *str)
 	if (!lst)
 		return(NULL);
 	lst->split_byspace = ft_split(str, ' ');
-	lst->pipex = init_pipex(lst->split_byspace, str);
+	lst->pipex = init_pipex(lst->split_byspace);
+	// g_list->savefd[0] = dup(STDIN_FILENO);
+	// g_list->savefd[1] = dup(STDOUT_FILENO);
+	//lst->savefd[0] = dup(STDIN_FILENO);
+	//lst->savefd[1] = dup(STDOUT_FILENO);
 	lst->next = NULL;
 	return (lst);
 }
@@ -69,6 +73,8 @@ t_lst_cmd	*init_shell(char *buffer, t_lst_cmd *lst)
 
 //	if (ft_check_redirection(buffer) == SUCCESS)
 //		red = ft_count_redirection(buffer);
+	//g_list->savefd[0] = dup(STDIN_FILENO);
+	//g_list->savefd[1] = dup(STDOUT_FILENO);
 	if (g_list->nb_pipe != 0)
 		lst = create_lst(buffer, lst);
 	else if (g_list->nb_pipe == 0)

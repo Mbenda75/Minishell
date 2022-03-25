@@ -6,18 +6,16 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 15:16:14 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/22 11:39:50 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/25 17:06:26 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_pipex *init_pipex(char **split_byspace, char *str)
+t_pipex *init_pipex(char **split_byspace)
 {
 	t_pipex	*pipex;
-	int i;
-
-	i = 0;
+	
 	pipex = NULL;
 	pipex = malloc(sizeof(t_pipex));
 	if (!pipex)
@@ -31,11 +29,8 @@ t_pipex *init_pipex(char **split_byspace, char *str)
 char	*search_path(t_env *lst)
 {
 	size_t	size;
-	int		index_path;
-	char	*str;
 
 	size = 5;
-	index_path = 0;
 	while (lst)
 	{
 		if (ft_strncmp("PATH=\n", lst->content, size) == 0)

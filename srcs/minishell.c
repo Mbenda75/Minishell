@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:46:47 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/22 20:04:43 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/25 17:04:31 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,17 @@ void	start_minishell(t_init ishell, char **env)
 	tmp = mshell;
 	while (tmp)
 	{
-		if (ft_is_built_in(mshell->split_byspace[0]) == 1)
+		printf("\nTEST1\n");
+  		if (ft_is_built_in(mshell->split_byspace[0]) == 1)
 			exec_built_in(mshell, env);
-		else
+		else 
 			cmd_fork(tmp, env, ++i);
 		tmp = tmp->next;
+		printf("\nTEST2\n");
 	}
+	printf("C'EST OKKK\n");
 	close_wait(ishell, mshell);
+	printf("TEST4244244224244242\n");
 }
 
 char *get_prompt(void)
@@ -52,6 +56,7 @@ void	*init_pfd(t_init ishell)
 	if (g_list->nb_pipe != 0)
 	{
 		i = -1;
+	
 		g_list->pfd = NULL;
 		g_list->pfd = malloc(sizeof(int **) * g_list->nb_pipe);
 		if (!g_list->pfd)
@@ -94,7 +99,6 @@ void	minishell(char **env)
 			add_history(ishell.prompt_line);
 			if (check_pipe(ishell.new_line) == 1)
 			{
-				printf("error pipe\n");
 				free(ishell.new_line);
 				free_str(ishell.cmd);
 				free(ishell.prompt_line);

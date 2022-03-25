@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error_redir.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 11:26:11 by user42            #+#    #+#             */
-/*   Updated: 2022/03/23 15:11:34 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/25 17:08:11 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int ft_colle_chevron_inverse(char *split_by_spa)
 
 int ft_colle_chevron_normal(char *str)
 {
-	int i;
 	int file_open;
 
 	i = 0;
@@ -50,7 +49,6 @@ int ft_colle_chevron_normal(char *str)
 
 int ft_colle_double_chevron_normal(char *str)
 {
-	int i;
 	int file_open;
 
 	i = 0;
@@ -62,7 +60,6 @@ int ft_colle_double_chevron_normal(char *str)
 		return (ft_custom_error("Error > chevron"));
 	}
 	close (file_open);
- {
 	free(str);
 	return (SUCCESS);
 }
@@ -97,6 +94,7 @@ int create_redir(char **tab, int i)
 		ft_pas_colle_chevron_inverse(tab, i);
 	return (SUCCESS);
 }
+
 int	ft_heredoc(char **tab, int i)
 {
 	char *input;
@@ -134,7 +132,6 @@ int	ft_heredoc(char **tab, int i)
 int	ft_check_redirection(char *str)
 {
 	char **tab;
-	char *str_2;
 	int i;
 	int j;
 	

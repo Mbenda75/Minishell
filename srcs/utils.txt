@@ -5,7 +5,16 @@
 		free_str(mshell->split_byspace);
 		exit (2);
 	}*/
-
+// if only same quote for arg echo == skipp 
+	//toujour skipp les quote des cmd/arg et des fichier si multi quote = cmd not found
+	//si dquote en premier et nb dquote est impair afficher les squote sinon skip tout 
+	//si squote en premier et nbquote est impair afficher les dquote sinon skip tout
+	//pour echo echo $USER == benmoham 
+	//echo  "'''$US'E'R'''" == ''''E'R'''
+	//echo ""'''$US'E'R'''"" == $USER
+	// echo ""'''"USER"'''"" == "USER"
+	//echo """'"USER"'""" == 'USER'
+	
 /* 	if (!lst)
 	{
 		//ft_system_error();

@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:23:39 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/22 20:28:49 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/25 17:04:42 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,24 +40,19 @@ void	close_wait(t_init ishell, t_lst_cmd *mshell)
 void	dup_exec(int i)
 {
 	int k;
-
 	k = -1;
+
 	if (i != 0) //pour dup notre entre standart dans les pipes pour les prochaine commande
 	{
-		printf("premier\n");
-		printf("i premier == %d\n", i);
-
-		dup2(g_list->pfd[i - 1][0], 0); // dup2(pfd[0][0]) dans le canal de lecture du pipe dans stdin
-
+		dup2(g_list->pfd[i - 1][0], STDIN_FILENO);// dup2(pfd[0][0]) dans le canal de lecture du pipe dans stdin
+		close(g_list->pfd[i - 1][0]);
 	}
 	if (i != g_list->nb_pipe) // pour dup la derniere commande avec notre sortie standar
 	{
-		printf("2eme\n");
-		printf("i 2emme == %d\n", i);
-		
-		dup2(g_list->pfd[i][1], 1); // dup2(pfd[0][1], 1) canal decriture du pipe dans stdout
+		dup2(g_list->pfd[i][1], STDOUT_FILENO); // dup2(pfd[0][1], 1) canal decriture du pipe dans stdout
+		close(g_list->pfd[i][1]);
 	}
- 	while (g_list->nb_pipe != 0 && ++k < g_list->nb_pipe)
+  	while (g_list->nb_pipe != 0 && ++k < g_list->nb_pipe)
 	{
 		close(g_list->pfd[k][0]);
 		close(g_list->pfd[k][1]);
@@ -70,7 +65,7 @@ void	exec_cmd(t_lst_cmd *mshell, char **env)
 	if (mshell->pipex->exec_path == NULL)
 	{
 		printf("exit exec\n");
-		return ;
+		exit(1);
 	}
 	if (access(mshell->pipex->exec_path, F_OK) == 0)
 		execve(mshell->pipex->exec_path, mshell->split_byspace, env);
@@ -87,6 +82,7 @@ void	cmd_fork(t_lst_cmd *tmp, char **env, int i)
 	}
 	if (tmp->pipex->child == 0)
 	{
+		ft_signals();
 		dup_exec(i);
 		exec_cmd(tmp, env);
 	}

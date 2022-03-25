@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:40:02 by user42            #+#    #+#             */
-/*   Updated: 2022/03/23 15:06:12 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/23 15:53:07 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ int	ft_built_in_export(char **cmd)
 			}
 			if (k.i == FAILURE)
 				printf("export: '%s': not a valid identifer\n", cmd[k.l]);
+		}	
 	}
 	return (SUCCESS);
 }

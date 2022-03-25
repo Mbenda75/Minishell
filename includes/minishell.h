@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/23 15:11:34 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/25 17:06:50 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_env
 	int					nb_pipe;
 	int					**pfd;
 	int					exit_value;
+	int					savefd[2];
 	struct s_env		*next;
 }				t_env;
 
@@ -68,7 +69,7 @@ typedef struct s_lst_cmd
 {
 	char				**split_byspace;
 	struct s_pipex 		*pipex;
-	
+	int 				savefd[2];
 	struct s_lst_cmd	*next;
 	int					exit_value;
 }				t_lst_cmd;
@@ -94,6 +95,7 @@ void	free_fd(int **fd);
 /* 			PARSING SHELL		 */
 char		*skip_quote(char *str);
 int			check_first_quote(char *str);
+int			if_noquote(char *str);
 
 int			count_pipe(char *str);
 int			size_malloc(char *str);
@@ -129,8 +131,8 @@ char		*search_path(t_env *lst);
 char		*ft_strcat2(char *dest, char *src);
 char		*boucle_path(char **array_path, char **array_cmd);
 void		exec_cmd(t_lst_cmd *mshell, char **env);
- void		cmd_fork(t_lst_cmd *tmp, char **env, int i);
-t_pipex 	*init_pipex(char **split_byspace, char *str);
+void		cmd_fork(t_lst_cmd *tmp, char **env, int i);
+t_pipex 	*init_pipex(char **split_byspace);
 void		close_wait(t_init ishell, t_lst_cmd *mshell);
 void		dup_exec(int i);
 void		*init_pfd(t_init ishell);

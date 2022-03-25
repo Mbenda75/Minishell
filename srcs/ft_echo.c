@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 22:01:53 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/23 13:29:52 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/25 17:07:31 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	check_option(char *str)
 	return (1);
 }
 
-int	ft_echo_dollar(char	**cmd, int i, int j)
+int	ft_echo_dollar(char	**cmd, int i)
 {
 	t_env	*echo_env;
 	int		dollar;
@@ -48,6 +48,7 @@ int	ft_echo_dollar(char	**cmd, int i, int j)
 		ft_echo_several_dollars(cmd, i, echo_env);
 		return (SUCCESS);
 	}
+	return (0);
 }
 
 void	ft_write_echo(char **cmd, int i, int j)
@@ -79,7 +80,7 @@ void	ft_write_echo(char **cmd, int i, int j)
 int	ft_built_echo(char *cmd[])
 {
 	t_decompte	m;
-	char		*tmp;
+
 
 	m.i = 1;
 	m.l = 0;

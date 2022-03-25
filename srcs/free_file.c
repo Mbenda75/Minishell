@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:18:17 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/22 10:43:13 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/25 17:02:26 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	free_fd(int **fd)
 	int	line;
 
 	line = 0;
-	while (line < g_list->nb_pipe);
+	while (line < g_list->nb_pipe)
 	{
 		free(fd[line]);
 		line++;
