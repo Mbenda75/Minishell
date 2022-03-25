@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 18:51:40 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/22 12:43:07 by user42           ###   ########.fr       */
+/*   Updated: 2022/03/25 17:32:42 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int	ft_find_dollars(char *str)
 int	ft_check_variable_after_equal(char *cmd)
 {
 	int	i;
-	int	j;
 
 	i = 0;
 	while (cmd[i])
@@ -103,7 +102,6 @@ int	ft_check_variable_before_equal(char *cmd)
 
 	i = 0;
 	j = 0;
-	printf("[%s]\n", cmd);
 	if (cmd[0] == '\0')
 		return(ft_custom_error("export: not valid identifier1"));
 	while(cmd[j])

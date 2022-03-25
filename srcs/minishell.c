@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:46:47 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/25 17:04:31 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/25 17:49:55 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,22 @@ void	start_minishell(t_init ishell, char **env)
 	tmp = mshell;
 	while (tmp)
 	{
-		printf("\nTEST1\n");
-  		if (ft_is_built_in(mshell->split_byspace[0]) == 1)
+		if (ft_is_built_in(mshell->split_byspace[0]) == 1)
 			exec_built_in(mshell, env);
-		else 
+		else
 			cmd_fork(tmp, env, ++i);
 		tmp = tmp->next;
-		printf("\nTEST2\n");
 	}
-	printf("C'EST OKKK\n");
-	close_wait(ishell, mshell);
-	printf("TEST4244244224244242\n");
+	if (g_list->check_stds == 1)
+	{
+		dup2(g_list->fd_stdout, STDOUT_FILENO);
+		dup2(g_list->fd_stdin, STDIN_FILENO);
+		close(g_list->file_open);
+		close(g_list->fd_stdout);
+		close(g_list->fd_stdin);
+		g_list->check_stds = 0;
+	}
+	g_list->exit_value = close_wait(ishell, mshell);
 }
 
 char *get_prompt(void)
@@ -48,7 +53,7 @@ char *get_prompt(void)
 	return (ret);	
 }
 
-void	*init_pfd(t_init ishell)
+int	init_pfd(t_init ishell)
 {
 	int i;
 	g_list->nb_pipe = count_pipe(ishell.new_line);
@@ -56,30 +61,28 @@ void	*init_pfd(t_init ishell)
 	if (g_list->nb_pipe != 0)
 	{
 		i = -1;
-	
 		g_list->pfd = NULL;
 		g_list->pfd = malloc(sizeof(int **) * g_list->nb_pipe);
 		if (!g_list->pfd)
-			return (NULL);
+			return (FAILURE);
 		while(++i < g_list->nb_pipe)
 		{
 			printf("nb de pfd\n");
 			g_list->pfd[i] = malloc(sizeof(int) * 2);
 			if (!g_list->pfd)
-				return (NULL);
+				return (FAILURE);
 		}
 		i = -1;
 		while (++i < g_list->nb_pipe)
 			pipe(g_list->pfd[i]);
 	}
+	return (SUCCESS);
 }
 
 void	minishell(char **env)
 {
 	t_init	ishell;
-	int i;
 
-	i = -1;
 	memset(&g_list, 0, sizeof(g_list));
 	g_list = cpy_env(env);
 	while (1)
@@ -99,6 +102,7 @@ void	minishell(char **env)
 			add_history(ishell.prompt_line);
 			if (check_pipe(ishell.new_line) == 1)
 			{
+				printf("error pipe\n");
 				free(ishell.new_line);
 				free_str(ishell.cmd);
 				free(ishell.prompt_line);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_built_in_checker.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 14:03:44 by user42            #+#    #+#             */
-/*   Updated: 2022/03/25 14:14:01 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/25 18:05:29 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	ft_is_built_in(char *cmd)
 	int			i;
 
 	i = 0;
-	
 	while (built_in[i])
 	{
 		if (!strcmp(built_in[i], cmd))
@@ -47,4 +46,5 @@ int	exec_built_in(t_lst_cmd *mshell, char **env)
 		ft_built_in_unset(mshell->split_byspace);
 	else
 		return (FAILURE);
+	return (FAILURE);
 }

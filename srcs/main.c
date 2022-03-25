@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:07:53 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/25 16:29:36 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/25 16:25:41 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,7 @@ int	check_pipe(char *str)
 	{
 		if ((str[i] == '|' && str[i + 1] == '|' )
 			|| str[0] == '|' || str[len - 1] == '|')
-		{
-			printf("error pipe\n");
 			return (1);
-		}
 		i++;
 	}
 	return (0);
@@ -54,7 +51,7 @@ int	main(int ac, char **av, char **env)
 {
 	if (ac != 1 && !av)
 		exit(1);
-//	ft_signals();
+	ft_signals();
 	minishell(env);
 	return (0);
 }

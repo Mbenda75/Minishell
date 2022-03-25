@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/25 17:06:50 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/25 17:48:42 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,11 @@ typedef struct s_env
 	char				*content;
 	int					nb_pipe;
 	int					**pfd;
+	int					fd_stdout;
+	int					fd_stdin;
+	int					check_stds;
+	int					file_open;
 	int					exit_value;
-	int					savefd[2];
 	struct s_env		*next;
 }				t_env;
 
@@ -69,7 +72,7 @@ typedef struct s_lst_cmd
 {
 	char				**split_byspace;
 	struct s_pipex 		*pipex;
-	int 				savefd[2];
+	
 	struct s_lst_cmd	*next;
 	int					exit_value;
 }				t_lst_cmd;
@@ -85,17 +88,15 @@ typedef struct s_decompte
 void		ft_signals(void);
 void		ft_signals_handler(int signal);
 
-/* FUNCT MEMORY */
+/* 			FUNCT MEMORY */
 void		free_str(char **s);
 void		*free_lst(t_lst_cmd *lst);
 void		*free_env(t_env *lst);
-void	free_fd(int **fd);
-
+void		free_fd(int **fd);
 
 /* 			PARSING SHELL		 */
 char		*skip_quote(char *str);
 int			check_first_quote(char *str);
-int			if_noquote(char *str);
 
 int			count_pipe(char *str);
 int			size_malloc(char *str);
@@ -111,8 +112,6 @@ char 		*ft_add_content(char *avant_equal, char *after_equal);
 char 		*ft_add_env_var(char *after_equal, char *env_var);
 int			ft_len(char *cmd[]);
 
-
-
 /*			INIT SHELL  		*/
 t_env		*cpy_env(char **envp);
 t_env		*fill_env(char *str);
@@ -120,7 +119,6 @@ t_lst_cmd	*create_lst(char *prompt_line, t_lst_cmd *lst);
 t_lst_cmd	*fill_lst(char *split_bypipe);
 t_lst_cmd	*init_shell(char *buffer, t_lst_cmd *lst);
 t_lst_cmd	*create_norm(t_lst_cmd *lst, char **split_bypipe, char *prompt_line);
-
 
 /* 			MINISHELL 			*/
 void		start_minishell(t_init ishell, char **env);
@@ -131,22 +129,21 @@ char		*search_path(t_env *lst);
 char		*ft_strcat2(char *dest, char *src);
 char		*boucle_path(char **array_path, char **array_cmd);
 void		exec_cmd(t_lst_cmd *mshell, char **env);
-void		cmd_fork(t_lst_cmd *tmp, char **env, int i);
+ void		cmd_fork(t_lst_cmd *tmp, char **env, int i);
 t_pipex 	*init_pipex(char **split_byspace);
-void		close_wait(t_init ishell, t_lst_cmd *mshell);
+int			close_wait(t_init ishell, t_lst_cmd *mshell);
 void		dup_exec(int i);
-void		*init_pfd(t_init ishell);
+int			init_pfd(t_init ishell);
 
-
-
-/*		FT_ERRORS_HANDLERS		*/
+/*			FT_ERRORS_HANDLERS		*/
 void		free_str(char **path);
 int			ft_custom_error(char *errstr);
 int			ft_system_error(void);
 
-/*		FT_BUILT_IN_CHECKER		*/
+/*			FT_BUILT_IN_CHECKER		*/
 int			ft_is_built_in(char *cmd);
 int			exec_built_in(t_lst_cmd *mshell, char **env);
+
 /*			FT_PWD				*/
 int			ft_builtin_pwd(char **argv);
 
@@ -163,8 +160,8 @@ void		ft_built_in_env(char **built_in);
 int			ft_built_echo(char *args[]);
 
 /*			UTILS_ECHO		*/
-int 		ft_echo_single_dollar(char **cmd, int i, t_env *echo_env);
-int			ft_echo_several_dollars(char **cmd, int i, t_env *echo_env);
+int 		ft_echo_single_dollar(char **cmd, int i);
+int			ft_echo_several_dollars(char **cmd, int i);
 
 /*			UTILS_ECHO_2		*/
 int			ft_len(char **cmd);
@@ -197,6 +194,11 @@ char		**ft_env_cpy(char **envp, char **envp_2);
 
 /*			FT_UTILS_REDIR		*/
 int 		ft_check_all_redir_errors(char *str);
+int			ft_check_if_no_redir(char *str);
+
+/*			FT_REDIR_HANDLER	*/
+int			ft_redir_handler(char *str);
+void		ft_heredoc(char **tab, int i);
 
 /*			FT_UTILS_REDIR_CREATE_FILES		*/
 int			ft_pas_colle_chevron(char **str, int i);
@@ -205,10 +207,13 @@ int			ft_pas_colle_chevron_inverse(char **str, int i);
 
 /*			FT_PARSE_DOLLAR		*/
 char		*ft_transform_dollar(char *str);
-int			ft_find_where_is_dollars(char *str);
-int			ft_find_dollars(char *str);
-char		*ft_transform_dollar_2(char *str);
-int			ft_checK_env_var_existence(char *complete_var);
+char		*ft_modify_newline_content(char **r_value);
+char		**ft_transform_dollar_malloc(char *str);
+char		*ft_assign_value(char *s_byspace, char **r_value, t_decompte *index);
+
+/*			UTILS_PARSE_DOLLAR		*/
+int			ft_count_dollar(char *str);
+int			ft_check_env_var_existence(char *complete_var);
 char		*ft_change_dollar_var(char *word);
 
 #endif

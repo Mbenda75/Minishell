@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 11:32:13 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/25 14:30:24 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/16 16:01:59 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	check_first_quote(char *str)
 	return (0);
 }
 
-int	if_noquote(char *str)
+int	if_noquote(char *str, char c)
 {
 	int	i;
 	int	quote;
@@ -38,13 +38,12 @@ int	if_noquote(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == 34 || str[i] == 39)
+		if (str[i] == c)
 			quote++;
 		i++;
 	}
-	if (quote % 2 == 0)
+	if (quote % 2)
 		return (0);
-	printf("error quote\n");
 	return (1);
 }
 
