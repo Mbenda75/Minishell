@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+         #
+#    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/18 08:05:34 by adaloui           #+#    #+#              #
-#    Updated: 2022/03/25 19:12:28 by adaloui          ###   ########.fr        #
+#    Updated: 2022/03/25 22:08:27 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ $(NAME): $(OBJ)
 
 $(OBJ): $(SRC)
 	@echo $(CYAN) "Creation des fichiers .o." $(WHITE)
-	@gcc $(FLAGS) -g -c $(SRC)
+	@gcc -g -c $(SRC)
 
 clean:
 	@echo "Suppression en cours des fichiers .o de $(NAME) et de la libft"

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/25 19:04:58 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/25 22:15:17 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,5 +216,14 @@ char		*ft_assign_value(char *s_byspace, char **r_value, t_decompte *index);
 int			ft_count_dollar(char *str);
 int			ft_check_env_var_existence(char *complete_var);
 char		*ft_change_dollar_var(char *word);
+int			ft_is_operator(char str);
+
+
+/*			FT_NO_CMD		*/
+void		ft_handle_dollar_no_cmd(char **split_byspace);
+char		*ft_no_cmd_dollar(char *str);
+char		*ft_transform_dollar_for_no_cmd(char *str);
+
+
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parse_dollar.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 17:06:47 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/25 17:44:39 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/25 23:06:02 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,11 @@ char	*ft_change_dollar_var(char *word)
 	}
 	free(tmp_add_equal);
 	return (word);
+}
+
+int ft_is_operator(char str)
+{
+	if (str == '+' || str == '*' || str == '/' || str == '-')
+			return (SUCCESS);
+	return (FAILURE);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 12:55:59 by adaloui           #+#    #+#             */
-/*   Updated: 2021/05/27 16:52:39 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/25 21:29:07 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*ft_itoa(int n)
 	else
 		n_t = n;
 	len = ft_decoupe(n_t, signe);
-	str = (char *)malloc(sizeof(char) * (len + 1));
+	str = (char *)malloc(sizeof(char) * (len) + 1);
 	if (str == NULL)
 		return (NULL);
 	ft_calcul(n_t, signe, str, len);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:46:47 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/25 19:33:26 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/25 20:43:12 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	minishell(char **env)
 		{
 			ishell.new_line = skip_quote(ishell.prompt_line);
 			add_history(ishell.prompt_line);
-			if (check_pipe(ishell.new_line) == 1 || ft_check_redirection(ishell.new_line) == FAILURE)
+			if (check_pipe(ishell.new_line) == FAILURE || ft_check_redirection(ishell.new_line) == FAILURE)
 			{
 				printf("error pipe\n");
 				free(ishell.new_line);
@@ -109,6 +109,7 @@ void	minishell(char **env)
 			}
 			else
 			{
+				ishell.new_line = ft_no_cmd_dollar(ishell.new_line);	
 				init_pfd(ishell);
 				start_minishell(ishell, env);
 				if(g_list->nb_pipe != 0)

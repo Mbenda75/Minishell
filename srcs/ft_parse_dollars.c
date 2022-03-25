@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse_dollars.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 18:08:49 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/24 13:41:59 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/25 23:52:24 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_modify_newline_content(char **r_value)
 	char	*str;
 
 	i = 0;
-	if (r_value[i + 1])
+	if (ft_len(r_value) > 1)
 	{
 		temp = "";
 		while (r_value[i])
@@ -30,7 +30,7 @@ char	*ft_modify_newline_content(char **r_value)
 		}
 		return (temp);
 	}
-	else if (r_value[i + 1] == NULL)
+	else if (ft_len(r_value) == 1)
 		str = r_value[0];
 	return (str);
 }
@@ -55,7 +55,13 @@ char	*ft_assign_value(char *s_byspace, char **r_value, t_decompte *index)
 		s_bydollar = ft_split(word, '$');
 		while (s_bydollar[++index->l])
 		{
-			if (ft_check_env_var_existence(s_bydollar[index->l]) == SUCCESS)
+			if (s_bydollar[index->l][0] == '?')
+			{
+				r_value[index->j] = ft_itoa(g_list->exit_value);
+				r_value[index->j] = ft_strjoin(r_value[index->j], s_bydollar[index->l]);
+				index->j++;
+			}
+			else if (ft_check_env_var_existence(s_bydollar[index->l]) == SUCCESS)
 			{
 				word = ft_change_dollar_var(s_bydollar[index->l]);
 				r_value[index->j] = word;
@@ -72,6 +78,18 @@ char	*ft_assign_value(char *s_byspace, char **r_value, t_decompte *index)
 	return (r_value[index->j]);
 }
 
+void ft_calculate_dollar(char **r_value, char **s_byspace, t_decompte *index)
+{
+	int value;
+	int op_un;
+	int op_deux;
+
+	op_un = g_list->exit_value;
+	op_deux = g_list->exit_value;
+	if (s_byspace[index->i][0] == '+')
+		value = op_un + op_deux;
+}
+
 char	*ft_transform_dollar(char *str)
 {
 	char		**s_byspace;
@@ -85,5 +103,28 @@ char	*ft_transform_dollar(char *str)
 	r_value = ft_transform_dollar_malloc(str);
 	while (s_byspace[++index.i])
 		ft_assign_value(s_byspace[index.i], r_value, &index);
+	return (ft_modify_newline_content(r_value));
+}
+
+char	*ft_transform_dollar_for_no_cmd(char *str)
+{
+	char		**s_byspace;
+	char		**r_value;
+	t_decompte	index;
+
+	index.i = -1;
+	index.j = 0;
+	index.l = 0;
+	s_byspace = ft_split(str, ' ');
+	r_value = ft_transform_dollar_malloc(str);
+	while (s_byspace[++index.i])
+	{
+		ft_assign_value(s_byspace[index.i], r_value, &index);
+		if (!ft_strchr(s_byspace[index.i], '$'))
+		{
+			if (ft_is_operator(s_byspace[index.i][0]) == SUCCESS)
+				ft_calculate_dollar(r_value, s_byspace, &index);
+		}
+	}
 	return (ft_modify_newline_content(r_value));
 }

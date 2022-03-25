@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:23:39 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/25 18:59:08 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/25 23:42:56 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ void	exec_cmd(t_lst_cmd *mshell, char **env)
 	
 	if (mshell->pipex->exec_path == NULL)
 	{
-		printf("exit exec\n");
-		exit(1);
+		printf("%s : command not found\n", mshell->split_byspace[0]);
+		exit(127);
 	}
 	while (mshell->split_byspace[j])
 	{
