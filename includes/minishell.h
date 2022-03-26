@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/25 22:15:17 by user42           ###   ########.fr       */
+/*   Updated: 2022/03/26 15:09:48 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,7 +210,7 @@ int			ft_pas_colle_chevron_inverse(char **str, int i);
 char		*ft_transform_dollar(char *str);
 char		*ft_modify_newline_content(char **r_value);
 char		**ft_transform_dollar_malloc(char *str);
-char		*ft_assign_value(char *s_byspace, char **r_value, t_decompte *index);
+char		**ft_assign_value(char *s_byspace, char **r_value, t_decompte *index);
 
 /*			UTILS_PARSE_DOLLAR		*/
 int			ft_count_dollar(char *str);
@@ -223,6 +223,8 @@ int			ft_is_operator(char str);
 void		ft_handle_dollar_no_cmd(char **split_byspace);
 char		*ft_no_cmd_dollar(char *str);
 char		*ft_transform_dollar_for_no_cmd(char *str);
+int			ft_no_cmd_dollar_check(char *str);
+
 
 
 
