@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/26 15:09:48 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/26 16:57:14 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ int			ft_check_if_no_redir(char *str);
 
 /*			FT_REDIR_HANDLER	*/
 int			ft_redir_handler(char *str);
-void		ft_heredoc(char **tab, int i);
+int			ft_heredoc(char **tab, int i);
 
 /*			FT_UTILS_REDIR_CREATE_FILES		*/
 int			ft_pas_colle_chevron(char **str, int i);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 17:19:35 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/25 20:28:40 by user42           ###   ########.fr       */
+/*   Updated: 2022/03/26 18:16:51 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,17 @@
 t_lst_cmd	*fill_lst(char *str)
 {
 	t_lst_cmd	*lst;
-	int i;
+	char *tmp;
+	//int i;
 
-	i = 1;
+	//i = 1;
 	lst = malloc(sizeof(t_lst_cmd));
 	if (!lst)
 		return(NULL);
-	lst->split_byspace = ft_split(str, ' ');
-	while (lst->split_byspace[i])
+	printf("str == %s\n", str);
+	tmp = strtok(str, "><");
+	lst->split_byspace = ft_split(tmp, ' ');
+	/*while (lst->split_byspace[i])
 	{
 		
 		if (lst->split_byspace[i][0] == '>' && lst->split_byspace[i][1] != '>')
@@ -42,18 +45,19 @@ t_lst_cmd	*fill_lst(char *str)
 		}
 		if (lst->split_byspace[i][0] == '<' && lst->split_byspace[i][1] == '<')
 		{
-			lst->split_byspace[i] = g_list->ret_herdc;
+			lst->split_byspace[i] = NULL;
+			lst->split_byspace[i + 1] = NULL;
 			i++;
 		}
 		i++;
-	}
+	}*/
 	printf("JE SUIS LA\n");
 	i = 0;
 	while (lst->split_byspace[i])
 	{
 		printf("split == %s\n", lst->split_byspace[i]);
 		i++;
-	}
+	}*/
 	lst->pipex = init_pipex(lst->split_byspace);
 	lst->next = NULL;
 	return (lst);

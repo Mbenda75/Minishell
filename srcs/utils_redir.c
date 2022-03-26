@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 17:27:19 by user42            #+#    #+#             */
-/*   Updated: 2022/03/25 18:25:49 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/26 17:23:00 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,9 @@ int ft_check_file_existence(char *str)
     t_decompte index;
     char **split_byspace;
     
-    index.i = 0;
+    index.i = -1;
     split_byspace = ft_split(str, ' ');
-    while (split_byspace[index.i])
+    while (split_byspace[++index.i])
     {
         if (split_byspace[index.i][0] == '<' && split_byspace[index.i][1] != '<')
         {
@@ -115,17 +115,14 @@ int ft_check_file_existence(char *str)
 	        if (index.j < 0)
 	        {
 		        close(index.j);
-		        printf("%s: No such POPO file or directory\n", split_byspace[index.i + 1]);
-		        return (FAILURE);
-            }
-            else
-            {
-                close(index.j);
-                return (SUCCESS);
+		        printf("%s: No such file or directory\n", split_byspace[index.i + 1]);
+		        free_str(split_byspace);
+                return (FAILURE);
             }
         }
-        index.i++;
 	}
+    free_str(split_byspace);
+    close(index.j);
     return (SUCCESS);
 }
 
@@ -137,7 +134,10 @@ int ft_check_all_redir_errors(char *str)
         return (FAILURE);
     if (ft_check_space_at_the_end(str) == FAILURE)
         return (FAILURE);
-    if (ft_check_file_existence(str) == FAILURE)
-        return (FAILURE);
+    if (strchr(str, '<'))
+    {
+        if (ft_check_file_existence(str) == FAILURE)
+            return (FAILURE);
+    }
     return (SUCCESS);
 }

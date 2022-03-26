@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:46:47 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/26 14:57:29 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/26 18:16:39 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,8 @@ void	minishell(char **env)
 			}
 			else
 			{
-				ishell.new_line = ft_no_cmd_dollar(ishell.new_line);	
+				ishell.new_line = ft_no_cmd_dollar(ishell.new_line);
+				//ishell.new_line = 
 				init_pfd(ishell);
 				start_minishell(ishell, env);
 				if(g_list->nb_pipe != 0)
