@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:18:17 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/25 17:35:24 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/27 23:10:30 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	*free_lst(t_lst_cmd *lst)
 	while (lst != NULL)
 	{
 		free_str(lst->pipex->split_path);
-	 	free(lst->pipex->exec_path);
+		free(lst->pipex->exec_path);
 		free(lst->pipex);
 		free_str(lst->split_byspace);
 		tmp = lst;

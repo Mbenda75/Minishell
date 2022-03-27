@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 14:03:44 by user42            #+#    #+#             */
-/*   Updated: 2022/03/27 21:17:51 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/27 23:10:06 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,24 @@
 
 int	ft_is_built_in(char *cmd)
 {
-	const char	*built_in[] = {"pwd", "cd", "exit", "env", "export", "echo", "unset", NULL};
+	const char	*built_in[] = {"pwd", "cd", "exit",
+		"env", "export", "echo", "unset", NULL};
 	int			i;
 
 	i = 0;
 	if (cmd == NULL)
-		return(1);
+		return (FAILURE);
 	while (built_in[i])
 	{
 		if (!strcmp(built_in[i], cmd))
-			return (0);
+			return (SUCCESS);
 		i++;
 	}
-	return (1);
+	return (FAILURE);
 }
 
 int	exec_built_in(t_lst_cmd *mshell, char **env)
 {
-	printf("builtin === %s\n", mshell->split_byspace[0]);
 	if (!ft_strcmp(mshell->split_byspace[0], "pwd"))
 		ft_builtin_pwd(mshell->split_byspace);
 	else if (!ft_strcmp(mshell->split_byspace[0], "cd"))

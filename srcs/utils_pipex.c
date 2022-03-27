@@ -6,20 +6,20 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 15:16:14 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/25 17:31:45 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/27 23:24:45 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_pipex *init_pipex(char **split_byspace)
+t_pipex	*init_pipex(char **split_byspace)
 {
 	t_pipex	*pipex;
 
 	pipex = NULL;
 	pipex = malloc(sizeof(t_pipex));
 	if (!pipex)
-		return(NULL);
+		return (NULL);
 	pipex->line_path = search_path(g_list);
 	pipex->split_path = ft_split(pipex->line_path, ':');
 	pipex->exec_path = boucle_path(pipex->split_path, split_byspace);

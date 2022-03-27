@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 17:19:35 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/27 21:27:57 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/27 22:35:37 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_lst_cmd	*fill_lst(char *str)
 
 	lst = malloc(sizeof(t_lst_cmd));
 	if (!lst)
-		return(NULL);
+		return (NULL);
 	lst->split_byspace = ft_split(str, ' ');
 	lst->pipex = init_pipex(lst->split_byspace);
 	lst->next = NULL;
@@ -29,7 +29,7 @@ t_lst_cmd	*create_norm(t_lst_cmd *lst, char **split_bypipe, char *prompt_line)
 {
 	int			i;
 	t_lst_cmd	*tmp;
-	
+
 	i = -1;
 	while (++i <= g_list->nb_pipe)
 	{

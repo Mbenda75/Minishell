@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_signals.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:27:34 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/25 23:20:19 by user42           ###   ########.fr       */
+/*   Updated: 2022/03/27 23:26:00 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ void	ft_signals_handler(int signal)
 		printf("%s", ishell);
 		free(ishell);
 	}
- 	/*if (signal == SIGSEGV)
+	if (signal == SIGSEGV)
 	{
 		ft_putstr_fd("\nexit ctrl d\n", 0);
 		exit(EXIT_FAILURE);
-	}*/
+	}
 }
 
-void	ft_signals()
+void	ft_signals(void)
 {
 	signal(SIGINT, ft_signals_handler);
 	signal(SIGSEGV, ft_signals_handler);

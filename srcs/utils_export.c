@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 18:51:40 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/25 17:32:42 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/27 22:14:56 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	ft_find_the_equal(char *str)
 	}
 	return (FAILURE);
 }
-
 
 int	ft_find_where_is_equal(char *str)
 {
@@ -98,13 +97,13 @@ int	ft_check_variable_after_equal(char *cmd)
 int	ft_check_variable_before_equal(char *cmd)
 {
 	int	i;
-	int j;
+	int	j;
 
 	i = 0;
 	j = 0;
 	if (cmd[0] == '\0')
-		return(ft_custom_error("export: not valid identifier1"));
-	while(cmd[j])
+		return (ft_custom_error("export: not valid identifier1"));
+	while (cmd[j])
 		j++;
 	if (cmd[j - 1] == '$')
 		return (ft_custom_error("export: not valid identifier"));
@@ -115,7 +114,7 @@ int	ft_check_variable_before_equal(char *cmd)
 		if (!((cmd[i] >= 'a' && cmd[i] <= 'z' )
 				|| (cmd[i] >= 'A' && cmd[i] <= 'Z')
 				|| (cmd[i] >= '0' && cmd[i] <= '9')
-				|| (cmd[i] == '_' || cmd[i] == '$') 
+				|| (cmd[i] == '_' || cmd[i] == '$')
 				|| (cmd[j - 1] == '+' && cmd[j - 2] != '+')
 				|| (cmd[i] == ' ' || cmd[i] == '=')))
 			return (ft_custom_error("export: not valid identifier3"));

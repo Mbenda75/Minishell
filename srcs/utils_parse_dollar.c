@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parse_dollar.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 17:06:47 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/25 23:06:02 by user42           ###   ########.fr       */
+/*   Updated: 2022/03/27 22:34:06 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ int	ft_check_env_var_existence(char *complete_var)
 	char	*tmp_add_equal;
 
 	check = g_list;
-    if (ft_strcmp(complete_var, "?") == 0)
+	if (ft_strcmp(complete_var, "?") == 0)
 	{
-        return (SUCCESS);
+		return (SUCCESS);
 	}
 	tmp_add_equal = ft_strjoin(complete_var, "=");
 	while (check)
@@ -59,9 +59,9 @@ char	*ft_change_dollar_var(char *word)
 	char	*tmp_add_equal;
 
 	check = g_list;
-    if (ft_strcmp(word, "?") == 0)
+	if (ft_strcmp(word, "?") == 0)
 	{
-        return (word = ft_itoa(g_list->exit_value));
+		return (word = ft_itoa(g_list->exit_value));
 	}
 	tmp_add_equal = ft_strjoin(word, "=");
 	while (check)
@@ -81,9 +81,9 @@ char	*ft_change_dollar_var(char *word)
 	return (word);
 }
 
-int ft_is_operator(char str)
+int	ft_is_operator(char str)
 {
 	if (str == '+' || str == '*' || str == '/' || str == '-')
-			return (SUCCESS);
+		return (SUCCESS);
 	return (FAILURE);
 }

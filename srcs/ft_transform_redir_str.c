@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 15:29:30 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/27 20:01:40 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/27 22:36:22 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,13 @@ void	ft_free_last_node_2(t_env *temp)
 	temp->next = NULL;
 }
 
-char *ft_transform_redirection(char *str)
+char	*ft_transform_redirection(char *str)
 {
-	t_env *tmp;
-	t_env *tmp_2;
-	char *tampon;
-	char *tampon_2;
-	char **s_byspace;
+	t_env	*tmp;
+	t_env	*tmp_2;
+	char	*tampon;
+	char	*tampon_2;
+	char	**s_byspace;
 
 	s_byspace = ft_split(str, ' ');
 	memset(&tmp, 0, sizeof(tmp));

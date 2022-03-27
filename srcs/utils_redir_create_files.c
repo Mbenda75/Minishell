@@ -6,13 +6,13 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 10:38:01 by user42            #+#    #+#             */
-/*   Updated: 2022/03/27 19:56:23 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/27 22:32:56 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int ft_pas_colle_chevron(char **str, int i)
+int	ft_pas_colle_chevron(char **str, int i)
 {
 	g_list->file_open = open(str[i + 1], O_WRONLY | O_TRUNC | O_CREAT, 0755);
 	if (g_list->file_open < 0)
@@ -29,9 +29,9 @@ int ft_pas_colle_chevron(char **str, int i)
 	return (SUCCESS);
 }
 
-int ft_pas_colle_double_chevron(char **str, int i)
+int	ft_pas_colle_double_chevron(char **str, int i)
 {
-	g_list->file_open = open(str[i + 1], O_CREAT | O_WRONLY | O_APPEND,  0755);
+	g_list->file_open = open(str[i + 1], O_CREAT | O_WRONLY | O_APPEND, 0755);
 	if (g_list->file_open < 0)
 		return (ft_custom_error("Error >> pas colle"));
 	if (dup2(g_list->file_open, STDOUT_FILENO) < 0)
@@ -39,7 +39,7 @@ int ft_pas_colle_double_chevron(char **str, int i)
 	return (SUCCESS);
 }
 
-int ft_pas_colle_chevron_inverse(char **str, int i)
+int	ft_pas_colle_chevron_inverse(char **str, int i)
 {
 	g_list->file_open = open(str[i + 1], O_RDONLY);
 	if (g_list->file_open < 0)

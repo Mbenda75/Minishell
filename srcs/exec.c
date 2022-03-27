@@ -6,80 +6,66 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:23:39 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/27 21:13:15 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/28 00:06:30 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-
 int	close_wait(t_init ishell, t_lst_cmd *mshell)
 {
-	int i;
-	int status;
-	t_lst_cmd *tmp;
-	
-	i = -1;
-	tmp  = mshell;
- 	while (tmp)
-	{
-		i = -1;
-		while (g_list->nb_pipe != 0 &&  ++i < g_list->nb_pipe)
-		{
-			close(g_list->pfd[i][0]);
-			close(g_list->pfd[i][1]);
-		}
-	 	waitpid(tmp->pipex->child, &status, 0);
-		tmp = tmp->next;
+	t_decompte	index;
+	t_lst_cmd	*tmp;
 
+	index.i = -1;
+	tmp = mshell;
+	while (tmp)
+	{
+		index.i = -1;
+		while (g_list->nb_pipe != 0 && ++index.i < g_list->nb_pipe)
+		{
+			close(g_list->pfd[index.i][0]);
+			close(g_list->pfd[index.i][1]);
+		}
+		waitpid(tmp->pipex->child, &index.j, 0);
+		tmp = tmp->next;
 	}
 	free_lst(mshell);
 	free(ishell.new_line);
 	free_str(ishell.cmd);
 	free(ishell.prompt_line);
-	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
-	if (WIFSIGNALED(status))
-		return (WTERMSIG(status) + 128);
-	return (status);
+	if (WIFEXITED(index.j))
+		return (WEXITSTATUS(index.j));
+	if (WIFSIGNALED(index.j))
+		return (WTERMSIG(index.j) + 128);
+	return (index.j);
 }
 
 void	dup_exec(int i)
 {
-	int k;
+	int	k;
 
 	k = -1;
-//	dup2(g_list->fd_stdout, STDOUT_FILENO);
-//	dup2(g_list->fd_stdin, STDIN_FILENO);
 	if (i != 0)
 	{
 		dup2(g_list->pfd[i - 1][0], 0);
 		if (g_list->check_stds == 1)
 			dup2(g_list->fd_stdout, STDOUT_FILENO);
-		//dup2(g_list->fd_stdin, STDIN_FILENO);
-
 	}
 	if (i != g_list->nb_pipe)
 	{
-		//dup2(g_list->fd_stdin, STDIN_FILENO);
 		if (g_list->check_stds == 0)
 			dup2(g_list->pfd[i][1], 1);
-		//dup2(g_list->fd_stdout, STDOUT_FILENO);
-
 	}
- 	while (g_list->nb_pipe != 0 && ++k < g_list->nb_pipe)
+	while (g_list->nb_pipe != 0 && ++k < g_list->nb_pipe)
 	{
 		close(g_list->pfd[k][0]);
 		close(g_list->pfd[k][1]);
-		//dup2(g_list->fd_stdout, STDOUT_FILENO);
-		//dup2(g_list->fd_stdin, STDIN_FILENO);
 	}
 }
 
-
 void	exec_cmd(t_lst_cmd *mshell, char **env)
 {
-	
 	if (mshell->pipex->exec_path == NULL)
 	{
 		printf("%s : command not found\n", mshell->split_byspace[0]);
@@ -100,6 +86,6 @@ void	cmd_fork(t_lst_cmd *tmp, char **env, int i)
 	if (tmp->pipex->child == 0)
 	{
 		dup_exec(i);
-		exec_cmd(tmp, env);	
+		exec_cmd(tmp, env);
 	}
 }
