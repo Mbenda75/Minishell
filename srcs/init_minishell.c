@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 17:19:35 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/26 18:16:51 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/27 15:29:55 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,49 +15,11 @@
 t_lst_cmd	*fill_lst(char *str)
 {
 	t_lst_cmd	*lst;
-	char *tmp;
-	//int i;
 
-	//i = 1;
 	lst = malloc(sizeof(t_lst_cmd));
 	if (!lst)
 		return(NULL);
-	printf("str == %s\n", str);
-	tmp = strtok(str, "><");
-	lst->split_byspace = ft_split(tmp, ' ');
-	/*while (lst->split_byspace[i])
-	{
-		
-		if (lst->split_byspace[i][0] == '>' && lst->split_byspace[i][1] != '>')
-		{
-			lst->split_byspace[i] = NULL;
-			i++;
-		}
-		if (lst->split_byspace[i][0] == '>' && lst->split_byspace[i][1] == '>')
-		{
-			lst->split_byspace[i] = NULL;
-			i++;
-		}
-		if (lst->split_byspace[i][0] == '<' && lst->split_byspace[i][1] != '<')
-		{
-			lst->split_byspace[i] = NULL;
-			i++;
-		}
-		if (lst->split_byspace[i][0] == '<' && lst->split_byspace[i][1] == '<')
-		{
-			lst->split_byspace[i] = NULL;
-			lst->split_byspace[i + 1] = NULL;
-			i++;
-		}
-		i++;
-	}*/
-	printf("JE SUIS LA\n");
-	i = 0;
-	while (lst->split_byspace[i])
-	{
-		printf("split == %s\n", lst->split_byspace[i]);
-		i++;
-	}*/
+	lst->split_byspace = ft_split(str, ' ');
 	lst->pipex = init_pipex(lst->split_byspace);
 	lst->next = NULL;
 	return (lst);
@@ -103,7 +65,13 @@ t_lst_cmd	*create_lst(char *prompt_line, t_lst_cmd *lst)
 t_lst_cmd	*init_shell(char *buffer, t_lst_cmd *lst)
 {
 	if (ft_check_if_no_redir(buffer) == SUCCESS)
+	{
 		ft_redir_handler(buffer);
+		buffer = ft_transform_redirection(buffer);
+		g_list->check_stds = 1;
+	}
+	else
+		g_list->check_stds = 0;
 	if (g_list->nb_pipe != 0)
 		lst = create_lst(buffer, lst);
 	else if (g_list->nb_pipe == 0)

@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:45:36 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/26 18:25:51 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/27 17:01:05 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ int ft_heredoc(char **tab, int i)
 
 	g_list->ret_herdc = ft_calloc(sizeof(char), 1);
 	delimiter = tab[i + 1];
-	
+	g_list->hrdc_STDOUT = open("temp", O_WRONLY | O_TRUNC | O_CREAT, 0755);
+	if (g_list->hrdc_STDOUT < 0)
+		return (ft_custom_error("Error <<"));
 	while (1)
 	{
 		input = readline(">");
@@ -38,14 +40,12 @@ int ft_heredoc(char **tab, int i)
 		g_list->ret_herdc = ft_strjoin(g_list->ret_herdc, "\n");
 		free(temp);
 	}
-	printf("g_list heredoc = %s\n")
-	/*g_list->file_open = open(g_list->ret_herdc, O_RDONLY);
-	if (g_list->file_open < 0)
-	{
-		printf("open pb\n");
-		free(g_list->ret_herdc);
-		return (FAILURE);
-	}*/
+	write(g_list->hrdc_STDOUT, g_list->ret_herdc, ft_strlen(g_list->ret_herdc) + 1);
+	g_list->hrdc_STDIN = open("temp", O_RDONLY);
+	if (g_list->hrdc_STDIN < 0)
+		return (ft_custom_error("Error << dup2 open"));
+	if (dup2(g_list->hrdc_STDIN, STDIN_FILENO) < 0)
+		return (ft_custom_error("Error << dup2 open"));
 	return (SUCCESS);
 }
 

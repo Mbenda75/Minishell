@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/26 16:57:14 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/27 16:58:35 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ typedef struct s_env
 	int					**pfd;
 	int					fd_stdout;
 	int					fd_stdin;
+	int					hrdc_STDOUT;
+	int					hrdc_STDIN;
 	int					check_stds;
 	int					file_open;
 	int					exit_value;
@@ -225,7 +227,11 @@ char		*ft_no_cmd_dollar(char *str);
 char		*ft_transform_dollar_for_no_cmd(char *str);
 int			ft_no_cmd_dollar_check(char *str);
 
-
-
+/*		FT_TRANSFORM_REDIR_STR		*/
+t_env		*fill_env_2(char *str);
+t_env		*cpy_env_2(char **env, t_env *r_value);
+void		ft_free_middle_node_2(t_env *head);
+void		ft_free_last_node_2(t_env *temp);
+char		*ft_transform_redirection(char *str);
 
 #endif

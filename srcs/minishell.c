@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:46:47 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/26 18:16:39 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/27 16:02:27 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,11 @@ void	start_minishell(t_init ishell, char **env)
 			cmd_fork(tmp, env, ++i);
 		tmp = tmp->next;
 	}
+//	dup2(g_list->fd_stdout, STDOUT_FILENO);
+//	dup2(g_list->fd_stdin, STDIN_FILENO);
 	if (g_list->check_stds == 1)
 	{
+		printf("salut\n");
 		dup2(g_list->fd_stdout, STDOUT_FILENO);
 		dup2(g_list->fd_stdin, STDIN_FILENO);
 		close(g_list->file_open);

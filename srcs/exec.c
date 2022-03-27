@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:23:39 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/25 23:42:56 by user42           ###   ########.fr       */
+/*   Updated: 2022/03/27 16:27:23 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,13 @@ void	dup_exec(int i)
 
 	k = -1;
 	if (i != 0)
+	{
 		dup2(g_list->pfd[i - 1][0], 0);
-	if (i != g_list->nb_pipe)
+	}
+	if (i != g_list->nb_pipe)// && g_list->check_stds == 0)
+	{
 		dup2(g_list->pfd[i][1], 1);
+	}
  	while (g_list->nb_pipe != 0 && ++k < g_list->nb_pipe)
 	{
 		close(g_list->pfd[k][0]);
@@ -63,19 +67,10 @@ void	dup_exec(int i)
 
 void	exec_cmd(t_lst_cmd *mshell, char **env)
 {
-	int j;
-
-	j = 0;
-	
 	if (mshell->pipex->exec_path == NULL)
 	{
 		printf("%s : command not found\n", mshell->split_byspace[0]);
 		exit(127);
-	}
-	while (mshell->split_byspace[j])
-	{
-		printf("JE SUIS LA = %s\n", mshell->split_byspace[j]);
-		j++;
 	}
 	if (access(mshell->pipex->exec_path, F_OK) == 0)
 		execve(mshell->pipex->exec_path, mshell->split_byspace, env);
@@ -84,7 +79,6 @@ void	exec_cmd(t_lst_cmd *mshell, char **env)
 void	cmd_fork(t_lst_cmd *tmp, char **env, int i)
 {
 	tmp->pipex->child = fork();
-	
 	if (tmp->pipex->child == -1)
 	{
 		write(2, "fork failed\n", 13);
@@ -93,7 +87,6 @@ void	cmd_fork(t_lst_cmd *tmp, char **env, int i)
 	if (tmp->pipex->child == 0)
 	{
 		dup_exec(i);
-		exec_cmd(tmp, env);
-		
+		exec_cmd(tmp, env);	
 	}
 }
