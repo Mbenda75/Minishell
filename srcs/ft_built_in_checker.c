@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 14:03:44 by user42            #+#    #+#             */
-/*   Updated: 2022/03/25 18:05:29 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/27 21:17:51 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,15 @@ int	ft_is_built_in(char *cmd)
 	int			i;
 
 	i = 0;
+	if (cmd == NULL)
+		return(1);
 	while (built_in[i])
 	{
 		if (!strcmp(built_in[i], cmd))
-			return (1);
+			return (0);
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
 int	exec_built_in(t_lst_cmd *mshell, char **env)

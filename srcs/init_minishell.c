@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 17:19:35 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/27 15:29:55 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/27 21:27:57 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ t_lst_cmd	*init_shell(char *buffer, t_lst_cmd *lst)
 	{
 		ft_redir_handler(buffer);
 		buffer = ft_transform_redirection(buffer);
+		printf("JE SUIS DANS CHECK REDIR\n");
 		g_list->check_stds = 1;
 	}
 	else

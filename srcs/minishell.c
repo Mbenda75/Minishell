@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:46:47 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/27 16:02:27 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/27 21:31:28 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	start_minishell(t_init ishell, char **env)
 	tmp = mshell;
 	while (tmp)
 	{
-		if (ft_is_built_in(mshell->split_byspace[0]) == 1)
+		if (ft_is_built_in(mshell->split_byspace[0]) == 0)
 			exec_built_in(mshell, env);
 		else
 			cmd_fork(tmp, env, ++i);
@@ -34,7 +34,6 @@ void	start_minishell(t_init ishell, char **env)
 //	dup2(g_list->fd_stdin, STDIN_FILENO);
 	if (g_list->check_stds == 1)
 	{
-		printf("salut\n");
 		dup2(g_list->fd_stdout, STDOUT_FILENO);
 		dup2(g_list->fd_stdin, STDIN_FILENO);
 		close(g_list->file_open);
@@ -101,23 +100,20 @@ void	minishell(char **env)
 		}
 		else if (ishell.cmd[0] != NULL)
 		{
-			ishell.new_line = skip_quote(ishell.prompt_line);
 			add_history(ishell.prompt_line);
-			if (check_pipe(ishell.new_line) == FAILURE || ft_check_redirection(ishell.new_line) == FAILURE || ft_no_cmd_dollar_check(ishell.new_line) == FAILURE)
+			if (check_pipe(ishell.prompt_line) == FAILURE || if_noquote(ishell.prompt_line) == FAILURE || ft_check_redirection(ishell.prompt_line) == FAILURE || ft_no_cmd_dollar_check(ishell.prompt_line) == FAILURE)
 			{
-				printf("error pipe\n");
-				free(ishell.new_line);
 				free_str(ishell.cmd);
 				free(ishell.prompt_line);
 			}
 			else
 			{
+				ishell.new_line = skip_quote(ishell.prompt_line);
 				ishell.new_line = ft_no_cmd_dollar(ishell.new_line);
-				//ishell.new_line = 
 				init_pfd(ishell);
 				start_minishell(ishell, env);
 				if(g_list->nb_pipe != 0)
-					free_fd(g_list->pfd);
+					free_fd(g_list->pfd); 
 			}
 		}
 	}

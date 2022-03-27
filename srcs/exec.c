@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:23:39 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/27 16:27:23 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/27 21:13:15 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,24 +49,37 @@ void	dup_exec(int i)
 	int k;
 
 	k = -1;
+//	dup2(g_list->fd_stdout, STDOUT_FILENO);
+//	dup2(g_list->fd_stdin, STDIN_FILENO);
 	if (i != 0)
 	{
 		dup2(g_list->pfd[i - 1][0], 0);
+		if (g_list->check_stds == 1)
+			dup2(g_list->fd_stdout, STDOUT_FILENO);
+		//dup2(g_list->fd_stdin, STDIN_FILENO);
+
 	}
-	if (i != g_list->nb_pipe)// && g_list->check_stds == 0)
+	if (i != g_list->nb_pipe)
 	{
-		dup2(g_list->pfd[i][1], 1);
+		//dup2(g_list->fd_stdin, STDIN_FILENO);
+		if (g_list->check_stds == 0)
+			dup2(g_list->pfd[i][1], 1);
+		//dup2(g_list->fd_stdout, STDOUT_FILENO);
+
 	}
  	while (g_list->nb_pipe != 0 && ++k < g_list->nb_pipe)
 	{
 		close(g_list->pfd[k][0]);
 		close(g_list->pfd[k][1]);
+		//dup2(g_list->fd_stdout, STDOUT_FILENO);
+		//dup2(g_list->fd_stdin, STDIN_FILENO);
 	}
 }
 
 
 void	exec_cmd(t_lst_cmd *mshell, char **env)
 {
+	
 	if (mshell->pipex->exec_path == NULL)
 	{
 		printf("%s : command not found\n", mshell->split_byspace[0]);

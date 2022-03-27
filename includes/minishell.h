@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/27 16:58:35 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/27 21:07:21 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ void		free_fd(int **fd);
 /* 			PARSING SHELL		 */
 char		*skip_quote(char *str);
 int			check_first_quote(char *str);
+int			if_noquote(char *str);
+
 
 int			count_pipe(char *str);
 int			size_malloc(char *str);
