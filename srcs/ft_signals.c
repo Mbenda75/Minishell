@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:27:34 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/28 14:46:23 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/28 16:55:53 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,15 @@ void	ft_signals_handler(int signal)
 	{
 		ft_putstr_fd("\n", 0);
 		ishell = getcwd(NULL, 0);
-		printf("%s", ishell);
+		rl_replace_line("", 0);
+		printf("%s ", ishell);
 		free(ishell);
 	}
-	/*if (signal == SIGSEGV)
+	if (signal == SIGSEGV)
 	{
-		ft_putstr_fd("\nexit ctrl d\n", 0);
-		exit(EXIT_FAILURE);
-	}*/
+		ft_putstr_fd("\nexit\n", 0);
+		exit(0);
+	}
 }
 
 void	ft_signals(void)

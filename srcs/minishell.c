@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:46:47 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/27 23:24:59 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/28 16:40:55 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ int	init_pfd(t_init ishell)
 
 void	minishell(char **env)
 {
+	
 	t_init	ishell;
-
 	memset(&g_list, 0, sizeof(g_list));
 	g_list = cpy_env(env);
 	while (1)

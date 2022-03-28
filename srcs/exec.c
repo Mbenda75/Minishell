@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:23:39 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/28 00:06:30 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/28 16:31:36 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	cmd_fork(t_lst_cmd *tmp, char **env, int i)
 	}
 	if (tmp->pipex->child == 0)
 	{
+		signal(SIGQUIT, SIG_DFL);
 		dup_exec(i);
 		exec_cmd(tmp, env);
 	}

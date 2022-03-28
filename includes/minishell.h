@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/28 16:02:22 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/28 16:46:10 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,6 @@ typedef struct s_pipex
 	char	*exec_path;
 	pid_t	child;
 }		t_pipex;
-
-typedef struct s_redir
-{
-	int	redirection_normal;
-	int	redirection_inverse;
-	int	double_red_norm;
-	int	double_red_inv;
-}				t_redir;
 
 typedef struct s_init
 {
@@ -198,7 +190,6 @@ char		**ft_get_var_env_2(char **envp, char *var_env);
 
 /*			FT_PIPE_CMD					*/
 int			ft_check_redirection(char *str);
-t_redir		ft_count_redirection(char *str);
 
 void		status_child(void);
 char		**ft_env_cpy(char **envp, char **envp_2);
@@ -246,14 +237,14 @@ char		*ft_no_cmd_dollar(char *str);
 char		*ft_transform_dollar_for_no_cmd(char *str);
 int			ft_no_cmd_dollar_check(char *str);
 
-/*		FT_TRANSFORM_REDIR_STR		*/
+/*			FT_TRANSFORM_REDIR_STR		*/
 t_env		*fill_env_2(char *str);
 t_env		*cpy_env_2(char **env, t_env *r_value);
 void		ft_free_middle_node_2(t_env *head);
 void		ft_free_last_node_2(t_env *temp);
 char		*ft_transform_redirection(char *str);
-char	*ft_redir_nrm(char *tampon, t_env *tmp_2);
-void	ft_free_last_node(t_env *temp);
-void	ft_free_middle_node(t_env *head);
+char		*ft_redir_nrm(char *tampon, t_env *tmp_2);
+void		ft_free_last_node(t_env *temp);
+void		ft_free_middle_node(t_env *head);
 
 #endif
