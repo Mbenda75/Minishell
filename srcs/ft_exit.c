@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:09:23 by user42            #+#    #+#             */
-/*   Updated: 2022/03/27 23:29:32 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/28 18:07:23 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ int	ft_calc_exit_nb(char *cmd, int *exit_value)
 
 void	ft_free_lst_print_and_exit(t_lst_cmd *mshell, int exit_value)
 {
-	if (g_list->nb_pipe != 0)
-		free_fd(g_list->pfd);
 	free_env(g_list);
 	free_lst(mshell);
 	exit(exit_value);

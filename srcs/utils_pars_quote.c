@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 11:32:13 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/28 15:55:56 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/28 17:37:41 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,11 @@ int	if_noquote(char *str)
 			quote++;
 		i++;
 	}
-	printf("quote == %d\n", quote);
 	if (quote % 2 == 0)
 		return (SUCCESS);
 	else
 	{
-		printf("error quote\n");
+		printf("Error quote\n");
 		return (FAILURE);
 	}
 }

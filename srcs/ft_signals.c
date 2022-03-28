@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:27:34 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/28 16:55:53 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/28 17:34:29 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	ft_signals_handler(int signal)
 		rl_replace_line("", 0);
 		printf("%s ", ishell);
 		free(ishell);
+		g_list->exit_value = 130;
 	}
 	if (signal == SIGSEGV)
 	{

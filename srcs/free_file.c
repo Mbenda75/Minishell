@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:18:17 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/27 23:10:30 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/28 18:06:31 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	free_fd(int **fd)
 		free(fd[line]);
 		line++;
 	}
+	free(fd);
+	
 }
 
 void	*free_lst(t_lst_cmd *lst)

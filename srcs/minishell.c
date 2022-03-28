@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:46:47 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/28 16:40:55 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/28 18:07:35 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@ void	start_minishell(t_init ishell, char **env)
 	tmp = mshell;
 	while (tmp)
 	{
-		if (ft_is_built_in(mshell->split_byspace[0]) == 0)
+		printf("=== %s\n", mshell->split_byspace[0]);
+ 		if (ft_is_built_in(mshell->split_byspace[0]) == 0)
 			exec_built_in(mshell, env);
-		else
+		else 
 			cmd_fork(tmp, env, ++i);
 		tmp = tmp->next;
 	}
@@ -65,7 +66,7 @@ int	init_pfd(t_init ishell)
 	{
 		i = -1;
 		g_list->pfd = NULL;
-		g_list->pfd = malloc(sizeof(int **) * g_list->nb_pipe);
+		g_list->pfd = malloc(sizeof(int *) * g_list->nb_pipe);
 		if (!g_list->pfd)
 			return (FAILURE);
 		while (++i < g_list->nb_pipe)
@@ -83,8 +84,8 @@ int	init_pfd(t_init ishell)
 
 void	minishell(char **env)
 {
-	
 	t_init	ishell;
+
 	memset(&g_list, 0, sizeof(g_list));
 	g_list = cpy_env(env);
 	while (1)
@@ -93,9 +94,11 @@ void	minishell(char **env)
 		ishell.prompt_line = readline(ishell.pwd);
 		ishell.cmd = ft_split(ishell.prompt_line, ' ');
 		free(ishell.pwd);
+		g_list->exit_value = 0;
 		if (ishell.cmd[0] == NULL)
 		{
 			ft_putstr_fd(NULL, 0);
+			g_list->exit_value = 0;
 			free_str(ishell.cmd);
 		}
 		else if (ishell.cmd[0] != NULL)
@@ -116,7 +119,12 @@ void	minishell(char **env)
 				init_pfd(ishell);
 				start_minishell(ishell, env);
 				if (g_list->nb_pipe != 0)
+				{
+					printf("pipes number0 = %d\n", g_list->nb_pipe);
+						printf("jai free");
+
 					free_fd(g_list->pfd);
+				}
 			}
 		}
 	}
