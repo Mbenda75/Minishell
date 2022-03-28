@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/28 00:01:39 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/28 14:33:51 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,6 +232,8 @@ char		*ft_modify_newline_content(char **r_value);
 char		**ft_transform_dollar_malloc(char *str);
 char		**ft_assign_value(char *s_byspace,
 				char **r_value, t_decompte *index);
+char *ft_assign_value_2(char **s_bydollar, t_decompte *index);
+
 
 /*			UTILS_PARSE_DOLLAR		*/
 int			ft_count_dollar(char *str);

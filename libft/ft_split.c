@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 19:15:19 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/02 13:27:09 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/28 14:19:34 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,3 @@ char	**ft_split(const char *str, char c)
 	tab[k] = 0;
 	return (tab);
 }
-
