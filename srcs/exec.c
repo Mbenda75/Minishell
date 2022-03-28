@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:23:39 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/28 17:35:06 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/29 00:07:16 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,40 @@ void	exec_cmd(t_lst_cmd *mshell, char **env)
 		execve(mshell->pipex->exec_path, mshell->split_byspace, env);
 }
 
+int ft_check_built_in(char *cmd)
+{
+	const char *built_in[] = {"pwd", "env", "echo", NULL};
+	int i;
+
+	i = 0;
+	if (cmd == NULL)
+		return (FAILURE);
+	while (built_in[i])
+	{
+		if (!strcmp(built_in[i], cmd))
+			return (SUCCESS);
+		i++;
+	}
+	return (FAILURE);
+}
+
+int	ft_is_built_in_2(char **s_byspace, int i)
+{
+	if (!ft_strcmp(s_byspace[i], "pwd"))
+		ft_builtin_pwd(s_byspace);
+	else if (!ft_strcmp(s_byspace[i], "echo"))
+		ft_built_echo(s_byspace);
+	else if (!ft_strcmp(s_byspace[i], "env"))
+		ft_built_in_env(s_byspace);
+	return (FAILURE);
+}
+
 void	cmd_fork(t_lst_cmd *tmp, char **env, int i)
 {
 	tmp->pipex->child = fork();
+	int j;
+
+	j = 0;
 	if (tmp->pipex->child == -1)
 	{
 		write(2, "fork failed\n", 13);
@@ -87,6 +118,11 @@ void	cmd_fork(t_lst_cmd *tmp, char **env, int i)
 	{
 		signal(SIGQUIT, SIG_DFL);
 		dup_exec(i);
+		if (ft_check_built_in(tmp->split_byspace[j]) == SUCCESS)
+		{
+			ft_is_built_in_2(tmp->split_byspace, j);
+			j++;
+		}
 		exec_cmd(tmp, env);
 	}
 }

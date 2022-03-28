@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 17:19:35 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/28 17:36:43 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/29 00:00:16 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,23 @@ t_lst_cmd	*create_lst(char *prompt_line, t_lst_cmd *lst)
 
 t_lst_cmd	*init_shell(char *buffer, t_lst_cmd *lst)
 {
+	char *buffer_2;
+	
 	if (ft_check_if_no_redir(buffer) == SUCCESS)
 	{
 		ft_redir_handler(buffer);
-		buffer = ft_transform_redirection(buffer);
+		buffer_2 = ft_transform_redirection(buffer);
+		printf("buffer %s\n", buffer_2);
 		g_list->check_stds = 1;
 	}
 	else
+	{
+		buffer_2 = buffer;
 		g_list->check_stds = 0;
+	}
 	if (g_list->nb_pipe != 0)
-		lst = create_lst(buffer, lst);
+		lst = create_lst(buffer_2, lst);
 	else if (g_list->nb_pipe == 0)
-		lst = create_lst(buffer, lst);
+		lst = create_lst(buffer_2, lst);
 	return (lst);
 }

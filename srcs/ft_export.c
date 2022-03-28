@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:40:02 by user42            #+#    #+#             */
-/*   Updated: 2022/03/28 14:55:46 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/28 21:31:34 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ int	ft_built_in_export_add(char *env_var, char *apres_egal)
 	if (ft_check_env_var_existence(env_var) == SUCCESS)
 	{
 		ft_built_in_export_modify(env_var, apres_egal);
-		free(apres_egal);
 		return (SUCCESS);
 	}
 	env_var = ft_strjoin(env_var, "=");

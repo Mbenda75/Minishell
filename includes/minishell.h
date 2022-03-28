@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/28 18:06:10 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/29 00:17:30 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ int			close_wait(t_init ishell, t_lst_cmd *mshell);
 void		dup_exec(int i);
 int			init_pfd(t_init ishell);
 
+
 /*			FT_ERRORS_HANDLERS		*/
 void		free_str(char **path);
 int			ft_custom_error(char *errstr);
@@ -239,11 +240,12 @@ int			ft_no_cmd_dollar_check(char *str);
 
 /*			FT_TRANSFORM_REDIR_STR		*/
 t_env		*fill_env_2(char *str);
-t_env		*cpy_env_2(char **env, t_env *r_value);
+t_env		*cpy_env_2(char **str, t_env *i);
 void		ft_free_middle_node_2(t_env *head);
 void		ft_free_last_node_2(t_env *temp);
 char		*ft_transform_redirection(char *str);
-char		*ft_redir_nrm(char *tampon, t_env *tmp_2);
+//char		*ft_redir_nrm(t_env *tmp_2);
+char		*ft_redir_nrm(char *str, t_env *tmp_2);
 void		ft_free_last_node(t_env *temp);
 void		ft_free_middle_node(t_env *head);
 

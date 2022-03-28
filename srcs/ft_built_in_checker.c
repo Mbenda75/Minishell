@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 14:03:44 by user42            #+#    #+#             */
-/*   Updated: 2022/03/28 17:52:12 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/28 21:43:32 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 int	ft_is_built_in(char *cmd)
 {
-	const char	*built_in[] = {"pwd", "cd", "exit",
-		"env", "export", "echo", "unset", NULL};
+	const char	*built_in[] = { "cd", "exit", "export", "unset", NULL};
 	int			i;
 
 	i = 0;
@@ -31,22 +30,14 @@ int	ft_is_built_in(char *cmd)
 }
 
 int	exec_built_in(t_lst_cmd *mshell, char **env)
-{
-	printf("BUILTI N === %s\n", mshell->split_byspace[0]);
-	
-	if (!ft_strcmp(mshell->split_byspace[0], "pwd"))
-		ft_builtin_pwd(mshell->split_byspace);
-	else if (!ft_strcmp(mshell->split_byspace[0], "cd"))  // Non 
+{	
+	if (!ft_strcmp(mshell->split_byspace[0], "cd"))
 		ft_built_in_cd(mshell->split_byspace, env);
-	else if (!ft_strcmp(mshell->split_byspace[0], "exit")) // Non
+	else if (!ft_strcmp(mshell->split_byspace[0], "exit"))
 		ft_built_in_exit(mshell);
-	else if (!ft_strcmp(mshell->split_byspace[0], "echo"))
-		ft_built_echo(mshell->split_byspace);
-	else if (!ft_strcmp(mshell->split_byspace[0], "env"))
-		ft_built_in_env(mshell->split_byspace);
-	else if (!ft_strcmp(mshell->split_byspace[0], "export")) // Non
+	else if (!ft_strcmp(mshell->split_byspace[0], "export"))
 		ft_built_in_export(mshell->split_byspace);
-	else if (!ft_strcmp(mshell->split_byspace[0], "unset")) // Non
+	else if (!ft_strcmp(mshell->split_byspace[0], "unset"))
 		ft_built_in_unset(mshell->split_byspace);
 	return (FAILURE);
 }

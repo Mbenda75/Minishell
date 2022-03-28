@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:46:47 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/28 18:07:35 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/28 21:26:34 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,11 @@ void	start_minishell(t_init ishell, char **env)
 	tmp = mshell;
 	while (tmp)
 	{
-		printf("=== %s\n", mshell->split_byspace[0]);
- 		if (ft_is_built_in(mshell->split_byspace[0]) == 0)
-			exec_built_in(mshell, env);
+ 		if (ft_is_built_in(tmp->split_byspace[0]) == 0)
+			exec_built_in(tmp, env);
 		else 
 			cmd_fork(tmp, env, ++i);
-		tmp = tmp->next;
+		tmp = tmp->next;;
 	}
 	if (g_list->check_stds == 1)
 		ft_close_all_fd();
@@ -119,12 +118,7 @@ void	minishell(char **env)
 				init_pfd(ishell);
 				start_minishell(ishell, env);
 				if (g_list->nb_pipe != 0)
-				{
-					printf("pipes number0 = %d\n", g_list->nb_pipe);
-						printf("jai free");
-
 					free_fd(g_list->pfd);
-				}
 			}
 		}
 	}
