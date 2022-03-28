@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 18:08:49 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/28 15:41:10 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/28 15:46:16 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,10 @@ char	*ft_modify_newline_content(char **r_value)
 	return (str);
 }
 
-char	**ft_transform_dollar_malloc(char *str)
+char	*ft_assign_value_2(char **s_bydollar, t_decompte *index)
 {
-	char	**malloc_str;
-
-	malloc_str = malloc(sizeof(char *) * ft_strlen(str) + 1);
-	return (malloc_str);
-}
-
-char *ft_assign_value_2(char **s_bydollar, t_decompte *index)
-{
-	char *tmp;
-	char *word;
+	char	*tmp;
+	char	*word;
 
 	if (s_bydollar[index->l][0] == '?')
 	{
@@ -60,7 +52,7 @@ char *ft_assign_value_2(char **s_bydollar, t_decompte *index)
 	else
 	{
 		if (index->l != 0)
-			word  = "";
+			word = "";
 		else
 			word = ft_strdup(s_bydollar[0]);
 	}
@@ -87,8 +79,8 @@ char	*ft_transform_dollar(char *str)
 {
 	char		**s_byspace;
 	char		**r_value;
-	char 	**tmp;
-	char	*tmp2;
+	char		**tmp;
+	char		*tmp2;
 	t_decompte	index;
 
 	index.i = -1;
@@ -106,7 +98,7 @@ char	*ft_transform_dollar(char *str)
 		free_str(tmp);
 		return (tmp2);
 	}
-	tmp2 =  ft_modify_newline_content(r_value);
+	tmp2 = ft_modify_newline_content(r_value);
 	return (tmp2);
 }
 

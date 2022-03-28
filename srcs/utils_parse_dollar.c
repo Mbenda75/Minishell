@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 17:06:47 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/27 22:34:06 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/28 15:46:30 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,12 @@ char	*ft_change_dollar_var(char *word)
 	return (word);
 }
 
-int	ft_is_operator(char str)
+char	**ft_transform_dollar_malloc(char *str)
 {
-	if (str == '+' || str == '*' || str == '/' || str == '-')
-		return (SUCCESS);
-	return (FAILURE);
+	char	**malloc_str;
+
+	malloc_str = malloc(sizeof(char *) * ft_strlen(str) + 1);
+	if (malloc_str == NULL)
+		return (NULL);
+	return (malloc_str);
 }

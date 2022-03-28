@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 11:32:13 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/27 23:17:10 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/28 15:55:56 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,27 @@ int	size_malloc(char *str)
 	return (size);
 }
 
+char	*skip_quote_norm(char *str, char *new_str, t_decompte *index)
+{
+	if (str[index->i] == '\'' || str[index->i] == '"')
+	{
+		index->l = index->i;
+		index->i++;
+		while (str[index->i] && str[index->i] != str[index->l])
+		{
+			new_str[index->j++] = str[index->i];
+			index->i++;
+		}
+		index->i++;
+	}
+	else
+	{
+		new_str[index->j++] = str[index->i];
+		index->i++;
+	}
+	return (new_str);
+}
+
 char	*skip_quote(char *str)
 {
 	t_decompte	index;
@@ -79,24 +100,7 @@ char	*skip_quote(char *str)
 	if (!new_str)
 		return (NULL);
 	while (str[index.i])
-	{
-		if (str[index.i] == '\'' || str[index.i] == '"')
-		{
-			index.l = index.i;
-			index.i++;
-			while (str[index.i] && str[index.i] != str[index.l])
-			{
-				new_str[index.j++] = str[index.i];
-				index.i++;
-			}
-			index.i++;
-		}
-		else
-		{
-			new_str[index.j++] = str[index.i];
-			index.i++;
-		}
-	}
+		new_str = skip_quote_norm(str, new_str, &index);
 	new_str[index.j++] = '\0';
 	return (new_str);
 }

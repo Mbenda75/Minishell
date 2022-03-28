@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 15:29:30 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/27 22:36:22 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/28 16:04:09 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,24 +46,20 @@ t_env	*cpy_env_2(char **s_byspace, t_env *r_value)
 	return (r_value);
 }
 
-void	ft_free_middle_node_2(t_env *head)
+char	*ft_redir_nrm(char *tampon, t_env *tmp_2)
 {
-	t_env	*tmp;
+	char	*tampon_2;
 
-	tmp = head->next;
-	free(head->content);
-	head->content = head->next->content;
-	head->next = head->next->next;
-	free(tmp);
-}
-
-void	ft_free_last_node_2(t_env *temp)
-{
-	while (temp->next->next != NULL)
-		temp = temp->next;
-	free(temp->next->content);
-	free(temp->next);
-	temp->next = NULL;
+	if (ft_strchr(tmp_2->content, '<') || ft_strchr(tmp_2->content, '>'))
+		ft_free_middle_node(tmp_2);
+	else
+	{
+		tampon = ft_strjoin(tampon, tmp_2->content);
+		tampon_2 = ft_strdup(tampon);
+		tampon = ft_strjoin(tampon_2, " ");
+		free(tampon_2);
+	}
+	return (tampon);
 }
 
 char	*ft_transform_redirection(char *str)
@@ -71,7 +67,6 @@ char	*ft_transform_redirection(char *str)
 	t_env	*tmp;
 	t_env	*tmp_2;
 	char	*tampon;
-	char	*tampon_2;
 	char	**s_byspace;
 
 	s_byspace = ft_split(str, ' ');
@@ -81,19 +76,8 @@ char	*ft_transform_redirection(char *str)
 	tampon = ft_calloc(sizeof(char), 1);
 	while (tmp_2 != NULL)
 	{
-		if (ft_strchr(tmp_2->content, '<') || ft_strchr(tmp_2->content, '>'))
-		{
-			ft_free_middle_node_2(tmp_2);
-			tmp_2 = tmp_2->next;
-		}
-		else
-		{
-			tampon = ft_strjoin(tampon, tmp_2->content);
-			tampon_2 = ft_strdup(tampon);
-			tampon = ft_strjoin(tampon_2, " ");
-			free(tampon_2);
-			tmp_2 = tmp_2->next;
-		}
+		tampon = ft_redir_nrm(tampon, tmp_2);
+		tmp_2 = tmp_2->next;
 	}
 	free(tmp);
 	free(tmp_2);

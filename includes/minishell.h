@@ -6,7 +6,7 @@
 /*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/28 14:33:51 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/28 16:02:22 by adaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,8 +232,7 @@ char		*ft_modify_newline_content(char **r_value);
 char		**ft_transform_dollar_malloc(char *str);
 char		**ft_assign_value(char *s_byspace,
 				char **r_value, t_decompte *index);
-char *ft_assign_value_2(char **s_bydollar, t_decompte *index);
-
+char		*ft_assign_value_2(char **s_bydollar, t_decompte *index);
 
 /*			UTILS_PARSE_DOLLAR		*/
 int			ft_count_dollar(char *str);
@@ -253,5 +252,8 @@ t_env		*cpy_env_2(char **env, t_env *r_value);
 void		ft_free_middle_node_2(t_env *head);
 void		ft_free_last_node_2(t_env *temp);
 char		*ft_transform_redirection(char *str);
+char	*ft_redir_nrm(char *tampon, t_env *tmp_2);
+void	ft_free_last_node(t_env *temp);
+void	ft_free_middle_node(t_env *head);
 
 #endif
