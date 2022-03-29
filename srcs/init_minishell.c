@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 17:19:35 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/29 17:00:03 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/29 20:59:19 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,7 @@ t_lst_cmd	*init_shell(char *buffer, t_lst_cmd *lst)
 		lst = create_lst(buffer, lst);
 	else if (g_list->nb_pipe == 0)
 		lst = create_lst(buffer, lst);
+	if (g_list->check_stds == 1)
+		free(buffer);
 	return (lst);
 }

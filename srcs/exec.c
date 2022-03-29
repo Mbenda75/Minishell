@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 15:23:39 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/29 19:03:51 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/29 20:03:28 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,11 @@ void	exec_cmd(t_lst_cmd *mshell, char **env)
 	if (access(mshell->pipex->exec_path, F_OK) == 0)
 		execve(mshell->pipex->exec_path, mshell->split_byspace, env);
 }
+
 int	ft_is_built(t_lst_cmd *tmp)
 {
-	const char	*built_in[] = {"pwd", "cd", "exit",
-		"export", "env", "unset", NULL};
+	const char	*built_in[] = {"pwd", "echo",
+		 "env", NULL};
 	int			i;
 
 	i = 0;
@@ -88,22 +89,14 @@ int	ft_is_built(t_lst_cmd *tmp)
 	return (FAILURE);
 }
 
-int	exec_built(t_lst_cmd *mshell, char **env)
+int	exec_built(t_lst_cmd *mshell)
 {
 	if (!ft_strcmp(mshell->split_byspace[0], "pwd"))
 		ft_builtin_pwd(mshell->split_byspace);
-	else if (!ft_strcmp(mshell->split_byspace[0], "cd"))  // Non 
-		ft_built_in_cd(mshell->split_byspace, env);
-	else if (!ft_strcmp(mshell->split_byspace[0], "exit")) // Non
-		ft_built_in_exit(mshell);
 	else if (!ft_strcmp(mshell->split_byspace[0], "echo"))
 		ft_built_echo(mshell->split_byspace);
 	else if (!ft_strcmp(mshell->split_byspace[0], "env"))
 		ft_built_in_env(mshell->split_byspace);
-	else if (!ft_strcmp(mshell->split_byspace[0], "export")) // Non
-		ft_built_in_export(mshell->split_byspace);
-	else if (!ft_strcmp(mshell->split_byspace[0], "unset")) // Non
-		ft_built_in_unset(mshell->split_byspace);
 	return (FAILURE);
 }
 
@@ -121,7 +114,7 @@ void	cmd_fork(t_lst_cmd *tmp, char **env, int i)
 		dup_exec(i);
 		if (ft_is_built_in(tmp->split_byspace[0]) == 0)
 		{
-				exec_built_in(tmp, env);
+				exec_built(tmp);
 				exit(127);
 		}
 		exec_cmd(tmp, env);

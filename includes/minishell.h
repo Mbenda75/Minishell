@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 08:08:32 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/29 17:23:28 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/29 21:02:55 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void		ft_signals_handler(int signal);
 void		free_str(char **s);
 void		*free_lst(t_lst_cmd *lst);
 void		*free_env(t_env *lst);
+void		*free_f(t_env *lst);
 void		free_fd(int **fd);
 
 /* 			PARSING SHELL		 */
@@ -246,5 +247,7 @@ char		*ft_transform_redirection(char *str);
 char		*ft_redir_nrm(char *tampon, t_env *tmp_2);
 void		ft_free_last_node(t_env *temp);
 void		ft_free_middle_node(t_env *head);
+
+int	exec_built(t_lst_cmd *mshell);
 
 #endif

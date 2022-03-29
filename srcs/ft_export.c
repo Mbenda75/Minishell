@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:40:02 by user42            #+#    #+#             */
-/*   Updated: 2022/03/29 18:28:48 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/29 20:38:34 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,18 +72,28 @@ int	ft_built_in_export_modify(char *env_var, char *apres_egal)
 int	ft_built_in_export_add(char *env_var, char *apres_egal)
 {
 	char	*tmp;
-
+	int ff;
+	
+	ff = 0;
 	if (ft_strchr(apres_egal, '$'))
+	{
 		apres_egal = ft_transform_dollar(apres_egal);
+		ff = 1;
+	}
 	if (ft_strchr(env_var, '$'))
 		env_var = ft_transform_dollar(env_var);
 	if (ft_check_variable_before_equal(env_var) == FAILURE
 		|| ft_check_variable_after_equal(apres_egal) == FAILURE)
-		return (FAILURE);
+		{
+			if (ff == 1)
+				free(apres_egal);
+			return (FAILURE);
+		}
 	if (ft_check_env_var_existence(env_var) == SUCCESS)
 	{
 		ft_built_in_export_modify(env_var, apres_egal);
-		free(apres_egal);
+		if (ff == 1)
+			free(apres_egal);
 		return (SUCCESS);
 	}
 	env_var = ft_strjoin(env_var, "=");
@@ -91,6 +101,8 @@ int	ft_built_in_export_add(char *env_var, char *apres_egal)
 	env_var = ft_strjoin(env_var, apres_egal);
 	free(tmp);
 	ft_list_push_back(g_list, env_var);
+	if (ff == 1)
+		free(apres_egal);
 	return (SUCCESS);
 }
 

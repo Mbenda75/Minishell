@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:46:47 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/29 19:07:44 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/29 20:09:07 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	ft_close_all_fd(void)
 	g_list->check_stds = 0;
 }
 
+
 void	start_minishell(t_init ishell, char **env)
 {
 	t_lst_cmd	*mshell;
@@ -36,6 +37,12 @@ void	start_minishell(t_init ishell, char **env)
 	{
 		if (!ft_strcmp(tmp->split_byspace[0], "exit")) // Non
 			ft_built_in_exit(tmp);
+		else if (!ft_strcmp(tmp->split_byspace[0], "export")) // Non
+			ft_built_in_export(tmp->split_byspace);
+		else if (!ft_strcmp(tmp->split_byspace[0], "unset")) // Non
+			ft_built_in_unset(tmp->split_byspace);
+		else if (!ft_strcmp(mshell->split_byspace[0], "cd"))  // Non 
+			ft_built_in_cd(mshell->split_byspace, env);
 		else
 			cmd_fork(tmp, env, ++i);
 		tmp = tmp->next;
@@ -114,7 +121,7 @@ void	minishell(char **env)
 			else
 			{
 				ishell.new_line = skip_quote(ishell.prompt_line);
-				ishell.new_line = ft_no_cmd_dollar(ishell.prompt_line);
+				//ishell.new_line = ft_no_cmd_dollar(ishell.prompt_line);
 				free_str(ishell.cmd);
 				init_pfd(ishell);
 				start_minishell(ishell, env);

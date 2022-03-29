@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_transform_redir_str.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 15:29:30 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/28 16:04:09 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/29 21:11:24 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,16 @@ t_env	*cpy_env_2(char **s_byspace, t_env *r_value)
 char	*ft_redir_nrm(char *tampon, t_env *tmp_2)
 {
 	char	*tampon_2;
+	char *tmp;
 
 	if (ft_strchr(tmp_2->content, '<') || ft_strchr(tmp_2->content, '>'))
 		ft_free_middle_node(tmp_2);
 	else
 	{
-		tampon = ft_strjoin(tampon, tmp_2->content);
-		tampon_2 = ft_strdup(tampon);
+		tmp = ft_strjoin(tampon, tmp_2->content);
+		tampon_2 = ft_strdup(tmp);
+		free(tampon);
+		free(tmp);
 		tampon = ft_strjoin(tampon_2, " ");
 		free(tampon_2);
 	}
@@ -79,8 +82,8 @@ char	*ft_transform_redirection(char *str)
 		tampon = ft_redir_nrm(tampon, tmp_2);
 		tmp_2 = tmp_2->next;
 	}
-	free(tmp);
-	free(tmp_2);
+	free_env(tmp);
+	free_env(tmp_2);
 	free_str(s_byspace);
 	return (tampon);
 }

@@ -6,7 +6,7 @@
 /*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 18:08:49 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/29 17:30:13 by benmoham         ###   ########.fr       */
+/*   Updated: 2022/03/29 20:47:03 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,11 +119,15 @@ char	*ft_transform_dollar(char *str)
 	{
 		tmp = ft_split(str, '$');
 		tmp2 = ft_modify_newline_content(r_value);
-		tmp2 = ft_strjoin(tmp[0], tmp2);
+		tmp2 = ft_strjoinfree(tmp[0], tmp2, 2);
 		free_str(tmp);
+		free_str(s_byspace);
+		free_str(r_value);
 		return (tmp2);
 	}
 	tmp2 = ft_modify_newline_content(r_value);
+	free_str(s_byspace);
+	free_str(r_value);
 	return (tmp2);
 }
 
