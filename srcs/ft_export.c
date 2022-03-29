@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:40:02 by user42            #+#    #+#             */
-/*   Updated: 2022/03/25 18:11:56 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/29 18:28:48 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ t_env	*ft_list_push_back(t_env *cpy_env, char *str)
 		i++;
 		list->next = fill_env(str);
 	}
-	printf("JE SUIS LE N6\n");
 	return (list);
 }
 
@@ -61,9 +60,9 @@ int	ft_built_in_export_modify(char *env_var, char *apres_egal)
 	char	*env_var_cpy;
 	char	*env_var2;
 
-	env_var = ft_strjoin(env_var, "=");	
+	env_var = ft_strjoin(env_var, "=");
 	env_var_cpy = ft_strdup(env_var);
-	env_var2 = ft_strjoin(env_var, apres_egal);  // need to correct leak
+	env_var2 = ft_strjoin(env_var, apres_egal);
 	free(env_var);
 	g_list = ft_modify_lst(g_list, env_var_cpy, env_var2);
 	free(env_var_cpy);
@@ -78,27 +77,28 @@ int	ft_built_in_export_add(char *env_var, char *apres_egal)
 		apres_egal = ft_transform_dollar(apres_egal);
 	if (ft_strchr(env_var, '$'))
 		env_var = ft_transform_dollar(env_var);
-	if (ft_check_variable_before_equal(env_var) == FAILURE ||
-	ft_check_variable_after_equal(apres_egal) == FAILURE)
+	if (ft_check_variable_before_equal(env_var) == FAILURE
+		|| ft_check_variable_after_equal(apres_egal) == FAILURE)
 		return (FAILURE);
 	if (ft_check_env_var_existence(env_var) == SUCCESS)
 	{
 		ft_built_in_export_modify(env_var, apres_egal);
+		free(apres_egal);
 		return (SUCCESS);
 	}
-	env_var = ft_strjoin(env_var, "="); //si la variable n'existe pas
+	env_var = ft_strjoin(env_var, "=");
 	tmp = env_var;
-	env_var = ft_strjoin(env_var, apres_egal); // need to correct leaks
+	env_var = ft_strjoin(env_var, apres_egal);
 	free(tmp);
-	ft_list_push_back(g_list, env_var); 
+	ft_list_push_back(g_list, env_var);
 	return (SUCCESS);
 }
 
 int	ft_built_in_export(char **cmd)
 {
-
 	char		*env_var;
 	t_decompte	k;
+
 
 	k.l = 0;
 	if (cmd[1] == NULL)

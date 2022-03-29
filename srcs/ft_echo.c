@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 22:01:53 by benmoham          #+#    #+#             */
-/*   Updated: 2022/03/25 18:05:03 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/29 18:28:34 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,6 @@ int	ft_built_echo(char *cmd[])
 	}
 	if (!m.l)
 		write(1, "\n", 1);
+	exit(127);
 	return (0);
 }

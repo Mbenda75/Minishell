@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parse_dollar.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaloui <adaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: benmoham <benmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 17:06:47 by adaloui           #+#    #+#             */
-/*   Updated: 2022/03/25 17:44:39 by adaloui          ###   ########.fr       */
+/*   Updated: 2022/03/29 13:44:17 by benmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ int	ft_check_env_var_existence(char *complete_var)
 	char	*tmp_add_equal;
 
 	check = g_list;
-    if (ft_strcmp(complete_var, "?") == 0)
+	if (ft_strcmp(complete_var, "?") == 0)
 	{
-        return (SUCCESS);
+		return (SUCCESS);
 	}
 	tmp_add_equal = ft_strjoin(complete_var, "=");
 	while (check)
@@ -59,9 +59,9 @@ char	*ft_change_dollar_var(char *word)
 	char	*tmp_add_equal;
 
 	check = g_list;
-    if (ft_strcmp(word, "?") == 0)
+	if (ft_strcmp(word, "?") == 0)
 	{
-        return (word = ft_itoa(g_list->exit_value));
+		return (word = ft_itoa(g_list->exit_value));
 	}
 	tmp_add_equal = ft_strjoin(word, "=");
 	while (check)
@@ -79,4 +79,14 @@ char	*ft_change_dollar_var(char *word)
 	}
 	free(tmp_add_equal);
 	return (word);
+}
+
+char	**ft_transform_dollar_malloc(char *str)
+{
+	char	**malloc_str;
+
+	malloc_str = malloc(sizeof(char *) * ft_strlen(str) + 1);
+	if (malloc_str == NULL)
+		return (NULL);
+	return (malloc_str);
 }

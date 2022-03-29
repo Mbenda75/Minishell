@@ -91,3 +91,4 @@ echo $ >|d cree le fichier et exec echo
 echo $ >| d cree le fichier et exec echo
 echo $ > | d erreur
 echo $ > |d erreur
+
